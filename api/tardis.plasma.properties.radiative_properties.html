@@ -43,7 +43,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="tardis.plasma.base module" href="tardis.plasma.base.html" />
+    <link rel="next" title="tardis.plasma.properties.transition_probabilities module" href="tardis.plasma.properties.transition_probabilities.html" />
     <link rel="prev" title="tardis.plasma.properties.property_collections module" href="tardis.plasma.properties.property_collections.html" />
     <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
 
@@ -288,6 +288,36 @@
 </dd></dl>
 
 <dl class="py class">
+<dt id="tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.radiative_properties.</span></code><code class="sig-name descname"><span class="pre">RawRadBoundBoundTransProbs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/radiative_properties.html#RawRadBoundBoundTransProbs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.radiative_properties.TransitionProbabilities" title="tardis.plasma.properties.radiative_properties.TransitionProbabilities"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.radiative_properties.TransitionProbabilities</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.TransitionProbabilitiesProperty</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p_rad_bb</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>Unnormalized transition probabilities for radiative bound-bound
+transitions</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_sobolev</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_blues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulated_emission_factor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau_sobolevs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuum_interaction_species</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/radiative_properties.html#RawRadBoundBoundTransProbs.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('p_rad_bb',)</span></em><a class="headerlink" href="#tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.transition_probabilities_outputs">
+<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('p_rad_bb',)</span></em><a class="headerlink" href="#tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="tardis.plasma.properties.radiative_properties.StimulatedEmissionFactor">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.radiative_properties.</span></code><code class="sig-name descname"><span class="pre">StimulatedEmissionFactor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlte_species</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/radiative_properties.html#StimulatedEmissionFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.radiative_properties.StimulatedEmissionFactor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
@@ -412,7 +442,7 @@ Columns as zones.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="tardis.plasma.base.html" class="btn btn-neutral float-right" title="tardis.plasma.base module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="tardis.plasma.properties.transition_probabilities.html" class="btn btn-neutral float-right" title="tardis.plasma.properties.transition_probabilities module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="tardis.plasma.properties.property_collections.html" class="btn btn-neutral float-left" title="tardis.plasma.properties.property_collections module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

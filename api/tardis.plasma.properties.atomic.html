@@ -299,6 +299,27 @@ Indexed by atomic number, ion number.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt id="tardis.plasma.properties.atomic.LevelIdxs2LineIdx">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.atomic.</span></code><code class="sig-name descname"><span class="pre">LevelIdxs2LineIdx</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#LevelIdxs2LineIdx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.LevelIdxs2LineIdx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.HiddenPlasmaProperty" title="tardis.plasma.properties.base.HiddenPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.HiddenPlasmaProperty</span></code></a></p>
+<p>Attributes:
+level_idxs2line_idx : pandas.Series, dtype int</p>
+<blockquote>
+<div><p>Maps a source_level_idx destination_level_idx pair to a line_idx.</p>
+</div></blockquote>
+<dl class="py method">
+<dt id="tardis.plasma.properties.atomic.LevelIdxs2LineIdx.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#LevelIdxs2LineIdx.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.LevelIdxs2LineIdx.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.atomic.LevelIdxs2LineIdx.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('level_idxs2line_idx',)</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.LevelIdxs2LineIdx.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="tardis.plasma.properties.atomic.Levels">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.atomic.</span></code><code class="sig-name descname"><span class="pre">Levels</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#Levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.Levels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.BaseAtomicDataProperty" title="tardis.plasma.properties.base.BaseAtomicDataProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.BaseAtomicDataProperty</span></code></a></p>
@@ -444,8 +465,16 @@ Columns are nu, x_sect, index=(‘atomic_number’,’ion_number’,’level_num
 a given level starts. Needed for calculation
 of recombination rates.</p>
 </dd>
-<dt><strong>photo_ion_index</strong><span class="classifier">pandas.MultiIndex, dtype int</span></dt><dd><p>Atomic, ion and level numbers for which
-photoionization data exists.</p>
+<dt><strong>nu_i: pandas.Series, dtype float</strong></dt><dd><p>Threshold frequencies for ionization</p>
+</dd>
+<dt><strong>energy_i: pandas.Series, dtype float</strong></dt><dd><p>Energies of levels with bound-free transitions. Needed to calculate
+for example internal transition probabilities in the macro atom scheme.</p>
+</dd>
+<dt><strong>photo_ion_index: pandas.MultiIndex, dtype int</strong></dt><dd><p>Atomic, ion and level numbers for which photoionization data exists.</p>
+</dd>
+<dt><strong>level2continuum_idx: pandas.Series, dtype int</strong></dt><dd><p>Maps a level MultiIndex (atomic_number, ion_number, level_number) to
+the continuum_idx of the corresponding bound-free continuum (which are
+sorted by decreasing frequency).</p>
 </dd>
 </dl>
 </dd>
@@ -457,12 +486,150 @@ photoionization data exists.</p>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.atomic.PhotoIonizationData.latex_name">
-<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('\\xi_{\\textrm{i}}(\\nu)',</span> <span class="pre">'',</span> <span class="pre">'')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.PhotoIonizationData.latex_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('\\xi_{\\textrm{i}}(\\nu)',</span> <span class="pre">'',</span> <span class="pre">'',</span> <span class="pre">'\\nu_i',</span> <span class="pre">'\\epsilon_i',</span> <span class="pre">'')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.PhotoIonizationData.latex_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.atomic.PhotoIonizationData.outputs">
-<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('photo_ion_cross_sections',</span> <span class="pre">'photo_ion_block_references',</span> <span class="pre">'photo_ion_index')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.PhotoIonizationData.outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('photo_ion_cross_sections',</span> <span class="pre">'photo_ion_block_references',</span> <span class="pre">'photo_ion_index',</span> <span class="pre">'nu_i',</span> <span class="pre">'energy_i',</span> <span class="pre">'photo_ion_idx',</span> <span class="pre">'level2continuum_idx')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.PhotoIonizationData.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tardis.plasma.properties.atomic.TwoPhotonData">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.atomic.</span></code><code class="sig-name descname"><span class="pre">TwoPhotonData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#TwoPhotonData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.TwoPhotonData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
+<dl class="py method">
+<dt id="tardis.plasma.properties.atomic.TwoPhotonData.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuum_interaction_species</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#TwoPhotonData.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.TwoPhotonData.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.atomic.TwoPhotonData.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('two_photon_data',</span> <span class="pre">'two_photon_idx')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.TwoPhotonData.outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attributes:
+two_photon_data : pandas.DataFrame, dtype float</p>
+<blockquote>
+<div><dl class="simple">
+<dt>A DataFrame containing the <em>two photon decay data</em> with:</dt><dd><p>index: atomic_number, ion_number, level_number_lower, level_number_upper
+columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</p>
+</dd>
+</dl>
+<p>alpha, beta, gamma are fit coefficients for the frequency dependent
+transition probability A(y) of the two photon decay. See Eq. 2 in
+Nussbaumer &amp; Schmutz (1984).</p>
+</div></blockquote>
+<p>two_photon_idx: pandas.DataFrame, dtype int</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tardis.plasma.properties.atomic.YgData">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.atomic.</span></code><code class="sig-name descname"><span class="pre">YgData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#YgData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.YgData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>yg_data</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Table of thermally averaged effective collision strengths
+(divided by the statistical weight of the lower level) Y_ij / g_i .
+Columns are temperatures.</p>
+</dd>
+<dt><strong>t_yg</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>Temperatures at which collision strengths are tabulated.</p>
+</dd>
+<dt><strong>yg_index</strong><span class="classifier">Pandas MultiIndex</span></dt><dd></dd>
+<dt><strong>delta_E_yg</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Energy difference between upper and lower levels coupled by collisions.</p>
+</dd>
+<dt><strong>yg_idx</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Source_level_idx and destination_level_idx of collision transitions.
+Indexed by atomic_number, ion_number, level_number_lower,
+level_number_upper.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="tardis.plasma.properties.atomic.YgData.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuum_interaction_species</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#YgData.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.YgData.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="tardis.plasma.properties.atomic.YgData.calculate_yg_van_regemorter">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">calculate_yg_van_regemorter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_electrons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuum_interaction_species</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#YgData.calculate_yg_van_regemorter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.YgData.calculate_yg_van_regemorter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate collision strengths in the van Regemorter approximation.</p>
+<p>This function calculates thermally averaged effective collision
+strengths (divided by the statistical weight of the lower level)
+Y_ij / g_i using the van Regemorter approximation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>atomic_data</strong><span class="classifier">tardis.io.atom_data.AtomData</span></dt><dd></dd>
+<dt><strong>t_electrons</strong><span class="classifier">numpy.ndarray</span></dt><dd></dd>
+<dt><strong>continuun_interaction_species</strong><span class="classifier">pandas.MultiIndex</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Thermally averaged effective collision strengths
+(divided by the statistical weight of the lower level) Y_ij / g_i</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>See Eq. 9.58 in [2].</p>
+<p class="rubric">References</p>
+<dl class="citation">
+<dt class="label" id="r89ee6ebc53a5-1"><span class="brackets">1</span></dt>
+<dd><p>van Regemorter, H., “Rate of Collisional Excitation in Stellar
+Atmospheres.”, The Astrophysical Journal, vol. 136, p. 906, 1962.
+doi:10.1086/147445.</p>
+</dd>
+<dt class="label" id="r89ee6ebc53a5-2"><span class="brackets">2</span></dt>
+<dd><p>Hubeny, I. and Mihalas, D., “Theory of Stellar Atmospheres”. 2014.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.atomic.YgData.latex_name">
+<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('\\frac{Y_{ij}}{g_i}',</span> <span class="pre">'T_\\textrm{Yg}',</span> <span class="pre">'\\textrm{yg_index}',</span> <span class="pre">'\\delta</span> <span class="pre">E_{ij}',</span> <span class="pre">'\\textrm{yg_idx}')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.YgData.latex_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.atomic.YgData.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('yg_data',</span> <span class="pre">'t_yg',</span> <span class="pre">'yg_index',</span> <span class="pre">'delta_E_yg',</span> <span class="pre">'yg_idx')</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.YgData.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tardis.plasma.properties.atomic.YgInterpolator">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.atomic.</span></code><code class="sig-name descname"><span class="pre">YgInterpolator</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#YgInterpolator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.YgInterpolator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>yg_interp</strong><span class="classifier">scipy.interpolate.PchipInterpolator</span></dt><dd><p>Interpolates the thermally averaged effective collision strengths
+(divided by the statistical weight of the lower level) Y_ij / g_i as
+a function of electron temperature.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="tardis.plasma.properties.atomic.YgInterpolator.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yg_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_yg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/atomic.html#YgInterpolator.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.atomic.YgInterpolator.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.atomic.YgInterpolator.latex_name">
+<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('\\frac{Y_ij}{g_i}_{\\textrm{interp}}',)</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.YgInterpolator.latex_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.atomic.YgInterpolator.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('yg_interp',)</span></em><a class="headerlink" href="#tardis.plasma.properties.atomic.YgInterpolator.outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

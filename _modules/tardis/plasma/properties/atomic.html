@@ -202,7 +202,10 @@
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">expn</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">PchipInterpolator</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span> <span class="k">as</span> <span class="n">counter</span>
+<span class="kn">from</span> <span class="nn">tardis</span> <span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
 
 <span class="kn">from</span> <span class="nn">tardis.plasma.properties.base</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">ProcessingPlasmaProperty</span><span class="p">,</span>
@@ -210,6 +213,15 @@
     <span class="n">BaseAtomicDataProperty</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">tardis.plasma.exceptions</span> <span class="kn">import</span> <span class="n">IncompleteAtomicData</span>
+<span class="kn">from</span> <span class="nn">tardis.plasma.properties.continuum_processes</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">get_ground_state_multi_index</span><span class="p">,</span>
+    <span class="n">K_B</span><span class="p">,</span>
+    <span class="n">BETA_COLL</span><span class="p">,</span>
+    <span class="n">H</span><span class="p">,</span>
+    <span class="n">A0</span><span class="p">,</span>
+    <span class="n">M_E</span><span class="p">,</span>
+    <span class="n">C</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -223,6 +235,10 @@
     <span class="s2">&quot;ZetaData&quot;</span><span class="p">,</span>
     <span class="s2">&quot;NLTEData&quot;</span><span class="p">,</span>
     <span class="s2">&quot;PhotoIonizationData&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;YgData&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;YgInterpolator&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;LevelIdxs2LineIdx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TwoPhotonData&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -305,34 +321,126 @@
 <span class="sd">        Indices where the photoionization data for</span>
 <span class="sd">        a given level starts. Needed for calculation</span>
 <span class="sd">        of recombination rates.</span>
-<span class="sd">    photo_ion_index : pandas.MultiIndex, dtype int</span>
-<span class="sd">        Atomic, ion and level numbers for which</span>
-<span class="sd">        photoionization data exists.</span>
+<span class="sd">    nu_i: pandas.Series, dtype float</span>
+<span class="sd">        Threshold frequencies for ionization</span>
+<span class="sd">    energy_i: pandas.Series, dtype float</span>
+<span class="sd">        Energies of levels with bound-free transitions. Needed to calculate</span>
+<span class="sd">        for example internal transition probabilities in the macro atom scheme.</span>
+<span class="sd">    photo_ion_index: pandas.MultiIndex, dtype int</span>
+<span class="sd">        Atomic, ion and level numbers for which photoionization data exists.</span>
+<span class="sd">    level2continuum_idx: pandas.Series, dtype int</span>
+<span class="sd">        Maps a level MultiIndex (atomic_number, ion_number, level_number) to</span>
+<span class="sd">        the continuum_idx of the corresponding bound-free continuum (which are</span>
+<span class="sd">        sorted by decreasing frequency).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;photo_ion_cross_sections&quot;</span><span class="p">,</span>
         <span class="s2">&quot;photo_ion_block_references&quot;</span><span class="p">,</span>
         <span class="s2">&quot;photo_ion_index&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nu_i&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;energy_i&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;photo_ion_idx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;level2continuum_idx&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\xi_{\textrm</span><span class="si">{i}</span><span class="s2">}(\nu)&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;\xi_{\textrm</span><span class="si">{i}</span><span class="s2">}(\nu)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;\nu_i&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;\epsilon_i&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
 <div class="viewcode-block" id="PhotoIonizationData.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.PhotoIonizationData.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_data</span><span class="p">,</span> <span class="n">continuum_interaction_species</span><span class="p">):</span>
         <span class="n">photoionization_data</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">photoionization_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
             <span class="p">[</span><span class="s2">&quot;atomic_number&quot;</span><span class="p">,</span> <span class="s2">&quot;ion_number&quot;</span><span class="p">,</span> <span class="s2">&quot;level_number&quot;</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="n">selected_species_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">IndexSlice</span><span class="p">[</span>
-            <span class="n">continuum_interaction_species</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s2">&quot;atomic_number&quot;</span><span class="p">),</span>
-            <span class="n">continuum_interaction_species</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s2">&quot;ion_number&quot;</span><span class="p">),</span>
-            <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span>
-        <span class="p">]</span>
-        <span class="n">photoionization_data</span> <span class="o">=</span> <span class="n">photoionization_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">selected_species_idx</span><span class="p">]</span>
+        <span class="n">mask_selected_species</span> <span class="o">=</span> <span class="n">photoionization_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span>
+            <span class="s2">&quot;level_number&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">continuum_interaction_species</span><span class="p">)</span>
+        <span class="n">photoionization_data</span> <span class="o">=</span> <span class="n">photoionization_data</span><span class="p">[</span><span class="n">mask_selected_species</span><span class="p">]</span>
         <span class="n">phot_nus</span> <span class="o">=</span> <span class="n">photoionization_data</span><span class="p">[</span><span class="s2">&quot;nu&quot;</span><span class="p">]</span>
-        <span class="n">block_references</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
-            <span class="p">[[</span><span class="mi">0</span><span class="p">],</span> <span class="n">phot_nus</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()]</span>
+        <span class="n">block_references</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
+            <span class="n">phot_nus</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="n">photo_ion_index</span> <span class="o">=</span> <span class="n">photoionization_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">photoionization_data</span><span class="p">,</span> <span class="n">block_references</span><span class="p">,</span> <span class="n">photo_ion_index</span></div></div>
+        <span class="n">nu_i</span> <span class="o">=</span> <span class="n">photoionization_data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">nu</span>
+        <span class="n">energy_i</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">levels</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">photo_ion_index</span><span class="p">]</span><span class="o">.</span><span class="n">energy</span>
+
+        <span class="n">source_idx</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_references</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">photo_ion_index</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">references_idx</span>
+        <span class="n">destination_idx</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_references</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">get_ground_state_multi_index</span><span class="p">(</span><span class="n">photo_ion_index</span><span class="p">)</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">references_idx</span>
+        <span class="n">photo_ion_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;source_level_idx&quot;</span><span class="p">:</span> <span class="n">source_idx</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="s2">&quot;destination_level_idx&quot;</span><span class="p">:</span> <span class="n">destination_idx</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">photo_ion_index</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">level2continuum_edge_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nu_i</span><span class="p">)),</span>
+            <span class="n">nu_i</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;continuum_idx&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">photoionization_data</span><span class="p">,</span>
+            <span class="n">block_references</span><span class="p">,</span>
+            <span class="n">photo_ion_index</span><span class="p">,</span>
+            <span class="n">nu_i</span><span class="p">,</span>
+            <span class="n">energy_i</span><span class="p">,</span>
+            <span class="n">photo_ion_idx</span><span class="p">,</span>
+            <span class="n">level2continuum_edge_idx</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TwoPhotonData"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.TwoPhotonData">[docs]</a><span class="k">class</span> <span class="nc">TwoPhotonData</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;two_photon_data&quot;</span><span class="p">,</span> <span class="s2">&quot;two_photon_idx&quot;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    two_photon_data : pandas.DataFrame, dtype float</span>
+<span class="sd">        A DataFrame containing the *two photon decay data* with:</span>
+<span class="sd">            index: atomic_number, ion_number, level_number_lower, level_number_upper</span>
+<span class="sd">            columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</span>
+<span class="sd">        alpha, beta, gamma are fit coefficients for the frequency dependent</span>
+<span class="sd">        transition probability A(y) of the two photon decay. See Eq. 2 in</span>
+<span class="sd">        Nussbaumer &amp; Schmutz (1984).</span>
+<span class="sd">    two_photon_idx: pandas.DataFrame, dtype int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TwoPhotonData.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.TwoPhotonData.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_data</span><span class="p">,</span> <span class="n">continuum_interaction_species</span><span class="p">):</span>
+        <span class="n">two_photon_data</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">two_photon_data</span>
+        <span class="n">mask_selected_species</span> <span class="o">=</span> <span class="n">two_photon_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">,</span> <span class="s2">&quot;level_number_upper&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">continuum_interaction_species</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mask_selected_species</span><span class="o">.</span><span class="n">sum</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="n">IncompleteAtomicData</span><span class="p">(</span>
+                <span class="s2">&quot;two photon transition data for the requested &quot;</span>
+                <span class="s2">&quot;continuum_interactions species: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">continuum_interaction_species</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">two_photon_data</span> <span class="o">=</span> <span class="n">two_photon_data</span><span class="p">[</span><span class="n">mask_selected_species</span><span class="p">]</span>
+        <span class="n">index_lower</span> <span class="o">=</span> <span class="n">two_photon_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_upper&quot;</span><span class="p">)</span>
+        <span class="n">index_upper</span> <span class="o">=</span> <span class="n">two_photon_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">)</span>
+        <span class="n">source_idx</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_references</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">index_upper</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">references_idx</span>
+        <span class="n">destination_idx</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_references</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">index_lower</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">references_idx</span>
+        <span class="n">two_photon_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;source_level_idx&quot;</span><span class="p">:</span> <span class="n">source_idx</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="s2">&quot;destination_level_idx&quot;</span><span class="p">:</span> <span class="n">destination_idx</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">two_photon_data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">two_photon_data</span><span class="p">,</span> <span class="n">two_photon_idx</span></div></div>
 
 
 <div class="viewcode-block" id="LinesLowerLevelIndex"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.LinesLowerLevelIndex">[docs]</a><span class="k">class</span> <span class="nc">LinesLowerLevelIndex</span><span class="p">(</span><span class="n">HiddenPlasmaProperty</span><span class="p">):</span>
@@ -369,6 +477,29 @@
         <span class="p">)</span>
         <span class="n">lines_index</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">levels_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">lines_index</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="LevelIdxs2LineIdx"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.LevelIdxs2LineIdx">[docs]</a><span class="k">class</span> <span class="nc">LevelIdxs2LineIdx</span><span class="p">(</span><span class="n">HiddenPlasmaProperty</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">    level_idxs2line_idx : pandas.Series, dtype int</span>
+<span class="sd">       Maps a source_level_idx destination_level_idx pair to a line_idx.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;level_idxs2line_idx&quot;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="LevelIdxs2LineIdx.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.LevelIdxs2LineIdx.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_data</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">atomic_data</span><span class="o">.</span><span class="n">lines_upper2level_idx</span><span class="p">,</span>
+                <span class="n">atomic_data</span><span class="o">.</span><span class="n">lines_lower2level_idx</span><span class="p">,</span>
+            <span class="p">],</span>
+            <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;source_level_idx&quot;</span><span class="p">,</span> <span class="s2">&quot;destination_level_idx&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">level_idxs2line_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;lines_idx&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">level_idxs2line_idx</span></div></div>
 
 
 <div class="viewcode-block" id="AtomicMass"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.AtomicMass">[docs]</a><span class="k">class</span> <span class="nc">AtomicMass</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
@@ -498,6 +629,146 @@
             <span class="k">return</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">nlte_data</span></div></div>
+
+
+<div class="viewcode-block" id="YgData"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.YgData">[docs]</a><span class="k">class</span> <span class="nc">YgData</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    yg_data : pandas.DataFrame</span>
+<span class="sd">        Table of thermally averaged effective collision strengths</span>
+<span class="sd">        (divided by the statistical weight of the lower level) Y_ij / g_i .</span>
+<span class="sd">        Columns are temperatures.</span>
+<span class="sd">    t_yg : numpy.ndarray</span>
+<span class="sd">        Temperatures at which collision strengths are tabulated.</span>
+<span class="sd">    yg_index : Pandas MultiIndex</span>
+<span class="sd">    delta_E_yg : pandas.DataFrame</span>
+<span class="sd">        Energy difference between upper and lower levels coupled by collisions.</span>
+<span class="sd">    yg_idx : pandas.DataFrame</span>
+<span class="sd">        Source_level_idx and destination_level_idx of collision transitions.</span>
+<span class="sd">        Indexed by atomic_number, ion_number, level_number_lower,</span>
+<span class="sd">        level_number_upper.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;yg_data&quot;</span><span class="p">,</span> <span class="s2">&quot;t_yg&quot;</span><span class="p">,</span> <span class="s2">&quot;yg_index&quot;</span><span class="p">,</span> <span class="s2">&quot;delta_E_yg&quot;</span><span class="p">,</span> <span class="s2">&quot;yg_idx&quot;</span><span class="p">)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;\frac{Y_</span><span class="si">{ij}</span><span class="s2">}</span><span class="si">{g_i}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;T_\textrm</span><span class="si">{Yg}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;\textrm</span><span class="si">{yg_index}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;\delta E_</span><span class="si">{ij}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;\textrm</span><span class="si">{yg_idx}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="YgData.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.YgData.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_data</span><span class="p">,</span> <span class="n">continuum_interaction_species</span><span class="p">):</span>
+        <span class="n">yg_data</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">yg_data</span>
+
+        <span class="n">mask_selected_species</span> <span class="o">=</span> <span class="n">yg_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">,</span> <span class="s2">&quot;level_number_upper&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">continuum_interaction_species</span><span class="p">)</span>
+        <span class="n">yg_data</span> <span class="o">=</span> <span class="n">yg_data</span><span class="p">[</span><span class="n">mask_selected_species</span><span class="p">]</span>
+
+        <span class="n">t_yg</span> <span class="o">=</span> <span class="n">yg_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">yg_data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">t_yg</span>
+        <span class="n">approximate_yg_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_yg_van_regemorter</span><span class="p">(</span>
+            <span class="n">atomic_data</span><span class="p">,</span> <span class="n">t_yg</span><span class="p">,</span> <span class="n">continuum_interaction_species</span>
+        <span class="p">)</span>
+
+        <span class="n">yg_data</span> <span class="o">=</span> <span class="n">yg_data</span><span class="o">.</span><span class="n">combine_first</span><span class="p">(</span><span class="n">approximate_yg_data</span><span class="p">)</span>
+
+        <span class="n">energies</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">levels</span><span class="o">.</span><span class="n">energy</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">yg_data</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">lu_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">)</span>
+        <span class="n">ll_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_upper&quot;</span><span class="p">)</span>
+        <span class="n">delta_E</span> <span class="o">=</span> <span class="n">energies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">lu_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">energies</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ll_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">delta_E</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">delta_E</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="n">source_idx</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_references</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">ll_index</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">references_idx</span>
+        <span class="n">destination_idx</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_references</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">lu_index</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">references_idx</span>
+        <span class="n">yg_idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;source_level_idx&quot;</span><span class="p">:</span> <span class="n">source_idx</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="s2">&quot;destination_level_idx&quot;</span><span class="p">:</span> <span class="n">destination_idx</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">yg_data</span><span class="p">,</span> <span class="n">t_yg</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">delta_E</span><span class="p">,</span> <span class="n">yg_idx</span></div>
+
+<div class="viewcode-block" id="YgData.calculate_yg_van_regemorter"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.YgData.calculate_yg_van_regemorter">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">calculate_yg_van_regemorter</span><span class="p">(</span>
+        <span class="n">atomic_data</span><span class="p">,</span> <span class="n">t_electrons</span><span class="p">,</span> <span class="n">continuum_interaction_species</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculate collision strengths in the van Regemorter approximation.</span>
+
+<span class="sd">        This function calculates thermally averaged effective collision</span>
+<span class="sd">        strengths (divided by the statistical weight of the lower level)</span>
+<span class="sd">        Y_ij / g_i using the van Regemorter approximation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        atomic_data : tardis.io.atom_data.AtomData</span>
+<span class="sd">        t_electrons : numpy.ndarray</span>
+<span class="sd">        continuun_interaction_species : pandas.MultiIndex</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pandas.DataFrame</span>
+<span class="sd">            Thermally averaged effective collision strengths</span>
+<span class="sd">            (divided by the statistical weight of the lower level) Y_ij / g_i</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        See Eq. 9.58 in [2].</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        .. [1] van Regemorter, H., “Rate of Collisional Excitation in Stellar</span>
+<span class="sd">               Atmospheres.”, The Astrophysical Journal, vol. 136, p. 906, 1962.</span>
+<span class="sd">               doi:10.1086/147445.</span>
+<span class="sd">        .. [2] Hubeny, I. and Mihalas, D., &quot;Theory of Stellar Atmospheres&quot;. 2014.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">I_H</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">ionization_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+        <span class="n">mask_selected_species</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">,</span> <span class="s2">&quot;level_number_upper&quot;</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">continuum_interaction_species</span><span class="p">)</span>
+        <span class="n">lines_filtered</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">mask_selected_species</span><span class="p">]</span>
+        <span class="n">f_lu</span> <span class="o">=</span> <span class="n">lines_filtered</span><span class="o">.</span><span class="n">f_lu</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">nu_lines</span> <span class="o">=</span> <span class="n">lines_filtered</span><span class="o">.</span><span class="n">nu</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="n">yg</span> <span class="o">=</span> <span class="n">f_lu</span> <span class="o">*</span> <span class="p">(</span><span class="n">I_H</span> <span class="o">/</span> <span class="p">(</span><span class="n">H</span> <span class="o">*</span> <span class="n">nu_lines</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">coll_const</span> <span class="o">=</span> <span class="n">A0</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">K_B</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">M_E</span><span class="p">))</span>
+        <span class="n">yg</span> <span class="o">=</span> <span class="mf">14.5</span> <span class="o">*</span> <span class="n">coll_const</span> <span class="o">*</span> <span class="n">t_electrons</span> <span class="o">*</span> <span class="n">yg</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+        <span class="n">u0</span> <span class="o">=</span> <span class="n">nu_lines</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">/</span> <span class="n">t_electrons</span> <span class="o">*</span> <span class="p">(</span><span class="n">H</span> <span class="o">/</span> <span class="n">K_B</span><span class="p">)</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.276</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">u0</span><span class="p">)</span> <span class="o">*</span> <span class="n">expn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">u0</span><span class="p">)</span>
+        <span class="n">gamma</span><span class="p">[</span><span class="n">gamma</span> <span class="o">&lt;</span> <span class="mf">0.2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.2</span>
+        <span class="n">yg</span> <span class="o">*=</span> <span class="n">u0</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="n">BETA_COLL</span>
+        <span class="n">yg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">yg</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">lines_filtered</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">t_electrons</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">yg</span></div></div>
+
+
+<div class="viewcode-block" id="YgInterpolator"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.YgInterpolator">[docs]</a><span class="k">class</span> <span class="nc">YgInterpolator</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    yg_interp : scipy.interpolate.PchipInterpolator</span>
+<span class="sd">        Interpolates the thermally averaged effective collision strengths</span>
+<span class="sd">        (divided by the statistical weight of the lower level) Y_ij / g_i as</span>
+<span class="sd">        a function of electron temperature.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;yg_interp&quot;</span><span class="p">,)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">frac</span><span class="si">{Y_ij}{g_i}</span><span class="s2">_{</span><span class="se">\\</span><span class="s2">textrm</span><span class="si">{interp}</span><span class="s2">}&quot;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="YgInterpolator.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.YgInterpolator.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yg_data</span><span class="p">,</span> <span class="n">t_yg</span><span class="p">):</span>
+        <span class="n">yg_interp</span> <span class="o">=</span> <span class="n">PchipInterpolator</span><span class="p">(</span><span class="n">t_yg</span><span class="p">,</span> <span class="n">yg_data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">extrapolate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">yg_interp</span></div></div>
 </pre></div>
 
            </div>

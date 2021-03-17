@@ -44,7 +44,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="tardis.plasma.exceptions module" href="tardis.plasma.exceptions.html" />
-    <link rel="prev" title="tardis.plasma.properties.radiative_properties module" href="tardis.plasma.properties.radiative_properties.html" />
+    <link rel="prev" title="tardis.plasma.properties.transition_probabilities module" href="tardis.plasma.properties.transition_probabilities.html" />
     <link href="../_static/tardis.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -257,6 +257,27 @@
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.base.</span></code><code class="sig-name descname"><span class="pre">BasePlasma</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/base.html#BasePlasma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.base.BasePlasma" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="tardis.io.util.html#tardis.io.util.PlasmaWriterMixin" title="tardis.io.util.PlasmaWriterMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.io.util.PlasmaWriterMixin</span></code></a></p>
 <dl class="py method">
+<dt id="tardis.plasma.base.BasePlasma.freeze">
+<code class="sig-name descname"><span class="pre">freeze</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/base.html#BasePlasma.freeze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.base.BasePlasma.freeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Freeze plama properties.</p>
+<p>This method freezes plasma properties to prevent them from being
+updated: the values of a frozen property are fixed in the plasma
+calculation. This is useful for example for setting up test cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>args</strong><span class="classifier">iterable of str</span></dt><dd><p>Names of plasma properties to freeze.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plasma</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="s1">&#39;t_electrons&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="tardis.plasma.base.BasePlasma.get_value">
 <code class="sig-name descname"><span class="pre">get_value</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/base.html#BasePlasma.get_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.base.BasePlasma.get_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -287,6 +308,26 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="tardis.plasma.base.BasePlasma.thaw">
+<code class="sig-name descname"><span class="pre">thaw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/base.html#BasePlasma.thaw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.base.BasePlasma.thaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thaw plama properties.</p>
+<p>This method thaws (unfreezes) plasma properties allowing them to be
+updated again.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>args</strong><span class="classifier">iterable of str</span></dt><dd><p>Names of plasma properties to unfreeze.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plasma</span><span class="o">.</span><span class="n">thaw</span><span class="p">(</span><span class="s1">&#39;t_electrons&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt id="tardis.plasma.base.BasePlasma.update">
 <code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/base.html#BasePlasma.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.base.BasePlasma.update" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -312,7 +353,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="tardis.plasma.exceptions.html" class="btn btn-neutral float-right" title="tardis.plasma.exceptions module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="tardis.plasma.properties.radiative_properties.html" class="btn btn-neutral float-left" title="tardis.plasma.properties.radiative_properties module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tardis.plasma.properties.transition_probabilities.html" class="btn btn-neutral float-left" title="tardis.plasma.properties.transition_probabilities module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

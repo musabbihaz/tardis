@@ -205,9 +205,9 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">tardis.io.atom_data</span> <span class="kn">import</span> <span class="n">AtomData</span>
-<span class="kn">from</span> <span class="nn">tardis.io.config_reader</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
 <span class="kn">from</span> <span class="nn">tardis.util.base</span> <span class="kn">import</span> <span class="n">species_string_to_tuple</span>
 <span class="kn">from</span> <span class="nn">tardis.plasma</span> <span class="kn">import</span> <span class="n">BasePlasma</span>
+<span class="kn">from</span> <span class="nn">tardis.plasma.properties.base</span> <span class="kn">import</span> <span class="n">TransitionProbabilitiesProperty</span>
 <span class="kn">from</span> <span class="nn">tardis.plasma.properties.property_collections</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">basic_inputs</span><span class="p">,</span>
     <span class="n">basic_properties</span><span class="p">,</span>
@@ -224,6 +224,9 @@
     <span class="n">detailed_j_blues_properties</span><span class="p">,</span>
     <span class="n">detailed_j_blues_inputs</span><span class="p">,</span>
     <span class="n">continuum_interaction_properties</span><span class="p">,</span>
+    <span class="n">continuum_interaction_inputs</span><span class="p">,</span>
+    <span class="n">adiabatic_cooling_properties</span><span class="p">,</span>
+    <span class="n">two_photon_properties</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">tardis.plasma.exceptions</span> <span class="kn">import</span> <span class="n">PlasmaConfigError</span>
 
@@ -236,6 +239,7 @@
     <span class="n">StimulatedEmissionFactor</span><span class="p">,</span>
     <span class="n">HeliumNumericalNLTE</span><span class="p">,</span>
     <span class="n">IonNumberDensity</span><span class="p">,</span>
+    <span class="n">MarkovChainTransProbsCollector</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -311,7 +315,7 @@
         <span class="n">continuum_atoms</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">atom_data</span><span class="o">.</span><span class="n">selected_atomic_numbers</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">continuum_atoms_in_selected_atoms</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="n">PlasmaConfigError</span><span class="p">(</span>
             <span class="s2">&quot;Not all continuum interaction species &quot;</span>
             <span class="s2">&quot;belong to atoms that have been specified &quot;</span>
             <span class="s2">&quot;in the configuration.&quot;</span>
@@ -331,7 +335,45 @@
     <span class="n">plasma_modules</span> <span class="o">=</span> <span class="n">basic_inputs</span> <span class="o">+</span> <span class="n">basic_properties</span>
     <span class="n">property_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">plasma</span><span class="o">.</span><span class="n">continuum_interaction</span><span class="o">.</span><span class="n">species</span><span class="p">:</span>
+        <span class="n">line_interaction_type</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">plasma</span><span class="o">.</span><span class="n">line_interaction_type</span>
+        <span class="k">if</span> <span class="n">line_interaction_type</span> <span class="o">!=</span> <span class="s2">&quot;macroatom&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PlasmaConfigError</span><span class="p">(</span>
+                <span class="s2">&quot;Continuum interactions require line_interaction_type &quot;</span>
+                <span class="s2">&quot;macroatom (instead of </span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line_interaction_type</span><span class="p">)</span>
+            <span class="p">)</span>
+
         <span class="n">plasma_modules</span> <span class="o">+=</span> <span class="n">continuum_interaction_properties</span>
+        <span class="n">plasma_modules</span> <span class="o">+=</span> <span class="n">continuum_interaction_inputs</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">plasma</span><span class="o">.</span><span class="n">continuum_interaction</span><span class="o">.</span><span class="n">enable_adiabatic_cooling</span><span class="p">:</span>
+            <span class="n">plasma_modules</span> <span class="o">+=</span> <span class="n">adiabatic_cooling_properties</span>
+
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">plasma</span><span class="o">.</span><span class="n">continuum_interaction</span><span class="o">.</span><span class="n">enable_two_photon_decay</span><span class="p">:</span>
+            <span class="n">plasma_modules</span> <span class="o">+=</span> <span class="n">two_photon_properties</span>
+
+        <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">plasma_property</span><span class="o">.</span><span class="n">transition_probabilities_outputs</span>
+            <span class="k">for</span> <span class="n">plasma_property</span> <span class="ow">in</span> <span class="n">plasma_modules</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">plasma_property</span><span class="p">,</span> <span class="n">TransitionProbabilitiesProperty</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">item</span>
+            <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">transition_probabilities_outputs</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span>
+        <span class="p">]</span>
+
+        <span class="n">property_kwargs</span><span class="p">[</span><span class="n">MarkovChainTransProbsCollector</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="n">transition_probabilities_outputs</span>
+        <span class="p">}</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">gamma_estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">bf_heating_coeff_estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">alpha_stim_estimator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">volume</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span>
+            <span class="n">r_inner</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">r_inner</span><span class="p">,</span>
+            <span class="n">t_inner</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">t_inner</span><span class="p">,</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">plasma</span><span class="o">.</span><span class="n">radiative_rates_type</span> <span class="o">==</span> <span class="s2">&quot;blackbody&quot;</span><span class="p">:</span>
         <span class="n">plasma_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">JBluesBlackBody</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">plasma</span><span class="o">.</span><span class="n">radiative_rates_type</span> <span class="o">==</span> <span class="s2">&quot;dilute-blackbody&quot;</span><span class="p">:</span>

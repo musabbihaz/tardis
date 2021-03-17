@@ -207,7 +207,10 @@
 <span class="kn">from</span> <span class="nn">tardis</span> <span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">prange</span>
 
-<span class="kn">from</span> <span class="nn">tardis.plasma.properties.base</span> <span class="kn">import</span> <span class="n">ProcessingPlasmaProperty</span>
+<span class="kn">from</span> <span class="nn">tardis.plasma.properties.base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ProcessingPlasmaProperty</span><span class="p">,</span>
+    <span class="n">TransitionProbabilitiesProperty</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">tardis.plasma.properties.util</span> <span class="kn">import</span> <span class="n">macro_atom</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -217,7 +220,12 @@
     <span class="s2">&quot;TauSobolev&quot;</span><span class="p">,</span>
     <span class="s2">&quot;BetaSobolev&quot;</span><span class="p">,</span>
     <span class="s2">&quot;TransitionProbabilities&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RawRadBoundBoundTransProbs&quot;</span><span class="p">,</span>
 <span class="p">]</span>
+
+<span class="n">C_EINSTEIN</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mf">4.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">esu</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">const</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cgs</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">m_e</span><span class="o">.</span><span class="n">cgs</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">value</span>  <span class="c1"># See tardis/docs/physics/plasma/macroatom.rst</span>
 
 
 <div class="viewcode-block" id="StimulatedEmissionFactor"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.radiative_properties.html#tardis.plasma.properties.radiative_properties.StimulatedEmissionFactor">[docs]</a><span class="k">class</span> <span class="nc">StimulatedEmissionFactor</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
@@ -428,6 +436,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plasma_parent</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TransitionProbabilities</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">plasma_parent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initialize</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="TransitionProbabilities.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.radiative_properties.html#tardis.plasma.properties.radiative_properties.TransitionProbabilities.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -482,6 +491,7 @@
             <span class="n">lines_idx</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">block_references</span><span class="p">,</span>
             <span class="n">transition_probabilities</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">transition_probabilities</span>
 
@@ -550,6 +560,65 @@
             <span class="k">return</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data</span>
         <span class="k">except</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data_all</span></div>
+
+
+<div class="viewcode-block" id="RawRadBoundBoundTransProbs"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.radiative_properties.html#tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs">[docs]</a><span class="k">class</span> <span class="nc">RawRadBoundBoundTransProbs</span><span class="p">(</span>
+    <span class="n">TransitionProbabilities</span><span class="p">,</span> <span class="n">TransitionProbabilitiesProperty</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    p_rad_bb : pandas.DataFrame, dtype float</span>
+<span class="sd">        Unnormalized transition probabilities for radiative bound-bound</span>
+<span class="sd">        transitions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;p_rad_bb&quot;</span><span class="p">,)</span>
+    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;p_rad_bb&quot;</span><span class="p">,)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plasma_parent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RawRadBoundBoundTransProbs</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">plasma_parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalize</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="RawRadBoundBoundTransProbs.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.radiative_properties.html#tardis.plasma.properties.radiative_properties.RawRadBoundBoundTransProbs.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">atomic_data</span><span class="p">,</span>
+        <span class="n">beta_sobolev</span><span class="p">,</span>
+        <span class="n">j_blues</span><span class="p">,</span>
+        <span class="n">stimulated_emission_factor</span><span class="p">,</span>
+        <span class="n">tau_sobolevs</span><span class="p">,</span>
+        <span class="n">continuum_interaction_species</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">p_rad_bb</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span>
+            <span class="n">atomic_data</span><span class="p">,</span>
+            <span class="n">beta_sobolev</span><span class="p">,</span>
+            <span class="n">j_blues</span><span class="p">,</span>
+            <span class="n">stimulated_emission_factor</span><span class="p">,</span>
+            <span class="n">tau_sobolevs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">transition_type</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data</span><span class="o">.</span><span class="n">transition_type</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data</span><span class="o">.</span><span class="n">source_level_idx</span><span class="p">,</span>
+                <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data</span><span class="o">.</span><span class="n">destination_level_idx</span><span class="p">,</span>
+                <span class="n">transition_type</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">mask_continuum_species</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data</span><span class="o">.</span><span class="n">atomic_number</span><span class="p">,</span>
+                <span class="n">atomic_data</span><span class="o">.</span><span class="n">macro_atom_data</span><span class="o">.</span><span class="n">ion_number</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">continuum_interaction_species</span><span class="p">)</span>
+        <span class="n">p_rad_bb</span> <span class="o">=</span> <span class="n">p_rad_bb</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="n">mask_continuum_species</span><span class="p">]</span>
+        <span class="c1"># To obtain energy-flow rates in cgs from the precomputed transition</span>
+        <span class="c1"># probabilities in the atomic data, we have to multiply by the</span>
+        <span class="c1"># constant C_EINSTEIN and convert from eV to erg.</span>
+        <span class="c1"># See tardis/docs/physics/plasma/macroatom.rst</span>
+        <span class="n">p_rad_bb</span> <span class="o">=</span> <span class="n">p_rad_bb</span> <span class="o">*</span> <span class="n">C_EINSTEIN</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">eV</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">erg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p_rad_bb</span></div></div>
 </pre></div>
 
            </div>

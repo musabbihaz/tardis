@@ -383,6 +383,55 @@
         <span class="k">for</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resolve_update_list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">plasma_properties_dict</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="BasePlasma.freeze"><a class="viewcode-back" href="../../../api/tardis.plasma.base.html#tardis.plasma.base.BasePlasma.freeze">[docs]</a>    <span class="k">def</span> <span class="nf">freeze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Freeze plama properties.</span>
+
+<span class="sd">        This method freezes plasma properties to prevent them from being</span>
+<span class="sd">        updated: the values of a frozen property are fixed in the plasma</span>
+<span class="sd">        calculation. This is useful for example for setting up test cases.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        args : iterable of str</span>
+<span class="sd">            Names of plasma properties to freeze.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; plasma.freeze(&#39;t_electrons&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs_dict</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">PlasmaMissingModule</span><span class="p">(</span>
+                    <span class="s2">&quot;Trying to freeze property </span><span class="si">{0}</span><span class="s2">&quot;</span>
+                    <span class="s2">&quot; that is unavailable&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">frozen</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="BasePlasma.thaw"><a class="viewcode-back" href="../../../api/tardis.plasma.base.html#tardis.plasma.base.BasePlasma.thaw">[docs]</a>    <span class="k">def</span> <span class="nf">thaw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Thaw plama properties.</span>
+
+<span class="sd">        This method thaws (unfreezes) plasma properties allowing them to be</span>
+<span class="sd">        updated again.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        args : iterable of str</span>
+<span class="sd">            Names of plasma properties to unfreeze.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; plasma.thaw(&#39;t_electrons&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs_dict</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">PlasmaMissingModule</span><span class="p">(</span>
+                    <span class="s2">&quot;Trying to thaw property </span><span class="si">{0}</span><span class="s2">&quot;</span>
+                    <span class="s2">&quot; that is unavailable&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">outputs_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">frozen</span> <span class="o">=</span> <span class="kc">False</span></div>
+
     <span class="k">def</span> <span class="nf">_update_module_type_str</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">outputs_dict</span><span class="p">[</span><span class="n">node</span><span class="p">]</span><span class="o">.</span><span class="n">_update_type_str</span><span class="p">()</span>

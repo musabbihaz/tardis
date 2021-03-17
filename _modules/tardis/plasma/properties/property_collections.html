@@ -279,17 +279,57 @@
 <span class="n">detailed_j_blues_properties</span> <span class="o">=</span> <span class="n">PlasmaPropertyCollection</span><span class="p">(</span>
     <span class="p">[</span><span class="n">JBluesDetailed</span><span class="p">,</span> <span class="n">JBluesNormFactor</span><span class="p">,</span> <span class="n">LuminosityInner</span><span class="p">,</span> <span class="n">TimeSimulation</span><span class="p">]</span>
 <span class="p">)</span>
+<span class="n">continuum_interaction_inputs</span> <span class="o">=</span> <span class="n">PlasmaPropertyCollection</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">StimRecombRateCoeffEstimator</span><span class="p">,</span>
+        <span class="n">PhotoIonRateCoeffEstimator</span><span class="p">,</span>
+        <span class="n">RInner</span><span class="p">,</span>
+        <span class="n">TInner</span><span class="p">,</span>
+        <span class="n">Volume</span><span class="p">,</span>
+        <span class="n">BfHeatingRateCoeffEstimator</span><span class="p">,</span>
+        <span class="n">YgData</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">)</span>
 <span class="n">continuum_interaction_properties</span> <span class="o">=</span> <span class="n">PlasmaPropertyCollection</span><span class="p">(</span>
     <span class="p">[</span>
         <span class="n">PhotoIonizationData</span><span class="p">,</span>
         <span class="n">SpontRecombRateCoeff</span><span class="p">,</span>
+        <span class="n">PhotoIonRateCoeff</span><span class="p">,</span>
         <span class="n">ThermalLevelBoltzmannFactorLTE</span><span class="p">,</span>
         <span class="n">ThermalLTEPartitionFunction</span><span class="p">,</span>
         <span class="n">BetaElectron</span><span class="p">,</span>
         <span class="n">ThermalGElectron</span><span class="p">,</span>
         <span class="n">ThermalPhiSahaLTE</span><span class="p">,</span>
         <span class="n">SahaFactor</span><span class="p">,</span>
+        <span class="n">TimeSimulation</span><span class="p">,</span>
+        <span class="n">PhotoIonEstimatorsNormFactor</span><span class="p">,</span>
+        <span class="n">LuminosityInner</span><span class="p">,</span>
+        <span class="n">StimRecombRateCoeff</span><span class="p">,</span>
+        <span class="n">CorrPhotoIonRateCoeff</span><span class="p">,</span>
+        <span class="n">SpontRecombCoolingRateCoeff</span><span class="p">,</span>
+        <span class="n">RawRecombTransProbs</span><span class="p">,</span>
+        <span class="n">RawPhotoIonTransProbs</span><span class="p">,</span>
+        <span class="n">RawRadBoundBoundTransProbs</span><span class="p">,</span>
+        <span class="n">MarkovChainTransProbs</span><span class="p">,</span>
+        <span class="n">YgInterpolator</span><span class="p">,</span>
+        <span class="n">CollExcRateCoeff</span><span class="p">,</span>
+        <span class="n">CollDeexcRateCoeff</span><span class="p">,</span>
+        <span class="n">RawCollisionTransProbs</span><span class="p">,</span>
+        <span class="n">MarkovChainIndex</span><span class="p">,</span>
+        <span class="n">MarkovChainTransProbsCollector</span><span class="p">,</span>
+        <span class="n">FreeFreeCoolingRate</span><span class="p">,</span>
+        <span class="n">FreeBoundCoolingRate</span><span class="p">,</span>
+        <span class="n">BoundFreeOpacity</span><span class="p">,</span>
+        <span class="n">LevelNumberDensityLTE</span><span class="p">,</span>
+        <span class="n">PhotoIonBoltzmannFactor</span><span class="p">,</span>
+        <span class="n">FreeBoundEmissionCDF</span><span class="p">,</span>
+        <span class="n">LevelIdxs2LineIdx</span><span class="p">,</span>
+        <span class="n">CollIonRateCoeffSeaton</span><span class="p">,</span>
     <span class="p">]</span>
+<span class="p">)</span>
+<span class="n">adiabatic_cooling_properties</span> <span class="o">=</span> <span class="n">PlasmaPropertyCollection</span><span class="p">([</span><span class="n">AdiabaticCoolingRate</span><span class="p">])</span>
+<span class="n">two_photon_properties</span> <span class="o">=</span> <span class="n">PlasmaPropertyCollection</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">RawTwoPhotonTransProbs</span><span class="p">,</span> <span class="n">TwoPhotonData</span><span class="p">,</span> <span class="n">TwoPhotonEmissionCDF</span><span class="p">]</span>
 <span class="p">)</span>
 </pre></div>
 

@@ -278,6 +278,11 @@
 <span class="sd">            index : numerical index;</span>
 <span class="sd">            columns : atomic_number, ion_number, level_number, nu[Hz], x_sect[cm^2]</span>
 
+<span class="sd">    two_photon_data: pandas.DataFrame</span>
+<span class="sd">        A DataFrame containing the *two photon decay data* with:</span>
+<span class="sd">            index: atomic_number, ion_number, level_number_lower, level_number_upper</span>
+<span class="sd">            columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</span>
+
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
 <span class="sd">    prepared : bool</span>
@@ -292,6 +297,7 @@
 <span class="sd">    symbol2atomic_number : OrderedDict</span>
 <span class="sd">    atomic_number2symbol : OrderedDict</span>
 <span class="sd">    photoionization_data : pandas.DataFrame</span>
+<span class="sd">    two_photon_data: pandas.DataFrame</span>
 
 <span class="sd">    Methods</span>
 <span class="sd">    -------</span>
@@ -315,6 +321,8 @@
         <span class="s2">&quot;collision_data_temperatures&quot;</span><span class="p">,</span>
         <span class="s2">&quot;synpp_refs&quot;</span><span class="p">,</span>
         <span class="s2">&quot;photoionization_data&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;yg_data&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;two_photon_data&quot;</span><span class="p">,</span>
     <span class="p">]</span>
 
     <span class="c1"># List of tuples of the related dataframes.</span>
@@ -394,6 +402,8 @@
         <span class="n">collision_data_temperatures</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">synpp_refs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">photoionization_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">yg_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">two_photon_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">prepared</span> <span class="o">=</span> <span class="kc">False</span>
@@ -443,6 +453,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">synpp_refs</span> <span class="o">=</span> <span class="n">synpp_refs</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">photoionization_data</span> <span class="o">=</span> <span class="n">photoionization_data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">yg_data</span> <span class="o">=</span> <span class="n">yg_data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">two_photon_data</span> <span class="o">=</span> <span class="n">two_photon_data</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_related</span><span class="p">()</span>
 
@@ -647,6 +661,9 @@
                 <span class="c1"># Sets all the destination levels to -1 to indicate that they</span>
                 <span class="c1"># are not used in downbranch calculations</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">macro_atom_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;destination_level_idx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">yg_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">yg_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">yg_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">selected_atomic_numbers</span><span class="p">]</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">nlte_data</span> <span class="o">=</span> <span class="n">NLTEData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nlte_species</span><span class="p">)</span></div>
 
