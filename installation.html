@@ -98,10 +98,7 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#installing-tardis-with-anaconda">Installing TARDIS with Anaconda</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#enabling-parallel-execution-with-openmp">Enabling parallel execution with OpenMP</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-tardis-with-anaconda">Installing TARDIS with Anaconda</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installation-troubles-faq">Installation Troubles (FAQ)</a></li>
 </ul>
 </li>
@@ -112,6 +109,7 @@
 <li class="toctree-l1"><a class="reference internal" href="using/components/index.html">Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="using/interaction/index.html">Additional Interactivity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
 </ul>
 <p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
 <ul>
@@ -295,27 +293,6 @@ then install TARDIS, as follows:</p>
 <span class="n">cd</span> <span class="n">tardis</span>
 <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
 </pre></div>
-</div>
-<div class="section" id="enabling-parallel-execution-with-openmp">
-<span id="install-openmp"></span><h3>Enabling parallel execution with OpenMP<a class="headerlink" href="#enabling-parallel-execution-with-openmp" title="Permalink to this headline">¶</a></h3>
-<p>Manually, cloning the repository enables other options such as running the code in parallel (enabling OpenMP).
-In general, we encourage downloading the compilers from <cite>conda</cite> as we then can ensure that they work with TARDIS.
-Within the TARDIS conda environment do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">compilers</span>
-</pre></div>
-</div>
-<p>For macOS:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">llvm</span><span class="o">-</span><span class="n">openmp</span>
-</pre></div>
-</div>
-<p>For Linux:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">openmp</span>
-</pre></div>
-</div>
-<p>To compile TARDIS for parallel execution:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">openmp</span>
-</pre></div>
-</div>
 </div>
 </div>
 <div class="section" id="installation-troubles-faq">
