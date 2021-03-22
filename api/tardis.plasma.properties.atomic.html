@@ -466,14 +466,14 @@ Columns are nu, x_sect, index=(‘atomic_number’,’ion_number’,’level_num
 a given level starts. Needed for calculation
 of recombination rates.</p>
 </dd>
-<dt><strong>nu_i: pandas.Series, dtype float</strong></dt><dd><p>Threshold frequencies for ionization</p>
+<dt><strong>nu_i</strong><span class="classifier">pandas.Series, dtype float</span></dt><dd><p>Threshold frequencies for ionization</p>
 </dd>
-<dt><strong>energy_i: pandas.Series, dtype float</strong></dt><dd><p>Energies of levels with bound-free transitions. Needed to calculate
+<dt><strong>energy_i</strong><span class="classifier">pandas.Series, dtype float</span></dt><dd><p>Energies of levels with bound-free transitions. Needed to calculate
 for example internal transition probabilities in the macro atom scheme.</p>
 </dd>
-<dt><strong>photo_ion_index: pandas.MultiIndex, dtype int</strong></dt><dd><p>Atomic, ion and level numbers for which photoionization data exists.</p>
+<dt><strong>photo_ion_index</strong><span class="classifier">pandas.MultiIndex, dtype int</span></dt><dd><p>Atomic, ion and level numbers for which photoionization data exists.</p>
 </dd>
-<dt><strong>level2continuum_idx: pandas.Series, dtype int</strong></dt><dd><p>Maps a level MultiIndex (atomic_number, ion_number, level_number) to
+<dt><strong>level2continuum_idx</strong><span class="classifier">pandas.Series, dtype int</span></dt><dd><p>Maps a level MultiIndex (atomic_number, ion_number, level_number) to
 the continuum_idx of the corresponding bound-free continuum (which are
 sorted by decreasing frequency).</p>
 </dd>
@@ -521,7 +521,7 @@ columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</p>
 transition probability A(y) of the two photon decay. See Eq. 2 in
 Nussbaumer &amp; Schmutz (1984).</p>
 </div></blockquote>
-<p>two_photon_idx: pandas.DataFrame, dtype int</p>
+<p>two_photon_idx : pandas.DataFrame, dtype int</p>
 </dd></dl>
 
 </dd></dl>
@@ -566,7 +566,7 @@ Y_ij / g_i using the van Regemorter approximation.</p>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>atomic_data</strong><span class="classifier">tardis.io.atom_data.AtomData</span></dt><dd></dd>
 <dt><strong>t_electrons</strong><span class="classifier">numpy.ndarray</span></dt><dd></dd>
-<dt><strong>continuun_interaction_species</strong><span class="classifier">pandas.MultiIndex</span></dt><dd></dd>
+<dt><strong>continuum_interaction_species</strong><span class="classifier">pandas.MultiIndex</span></dt><dd></dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>

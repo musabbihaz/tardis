@@ -322,14 +322,14 @@
 <span class="sd">        Indices where the photoionization data for</span>
 <span class="sd">        a given level starts. Needed for calculation</span>
 <span class="sd">        of recombination rates.</span>
-<span class="sd">    nu_i: pandas.Series, dtype float</span>
+<span class="sd">    nu_i : pandas.Series, dtype float</span>
 <span class="sd">        Threshold frequencies for ionization</span>
-<span class="sd">    energy_i: pandas.Series, dtype float</span>
+<span class="sd">    energy_i : pandas.Series, dtype float</span>
 <span class="sd">        Energies of levels with bound-free transitions. Needed to calculate</span>
 <span class="sd">        for example internal transition probabilities in the macro atom scheme.</span>
-<span class="sd">    photo_ion_index: pandas.MultiIndex, dtype int</span>
+<span class="sd">    photo_ion_index : pandas.MultiIndex, dtype int</span>
 <span class="sd">        Atomic, ion and level numbers for which photoionization data exists.</span>
-<span class="sd">    level2continuum_idx: pandas.Series, dtype int</span>
+<span class="sd">    level2continuum_idx : pandas.Series, dtype int</span>
 <span class="sd">        Maps a level MultiIndex (atomic_number, ion_number, level_number) to</span>
 <span class="sd">        the continuum_idx of the corresponding bound-free continuum (which are</span>
 <span class="sd">        sorted by decreasing frequency).</span>
@@ -410,7 +410,7 @@
 <span class="sd">        alpha, beta, gamma are fit coefficients for the frequency dependent</span>
 <span class="sd">        transition probability A(y) of the two photon decay. See Eq. 2 in</span>
 <span class="sd">        Nussbaumer &amp; Schmutz (1984).</span>
-<span class="sd">    two_photon_idx: pandas.DataFrame, dtype int</span>
+<span class="sd">    two_photon_idx : pandas.DataFrame, dtype int</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TwoPhotonData.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.atomic.html#tardis.plasma.properties.atomic.TwoPhotonData.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_data</span><span class="p">,</span> <span class="n">continuum_interaction_species</span><span class="p">):</span>
@@ -713,7 +713,7 @@
 <span class="sd">        ----------</span>
 <span class="sd">        atomic_data : tardis.io.atom_data.AtomData</span>
 <span class="sd">        t_electrons : numpy.ndarray</span>
-<span class="sd">        continuun_interaction_species : pandas.MultiIndex</span>
+<span class="sd">        continuum_interaction_species : pandas.MultiIndex</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>

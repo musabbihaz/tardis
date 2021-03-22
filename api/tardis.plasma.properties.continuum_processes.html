@@ -321,7 +321,8 @@ coefficient for bound-free heating.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>chi_bf</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd></dd>
+<dt><strong>chi_bf</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>Bound-free opacity corrected for stimulated emission.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -481,7 +482,7 @@ stimulated recombination.</p>
 </dd>
 <dt><strong>C_fb</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The individual free-bound cooling rates of the electron gas.</p>
 </dd>
-<dt><strong>p_fb_deac: pandas.DataFrame, dtype float</strong></dt><dd><p>Probabilities of free-bound cooling in a specific continuum
+<dt><strong>p_fb_deac</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>Probabilities of free-bound cooling in a specific continuum
 (identified by its continuum_idx).</p>
 </dd>
 </dl>
@@ -989,20 +990,20 @@ relative emission probabilities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>y</strong><span class="classifier">np.ndarray, dtype float</span></dt><dd><p>Emission frequency divided by that of the normal line
+<dt><strong>y</strong><span class="classifier">numpy.ndarray, dtype float</span></dt><dd><p>Emission frequency divided by that of the normal line
 transition corresponding to the two photon decay.</p>
 </dd>
-<dt><strong>alpha: float</strong></dt><dd><p>Fit coefficient.</p>
+<dt><strong>alpha</strong><span class="classifier">float</span></dt><dd><p>Fit coefficient.</p>
 </dd>
-<dt><strong>beta: float</strong></dt><dd><p>Fit coefficient.</p>
+<dt><strong>beta</strong><span class="classifier">float</span></dt><dd><p>Fit coefficient.</p>
 </dd>
-<dt><strong>gamma: float</strong></dt><dd><p>Fit coefficient.</p>
+<dt><strong>gamma</strong><span class="classifier">float</span></dt><dd><p>Fit coefficient.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>np.ndarray, dtype float</dt><dd><p>Unnormalized two photon emissivity in the frequency scale.</p>
+<dt>numpy.ndarray, dtype float</dt><dd><p>Unnormalized two photon emissivity in the frequency scale.</p>
 </dd>
 </dl>
 </dd>
