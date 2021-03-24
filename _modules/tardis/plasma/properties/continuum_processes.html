@@ -240,6 +240,8 @@
     <span class="s2">&quot;RawTwoPhotonTransProbs&quot;</span><span class="p">,</span>
     <span class="s2">&quot;TwoPhotonEmissionCDF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;CollIonRateCoeffSeaton&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;CollRecombRateCoeff&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;RawCollIonTransProbs&quot;</span><span class="p">,</span>
 <span class="p">]</span>
 
 
@@ -287,10 +289,10 @@
     <span class="k">return</span> <span class="n">integrated</span>
 
 
-<span class="c1"># It is currently not possible to use scipy.integrate.cumtrapz in numba.</span>
-<span class="c1"># So here is my own implementation.</span>
+<span class="c1"># It is currently not possible to use scipy.integrate.cumulative_trapezoid in</span>
+<span class="c1"># numba. So here is my own implementation.</span>
 <span class="nd">@njit</span><span class="p">(</span><span class="o">**</span><span class="n">njit_dict</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">cumtrapz</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">numba_cumulative_trapezoid</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cumulatively integrate f(x) using the composite trapezoidal rule.</span>
 
@@ -338,11 +340,11 @@
     <span class="n">n_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">block_references</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">integrated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>  <span class="c1"># columns</span>
-        <span class="c1"># TODO: Avoid this loop through vectorization of cumtrapz</span>
+        <span class="c1"># TODO: Avoid this loop through vectorization of cumulative_trapezoid</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">n_rows</span><span class="p">):</span>  <span class="c1"># rows</span>
             <span class="n">start</span> <span class="o">=</span> <span class="n">block_references</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
             <span class="n">stop</span> <span class="o">=</span> <span class="n">block_references</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="n">integrated</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">stop</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cumtrapz</span><span class="p">(</span>
+            <span class="n">integrated</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">stop</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">numba_cumulative_trapezoid</span><span class="p">(</span>
                 <span class="n">f</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span>
             <span class="p">)</span>
     <span class="k">return</span> <span class="n">integrated</span>
@@ -688,16 +690,16 @@
     <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;p^{\textrm</span><span class="si">{recomb}</span><span class="s2">}&quot;</span><span class="p">,)</span>
 
 <div class="viewcode-block" id="RawRecombTransProbs.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.RawRecombTransProbs.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha_sp</span><span class="p">,</span> <span class="n">nu_i</span><span class="p">,</span> <span class="n">energy_i</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">):</span>
-        <span class="n">p_recomb_deac</span> <span class="o">=</span> <span class="n">alpha_sp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">nu_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">H</span>
-        <span class="n">p_recomb_deac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
-            <span class="n">p_recomb_deac</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">transition_type</span><span class="o">=-</span><span class="mi">1</span>
+        <span class="n">p_recomb_deactivation</span> <span class="o">=</span> <span class="n">alpha_sp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">nu_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">H</span>
+        <span class="n">p_recomb_deactivation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+            <span class="n">p_recomb_deactivation</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">transition_type</span><span class="o">=-</span><span class="mi">1</span>
         <span class="p">)</span>
 
         <span class="n">p_recomb_internal</span> <span class="o">=</span> <span class="n">alpha_sp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">energy_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">p_recomb_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
             <span class="n">p_recomb_internal</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">transition_type</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
-        <span class="n">p_recomb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">p_recomb_deac</span><span class="p">,</span> <span class="n">p_recomb_internal</span><span class="p">])</span>
+        <span class="n">p_recomb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">p_recomb_deactivation</span><span class="p">,</span> <span class="n">p_recomb_internal</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">p_recomb</span></div></div>
 
 
@@ -714,8 +716,8 @@
     <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;p_photo_ion&quot;</span><span class="p">,)</span>
     <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;p^{\textrm</span><span class="si">{photo_ion}</span><span class="s2">}&quot;</span><span class="p">,)</span>
 
-<div class="viewcode-block" id="RawPhotoIonTransProbs.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.RawPhotoIonTransProbs.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamma_corr</span><span class="p">,</span> <span class="n">nu_i</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">):</span>
-        <span class="n">p_photo_ion</span> <span class="o">=</span> <span class="n">gamma_corr</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">nu_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">H</span>
+<div class="viewcode-block" id="RawPhotoIonTransProbs.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.RawPhotoIonTransProbs.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gamma_corr</span><span class="p">,</span> <span class="n">energy_i</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">):</span>
+        <span class="n">p_photo_ion</span> <span class="o">=</span> <span class="n">gamma_corr</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">energy_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">p_photo_ion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">p_photo_ion</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">p_photo_ion</span></div></div>
 
@@ -832,11 +834,15 @@
     <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;c_</span><span class="si">{ul}</span><span class="s2">&quot;</span><span class="p">,)</span>
 
 <div class="viewcode-block" id="CollDeexcRateCoeff.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.CollDeexcRateCoeff.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thermal_lte_level_boltzmann_factor</span><span class="p">,</span> <span class="n">coll_exc_coeff</span><span class="p">):</span>
-        <span class="n">ll_index</span> <span class="o">=</span> <span class="n">coll_exc_coeff</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_upper&quot;</span><span class="p">)</span>
-        <span class="n">lu_index</span> <span class="o">=</span> <span class="n">coll_exc_coeff</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">)</span>
+        <span class="n">level_lower_index</span> <span class="o">=</span> <span class="n">coll_exc_coeff</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_upper&quot;</span><span class="p">)</span>
+        <span class="n">level_upper_index</span> <span class="o">=</span> <span class="n">coll_exc_coeff</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_lower&quot;</span><span class="p">)</span>
 
-        <span class="n">n_lower_prop</span> <span class="o">=</span> <span class="n">thermal_lte_level_boltzmann_factor</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ll_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">n_upper_prop</span> <span class="o">=</span> <span class="n">thermal_lte_level_boltzmann_factor</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">lu_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">n_lower_prop</span> <span class="o">=</span> <span class="n">thermal_lte_level_boltzmann_factor</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">level_lower_index</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">n_upper_prop</span> <span class="o">=</span> <span class="n">thermal_lte_level_boltzmann_factor</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+            <span class="n">level_upper_index</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
         <span class="n">coll_deexc_coeff</span> <span class="o">=</span> <span class="n">coll_exc_coeff</span> <span class="o">*</span> <span class="n">n_lower_prop</span> <span class="o">/</span> <span class="n">n_upper_prop</span>
         <span class="k">return</span> <span class="n">coll_deexc_coeff</span></div></div>
@@ -865,19 +871,23 @@
         <span class="n">atomic_data</span><span class="p">,</span>
         <span class="n">level_number_density</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="n">p_deexc_deac</span> <span class="o">=</span> <span class="p">(</span><span class="n">coll_deexc_coeff</span> <span class="o">*</span> <span class="n">electron_densities</span><span class="p">)</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
+        <span class="n">p_deexc_deactivation</span> <span class="o">=</span> <span class="p">(</span><span class="n">coll_deexc_coeff</span> <span class="o">*</span> <span class="n">electron_densities</span><span class="p">)</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
             <span class="n">delta_E_yg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
-        <span class="n">p_deexc_deac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">p_deexc_deac</span><span class="p">,</span> <span class="n">yg_idx</span><span class="p">)</span>
-        <span class="n">p_deexc_deac</span> <span class="o">=</span> <span class="n">p_deexc_deac</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">p_deexc_deactivation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+            <span class="n">p_deexc_deactivation</span><span class="p">,</span> <span class="n">yg_idx</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">p_deexc_deactivation</span> <span class="o">=</span> <span class="n">p_deexc_deactivation</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="n">index_dd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_product</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">p_deexc_deac</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+            <span class="p">[</span><span class="n">p_deexc_deactivation</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
             <span class="n">names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">yg_idx</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;transition_type&quot;</span><span class="p">],</span>
         <span class="p">)</span>
-        <span class="n">p_deexc_deac</span> <span class="o">=</span> <span class="n">p_deexc_deac</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_dd</span><span class="p">)</span>
+        <span class="n">p_deexc_deactivation</span> <span class="o">=</span> <span class="n">p_deexc_deactivation</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_dd</span><span class="p">)</span>
 
-        <span class="n">ll_index</span> <span class="o">=</span> <span class="n">coll_deexc_coeff</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s2">&quot;level_number_upper&quot;</span><span class="p">)</span>
-        <span class="n">energy_lower</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">levels</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ll_index</span><span class="p">]</span>
+        <span class="n">level_lower_index</span> <span class="o">=</span> <span class="n">coll_deexc_coeff</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span>
+            <span class="s2">&quot;level_number_upper&quot;</span>
+        <span class="p">)</span>
+        <span class="n">energy_lower</span> <span class="o">=</span> <span class="n">atomic_data</span><span class="o">.</span><span class="n">levels</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">level_lower_index</span><span class="p">]</span>
         <span class="n">p_deexc_internal</span> <span class="o">=</span> <span class="p">(</span><span class="n">coll_deexc_coeff</span> <span class="o">*</span> <span class="n">electron_densities</span><span class="p">)</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
             <span class="n">energy_lower</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
@@ -894,7 +904,9 @@
         <span class="n">p_exc_cool</span> <span class="o">=</span> <span class="p">(</span><span class="n">coll_exc_coeff</span> <span class="o">*</span> <span class="n">electron_densities</span><span class="p">)</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
             <span class="n">delta_E_yg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
-        <span class="n">p_exc_cool</span> <span class="o">=</span> <span class="n">p_exc_cool</span> <span class="o">*</span> <span class="n">level_number_density</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ll_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">p_exc_cool</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">p_exc_cool</span> <span class="o">*</span> <span class="n">level_number_density</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">level_lower_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">)</span>
         <span class="n">p_exc_cool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">p_exc_cool</span><span class="p">,</span> <span class="n">yg_idx</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="n">p_exc_cool</span> <span class="o">=</span> <span class="n">p_exc_cool</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">&quot;destination_level_idx&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="n">exc_cool_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_product</span><span class="p">(</span>
@@ -903,7 +915,7 @@
         <span class="p">)</span>
         <span class="n">p_exc_cool</span> <span class="o">=</span> <span class="n">p_exc_cool</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">exc_cool_index</span><span class="p">)</span>
         <span class="n">p_coll</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">p_deexc_deac</span><span class="p">,</span> <span class="n">p_deexc_internal</span><span class="p">,</span> <span class="n">p_exc_internal</span><span class="p">,</span> <span class="n">p_exc_cool</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">p_deexc_deactivation</span><span class="p">,</span> <span class="n">p_deexc_internal</span><span class="p">,</span> <span class="n">p_exc_internal</span><span class="p">,</span> <span class="n">p_exc_cool</span><span class="p">]</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">p_coll</span></div></div>
 
@@ -963,7 +975,7 @@
             <span class="n">j_nu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_j_nu</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 
             <span class="n">cdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">nu</span><span class="p">)</span>
-            <span class="n">cdf</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">cumtrapz</span><span class="p">(</span><span class="n">j_nu</span><span class="p">,</span> <span class="n">nu</span><span class="p">)</span>
+            <span class="n">cdf</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">numba_cumulative_trapezoid</span><span class="p">(</span><span class="n">j_nu</span><span class="p">,</span> <span class="n">nu</span><span class="p">)</span>
             <span class="n">cdf</span> <span class="o">/=</span> <span class="n">cdf</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">index_cdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">([</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">bins</span><span class="p">)</span>
             <span class="n">cdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;nu&quot;</span><span class="p">:</span> <span class="n">nu</span><span class="p">,</span> <span class="s2">&quot;cdf&quot;</span><span class="p">:</span> <span class="n">cdf</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">index_cdf</span><span class="p">)</span>
@@ -1007,44 +1019,46 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    C_adiabatic : pandas.DataFrame, dtype float</span>
+<span class="sd">    cool_rate_adiabatic : pandas.DataFrame, dtype float</span>
 <span class="sd">        The adiabatic cooling rate of the electron gas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C_adiabatic&quot;</span><span class="p">,)</span>
-    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C_adiabatic&quot;</span><span class="p">,)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cool_rate_adiabatic&quot;</span><span class="p">,)</span>
+    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cool_rate_adiabatic&quot;</span><span class="p">,)</span>
     <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C_{\textrm</span><span class="si">{adiabatic}</span><span class="s2">}&quot;</span><span class="p">,)</span>
 
 <div class="viewcode-block" id="AdiabaticCoolingRate.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">electron_densities</span><span class="p">,</span> <span class="n">t_electrons</span><span class="p">,</span> <span class="n">time_explosion</span><span class="p">):</span>
-        <span class="n">C_adiabatic</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">cool_rate_adiabatic</span> <span class="o">=</span> <span class="p">(</span>
             <span class="mf">3.0</span> <span class="o">*</span> <span class="n">electron_densities</span> <span class="o">*</span> <span class="n">K_B</span> <span class="o">*</span> <span class="n">t_electrons</span>
         <span class="p">)</span> <span class="o">/</span> <span class="n">time_explosion</span>
 
-        <span class="n">C_adiabatic</span> <span class="o">=</span> <span class="n">cooling_rate_series2dataframe</span><span class="p">(</span>
-            <span class="n">C_adiabatic</span><span class="p">,</span> <span class="n">destination_level_idx</span><span class="o">=</span><span class="s2">&quot;adiabatic&quot;</span>
+        <span class="n">cool_rate_adiabatic</span> <span class="o">=</span> <span class="n">cooling_rate_series2dataframe</span><span class="p">(</span>
+            <span class="n">cool_rate_adiabatic</span><span class="p">,</span> <span class="n">destination_level_idx</span><span class="o">=</span><span class="s2">&quot;adiabatic&quot;</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">C_adiabatic</span></div></div>
+        <span class="k">return</span> <span class="n">cool_rate_adiabatic</span></div></div>
 
 
 <div class="viewcode-block" id="FreeFreeCoolingRate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate">[docs]</a><span class="k">class</span> <span class="nc">FreeFreeCoolingRate</span><span class="p">(</span><span class="n">TransitionProbabilitiesProperty</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    C_ff : pandas.DataFrame, dtype float</span>
+<span class="sd">    cool_rate_ff : pandas.DataFrame, dtype float</span>
 <span class="sd">        The free-free cooling rate of the electron gas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C_ff&quot;</span><span class="p">,)</span>
-    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C_ff&quot;</span><span class="p">,)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cool_rate_ff&quot;</span><span class="p">,)</span>
+    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cool_rate_ff&quot;</span><span class="p">,)</span>
     <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C^{\textrm</span><span class="si">{ff}</span><span class="s2">}&quot;</span><span class="p">,)</span>
 
 <div class="viewcode-block" id="FreeFreeCoolingRate.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ion_number_density</span><span class="p">,</span> <span class="n">electron_densities</span><span class="p">,</span> <span class="n">t_electrons</span><span class="p">):</span>
         <span class="n">ff_cooling_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_ff_cooling_factor</span><span class="p">(</span>
             <span class="n">ion_number_density</span><span class="p">,</span> <span class="n">electron_densities</span>
         <span class="p">)</span>
-        <span class="n">C_ff</span> <span class="o">=</span> <span class="mf">1.426e-27</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">t_electrons</span><span class="p">)</span> <span class="o">*</span> <span class="n">ff_cooling_factor</span>
-        <span class="n">C_ff</span> <span class="o">=</span> <span class="n">cooling_rate_series2dataframe</span><span class="p">(</span><span class="n">C_ff</span><span class="p">,</span> <span class="n">destination_level_idx</span><span class="o">=</span><span class="s2">&quot;ff&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">C_ff</span></div>
+        <span class="n">cool_rate_ff</span> <span class="o">=</span> <span class="mf">1.426e-27</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">t_electrons</span><span class="p">)</span> <span class="o">*</span> <span class="n">ff_cooling_factor</span>
+        <span class="n">cool_rate_ff</span> <span class="o">=</span> <span class="n">cooling_rate_series2dataframe</span><span class="p">(</span>
+            <span class="n">cool_rate_ff</span><span class="p">,</span> <span class="n">destination_level_idx</span><span class="o">=</span><span class="s2">&quot;ff&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">cool_rate_ff</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_calculate_ff_cooling_factor</span><span class="p">(</span><span class="n">ion_number_density</span><span class="p">,</span> <span class="n">electron_densities</span><span class="p">):</span>
@@ -1060,18 +1074,18 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
-<span class="sd">    C_fb_total : pandas.DataFrame, dtype float</span>
+<span class="sd">    cool_rate_fb_total : pandas.DataFrame, dtype float</span>
 <span class="sd">        The total free-bound cooling rate of the electron gas.</span>
-<span class="sd">    C_fb : pandas.DataFrame, dtype float</span>
+<span class="sd">    cool_rate_fb : pandas.DataFrame, dtype float</span>
 <span class="sd">        The individual free-bound cooling rates of the electron gas.</span>
-<span class="sd">    p_fb_deac : pandas.DataFrame, dtype float</span>
+<span class="sd">    p_fb_deactivation: pandas.DataFrame, dtype float</span>
 <span class="sd">        Probabilities of free-bound cooling in a specific continuum</span>
 <span class="sd">        (identified by its continuum_idx).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C_fb_tot&quot;</span><span class="p">,</span> <span class="s2">&quot;C_fb&quot;</span><span class="p">,</span> <span class="s2">&quot;p_fb_deac&quot;</span><span class="p">)</span>
-    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C_fb_tot&quot;</span><span class="p">,)</span>
-    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;C^{</span><span class="se">\\</span><span class="s2">textrm{fb, tot}}&quot;</span><span class="p">,</span> <span class="s2">&quot;C^{</span><span class="se">\\</span><span class="s2">textrm</span><span class="si">{fb}</span><span class="s2">}&quot;</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cool_rate_fb_tot&quot;</span><span class="p">,</span> <span class="s2">&quot;cool_rate_fb&quot;</span><span class="p">,</span> <span class="s2">&quot;p_fb_deactivation&quot;</span><span class="p">)</span>
+    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;cool_rate_fb_tot&quot;</span><span class="p">,)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C^{\textrm{fb, tot}}&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;C^{\textrm</span><span class="si">{fb}</span><span class="s2">}&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="FreeBoundCoolingRate.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1083,17 +1097,19 @@
         <span class="n">next_ion_stage_index</span> <span class="o">=</span> <span class="n">get_ion_multi_index</span><span class="p">(</span><span class="n">c_fb_sp</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
         <span class="n">n_k</span> <span class="o">=</span> <span class="n">ion_number_density</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">next_ion_stage_index</span><span class="p">]</span>
 
-        <span class="n">C_fb</span> <span class="o">=</span> <span class="n">c_fb_sp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_k</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">C_fb_tot</span> <span class="o">=</span> <span class="n">cooling_rate_series2dataframe</span><span class="p">(</span><span class="n">C_fb</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;bf&quot;</span><span class="p">)</span>
-
-        <span class="n">p_fb_deac</span> <span class="o">=</span> <span class="n">C_fb</span> <span class="o">/</span> <span class="n">C_fb_tot</span><span class="o">.</span><span class="n">values</span>
-        <span class="c1"># TODO: this will be needed more often; put it in a function</span>
-        <span class="n">continuum_idx</span> <span class="o">=</span> <span class="n">level2continuum_idx</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">p_fb_deac</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">p_fb_deac</span> <span class="o">=</span> <span class="n">p_fb_deac</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">continuum_idx</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span>
-            <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">cool_rate_fb</span> <span class="o">=</span> <span class="n">c_fb_sp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_k</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">cool_rate_fb_tot</span> <span class="o">=</span> <span class="n">cooling_rate_series2dataframe</span><span class="p">(</span>
+            <span class="n">cool_rate_fb</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="s2">&quot;bf&quot;</span>
         <span class="p">)</span>
-        <span class="n">p_fb_deac</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;continuum_idx&quot;</span>
-        <span class="k">return</span> <span class="n">C_fb_tot</span><span class="p">,</span> <span class="n">C_fb</span><span class="p">,</span> <span class="n">p_fb_deac</span></div></div>
+
+        <span class="n">p_fb_deactivation</span> <span class="o">=</span> <span class="n">cool_rate_fb</span> <span class="o">/</span> <span class="n">cool_rate_fb_tot</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># TODO: this will be needed more often; put it in a function</span>
+        <span class="n">continuum_idx</span> <span class="o">=</span> <span class="n">level2continuum_idx</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">p_fb_deactivation</span><span class="o">.</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">p_fb_deactivation</span> <span class="o">=</span> <span class="n">p_fb_deactivation</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+            <span class="n">continuum_idx</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">p_fb_deactivation</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;continuum_idx&quot;</span>
+        <span class="k">return</span> <span class="n">cool_rate_fb_tot</span><span class="p">,</span> <span class="n">cool_rate_fb</span><span class="p">,</span> <span class="n">p_fb_deactivation</span></div></div>
 
 
 <div class="viewcode-block" id="BoundFreeOpacity"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.BoundFreeOpacity">[docs]</a><span class="k">class</span> <span class="nc">BoundFreeOpacity</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
@@ -1216,6 +1232,112 @@
     <span class="k">def</span> <span class="nf">_calculate_u0s</span><span class="p">(</span><span class="n">nu</span><span class="p">,</span> <span class="n">t_electrons</span><span class="p">):</span>
         <span class="n">u0s</span> <span class="o">=</span> <span class="n">nu</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">/</span> <span class="n">t_electrons</span> <span class="o">*</span> <span class="p">(</span><span class="n">H</span> <span class="o">/</span> <span class="n">K_B</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">u0s</span></div>
+
+
+<div class="viewcode-block" id="CollRecombRateCoeff"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.CollRecombRateCoeff">[docs]</a><span class="k">class</span> <span class="nc">CollRecombRateCoeff</span><span class="p">(</span><span class="n">ProcessingPlasmaProperty</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    coll_recomb_coeff : pandas.DataFrame, dtype float</span>
+<span class="sd">        The rate coefficient for collisional recombination.</span>
+<span class="sd">        Multiply with the electron density squared and the ion number density</span>
+<span class="sd">        to obtain the total rate.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The collisional recombination rate coefficient is calculated from the</span>
+<span class="sd">    collisional ionization rate coefficient based on the requirement of detailed</span>
+<span class="sd">    balance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;coll_recomb_coeff&quot;</span><span class="p">,)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;c_{\kappa\textrm{i,}}&quot;</span><span class="p">,)</span>
+
+<div class="viewcode-block" id="CollRecombRateCoeff.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phi_ik</span><span class="p">,</span> <span class="n">coll_ion_coeff</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">coll_ion_coeff</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">phi_ik</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">coll_ion_coeff</span><span class="o">.</span><span class="n">index</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="RawCollIonTransProbs"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs">[docs]</a><span class="k">class</span> <span class="nc">RawCollIonTransProbs</span><span class="p">(</span><span class="n">TransitionProbabilitiesProperty</span><span class="p">,</span> <span class="n">IndexSetterMixin</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    p_coll_ion : pandas.DataFrame, dtype float</span>
+<span class="sd">        The unnormalized transition probabilities for</span>
+<span class="sd">        collisional ionization.</span>
+<span class="sd">    p_coll_recomb : pandas.DataFrame, dtype float</span>
+<span class="sd">        The unnormalized transition probabilities for</span>
+<span class="sd">        collisional recombination.</span>
+<span class="sd">    cool_rate_coll_ion : pandas.DataFrame, dtype float</span>
+<span class="sd">        The collisional ionization cooling rates of the electron gas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;p_coll_ion&quot;</span><span class="p">,</span> <span class="s2">&quot;p_coll_recomb&quot;</span><span class="p">,</span> <span class="s2">&quot;cool_rate_coll_ion&quot;</span><span class="p">)</span>
+    <span class="n">transition_probabilities_outputs</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;p_coll_ion&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;p_coll_recomb&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;cool_rate_coll_ion&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;p^{\textrm{coll ion}}&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;p^{\textrm{coll recomb}}&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;C^{\textrm</span><span class="si">{ion}</span><span class="s2">}&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="RawCollIonTransProbs.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.continuum_processes.html#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">coll_ion_coeff</span><span class="p">,</span>
+        <span class="n">coll_recomb_coeff</span><span class="p">,</span>
+        <span class="n">nu_i</span><span class="p">,</span>
+        <span class="n">photo_ion_idx</span><span class="p">,</span>
+        <span class="n">electron_densities</span><span class="p">,</span>
+        <span class="n">energy_i</span><span class="p">,</span>
+        <span class="n">level_number_density</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">p_coll_ion</span> <span class="o">=</span> <span class="n">coll_ion_coeff</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">energy_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">p_coll_ion</span> <span class="o">=</span> <span class="n">p_coll_ion</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">p_coll_ion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">p_coll_ion</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">coll_recomb_rate</span> <span class="o">=</span> <span class="n">coll_recomb_coeff</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
+            <span class="n">electron_densities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>  <span class="c1"># The full rate is obtained from this by multiplying by the</span>
+        <span class="c1"># electron density and ion number density.</span>
+        <span class="n">p_recomb_deactivation</span> <span class="o">=</span> <span class="n">coll_recomb_rate</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">nu_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">H</span>
+        <span class="n">p_recomb_deactivation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+            <span class="n">p_recomb_deactivation</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">transition_type</span><span class="o">=-</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="n">p_recomb_deactivation</span> <span class="o">=</span> <span class="n">p_recomb_deactivation</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">index_dd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_product</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">p_recomb_deactivation</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+            <span class="n">names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">photo_ion_idx</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;transition_type&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">p_recomb_deactivation</span> <span class="o">=</span> <span class="n">p_recomb_deactivation</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index_dd</span><span class="p">)</span>
+
+        <span class="n">p_recomb_internal</span> <span class="o">=</span> <span class="n">coll_recomb_rate</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">energy_i</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">p_recomb_internal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+            <span class="n">p_recomb_internal</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">transition_type</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="n">p_coll_recomb</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">p_recomb_deactivation</span><span class="p">,</span> <span class="n">p_recomb_internal</span><span class="p">])</span>
+
+        <span class="n">cool_rate_coll_ion</span> <span class="o">=</span> <span class="p">(</span><span class="n">coll_ion_coeff</span> <span class="o">*</span> <span class="n">electron_densities</span><span class="p">)</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
+            <span class="n">nu_i</span> <span class="o">*</span> <span class="n">H</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="n">level_lower_index</span> <span class="o">=</span> <span class="n">coll_ion_coeff</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">cool_rate_coll_ion</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">cool_rate_coll_ion</span>
+            <span class="o">*</span> <span class="n">level_number_density</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">level_lower_index</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">)</span>
+        <span class="n">cool_rate_coll_ion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span>
+            <span class="n">cool_rate_coll_ion</span><span class="p">,</span> <span class="n">photo_ion_idx</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="n">cool_rate_coll_ion</span> <span class="o">=</span> <span class="n">cool_rate_coll_ion</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+            <span class="n">level</span><span class="o">=</span><span class="s2">&quot;destination_level_idx&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">ion_cool_index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_product</span><span class="p">(</span>
+            <span class="p">[[</span><span class="s2">&quot;k&quot;</span><span class="p">],</span> <span class="n">cool_rate_coll_ion</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
+            <span class="n">names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">photo_ion_idx</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;transition_type&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+        <span class="n">cool_rate_coll_ion</span> <span class="o">=</span> <span class="n">cool_rate_coll_ion</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">ion_cool_index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">p_coll_ion</span><span class="p">,</span> <span class="n">p_coll_recomb</span><span class="p">,</span> <span class="n">cool_rate_coll_ion</span></div></div>
 </pre></div>
 
            </div>

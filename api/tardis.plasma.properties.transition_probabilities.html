@@ -289,7 +289,7 @@
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.latex_name">
-<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('N',</span> <span class="pre">'R',</span> <span class="pre">'B',</span> <span class="pre">'p_\\textrm{deac}')</span></em><a class="headerlink" href="#tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.latex_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('N',</span> <span class="pre">'R',</span> <span class="pre">'B',</span> <span class="pre">'p_\\textrm{deactivation}')</span></em><a class="headerlink" href="#tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.latex_name" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
@@ -307,7 +307,7 @@ Indexed by source_level_idx, destination_level_idx.
 Probability of being absorbed in destination_level_idx when
 starting from source_level_idx.</p>
 </dd>
-<dt><strong>p_deac</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>Redistribution probabilities after deactivation of the Markov-chain
+<dt><strong>p_deactivation</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>Redistribution probabilities after deactivation of the Markov-chain
 macro atom. Indexed by source_level_idx, destination_level_idx.
 Probability of an r-packet being emitted in the transition
 (source_level_idx –&gt; destination_level_idx) after deactivation
@@ -320,7 +320,7 @@ in source_level_idx.</p>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.outputs">
-<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('N',</span> <span class="pre">'R',</span> <span class="pre">'B',</span> <span class="pre">'p_deac')</span></em><a class="headerlink" href="#tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('N',</span> <span class="pre">'R',</span> <span class="pre">'B',</span> <span class="pre">'p_deactivation')</span></em><a class="headerlink" href="#tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>

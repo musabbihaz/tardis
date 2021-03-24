@@ -361,8 +361,8 @@
 <div class="viewcode-block" id="MarkovChainTransProbs"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.transition_probabilities.html#tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs">[docs]</a><span class="k">class</span> <span class="nc">MarkovChainTransProbs</span><span class="p">(</span>
     <span class="n">ProcessingPlasmaProperty</span><span class="p">,</span> <span class="n">SpMatrixSeriesConverterMixin</span>
 <span class="p">):</span>
-    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;p_deac&quot;</span><span class="p">)</span>
-    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;p_\textrm</span><span class="si">{deac}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;p_deactivation&quot;</span><span class="p">)</span>
+    <span class="n">latex_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;p_\textrm</span><span class="si">{deactivation}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -380,7 +380,7 @@
 <span class="sd">        Indexed by source_level_idx, destination_level_idx.</span>
 <span class="sd">        Probability of being absorbed in destination_level_idx when</span>
 <span class="sd">        starting from source_level_idx.</span>
-<span class="sd">    p_deac : pandas.DataFrame, dtype float</span>
+<span class="sd">    p_deactivation : pandas.DataFrame, dtype float</span>
 <span class="sd">        Redistribution probabilities after deactivation of the Markov-chain</span>
 <span class="sd">        macro atom. Indexed by source_level_idx, destination_level_idx.</span>
 <span class="sd">        Probability of an r-packet being emitted in the transition</span>
@@ -391,7 +391,9 @@
 <div class="viewcode-block" id="MarkovChainTransProbs.calculate"><a class="viewcode-back" href="../../../../api/tardis.plasma.properties.transition_probabilities.html#tardis.plasma.properties.transition_probabilities.MarkovChainTransProbs.calculate">[docs]</a>    <span class="k">def</span> <span class="nf">calculate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p_combined</span><span class="p">,</span> <span class="n">idx2mkv_idx</span><span class="p">):</span>
         <span class="n">p</span> <span class="o">=</span> <span class="n">p_combined</span>
         <span class="n">p_internal</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;transition_type&quot;</span><span class="p">)</span>
-        <span class="n">p_deac</span> <span class="o">=</span> <span class="n">normalize_trans_probs</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;transition_type&quot;</span><span class="p">))</span>
+        <span class="n">p_deactivation</span> <span class="o">=</span> <span class="n">normalize_trans_probs</span><span class="p">(</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">xs</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="s2">&quot;transition_type&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
 
         <span class="n">N</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">p_internal</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">p_internal</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -414,7 +416,7 @@
             <span class="n">R</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">R1</span>
         <span class="n">N</span> <span class="o">=</span> <span class="n">N</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">B</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">N</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">p_deac</span></div></div>
+        <span class="k">return</span> <span class="n">N</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">p_deactivation</span></div></div>
 </pre></div>
 
            </div>

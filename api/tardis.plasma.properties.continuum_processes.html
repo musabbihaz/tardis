@@ -262,7 +262,7 @@
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>C_adiabatic</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The adiabatic cooling rate of the electron gas.</p>
+<dt><strong>cool_rate_adiabatic</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The adiabatic cooling rate of the electron gas.</p>
 </dd>
 </dl>
 </dd>
@@ -279,12 +279,12 @@
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.outputs">
-<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('C_adiabatic',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('cool_rate_adiabatic',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.transition_probabilities_outputs">
-<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('C_adiabatic',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('cool_rate_adiabatic',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.AdiabaticCoolingRate.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -442,6 +442,41 @@ level number density to obtain the total rate.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt id="tardis.plasma.properties.continuum_processes.CollRecombRateCoeff">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.continuum_processes.</span></code><code class="sig-name descname"><span class="pre">CollRecombRateCoeff</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#CollRecombRateCoeff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.CollRecombRateCoeff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
+<p class="rubric">Notes</p>
+<p>The collisional recombination rate coefficient is calculated from the
+collisional ionization rate coefficient based on the requirement of detailed
+balance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>coll_recomb_coeff</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The rate coefficient for collisional recombination.
+Multiply with the electron density squared and the ion number density
+to obtain the total rate.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi_ik</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coll_ion_coeff</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#CollRecombRateCoeff.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.latex_name">
+<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('c_{\\kappa\\textrm{i,}}',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.latex_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('coll_recomb_coeff',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.CollRecombRateCoeff.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="tardis.plasma.properties.continuum_processes.CorrPhotoIonRateCoeff">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.continuum_processes.</span></code><code class="sig-name descname"><span class="pre">CorrPhotoIonRateCoeff</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#CorrPhotoIonRateCoeff"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.CorrPhotoIonRateCoeff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="tardis.plasma.properties.base.html#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
@@ -478,11 +513,11 @@ stimulated recombination.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>C_fb_total</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The total free-bound cooling rate of the electron gas.</p>
+<dt><strong>cool_rate_fb_total</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The total free-bound cooling rate of the electron gas.</p>
 </dd>
-<dt><strong>C_fb</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The individual free-bound cooling rates of the electron gas.</p>
+<dt><strong>cool_rate_fb</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The individual free-bound cooling rates of the electron gas.</p>
 </dd>
-<dt><strong>p_fb_deac</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>Probabilities of free-bound cooling in a specific continuum
+<dt><strong>p_fb_deactivation: pandas.DataFrame, dtype float</strong></dt><dd><p>Probabilities of free-bound cooling in a specific continuum
 (identified by its continuum_idx).</p>
 </dd>
 </dl>
@@ -500,12 +535,12 @@ stimulated recombination.</p>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.outputs">
-<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('C_fb_tot',</span> <span class="pre">'C_fb',</span> <span class="pre">'p_fb_deac')</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('cool_rate_fb_tot',</span> <span class="pre">'cool_rate_fb',</span> <span class="pre">'p_fb_deactivation')</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.transition_probabilities_outputs">
-<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('C_fb_tot',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('cool_rate_fb_tot',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeBoundCoolingRate.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -550,7 +585,7 @@ We use the same CDF for free-bound emission from k- and i-packets
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>C_ff</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The free-free cooling rate of the electron gas.</p>
+<dt><strong>cool_rate_ff</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The free-free cooling rate of the electron gas.</p>
 </dd>
 </dl>
 </dd>
@@ -567,12 +602,12 @@ We use the same CDF for free-bound emission from k- and i-packets
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.outputs">
-<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('C_ff',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('cool_rate_ff',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.transition_probabilities_outputs">
-<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('C_ff',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('cool_rate_ff',)</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.FreeFreeCoolingRate.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -709,6 +744,46 @@ ionization.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt id="tardis.plasma.properties.continuum_processes.RawCollIonTransProbs">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.continuum_processes.</span></code><code class="sig-name descname"><span class="pre">RawCollIonTransProbs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#RawCollIonTransProbs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.TransitionProbabilitiesProperty</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.continuum_processes.IndexSetterMixin</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>p_coll_ion</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The unnormalized transition probabilities for
+collisional ionization.</p>
+</dd>
+<dt><strong>p_coll_recomb</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The unnormalized transition probabilities for
+collisional recombination.</p>
+</dd>
+<dt><strong>cool_rate_coll_ion</strong><span class="classifier">pandas.DataFrame, dtype float</span></dt><dd><p>The collisional ionization cooling rates of the electron gas.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.calculate">
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coll_ion_coeff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coll_recomb_coeff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo_ion_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electron_densities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_number_density</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#RawCollIonTransProbs.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.calculate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.latex_name">
+<code class="sig-name descname"><span class="pre">latex_name</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('p^{\\textrm{coll</span> <span class="pre">ion}}',</span> <span class="pre">'p^{\\textrm{coll</span> <span class="pre">recomb}}',</span> <span class="pre">'C^{\\textrm{ion}}')</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.latex_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.outputs">
+<code class="sig-name descname"><span class="pre">outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('p_coll_ion',</span> <span class="pre">'p_coll_recomb',</span> <span class="pre">'cool_rate_coll_ion')</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.transition_probabilities_outputs">
+<code class="sig-name descname"><span class="pre">transition_probabilities_outputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">('p_coll_ion',</span> <span class="pre">'p_coll_recomb',</span> <span class="pre">'cool_rate_coll_ion')</span></em><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawCollIonTransProbs.transition_probabilities_outputs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="tardis.plasma.properties.continuum_processes.RawCollisionTransProbs">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.continuum_processes.</span></code><code class="sig-name descname"><span class="pre">RawCollisionTransProbs</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#RawCollisionTransProbs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawCollisionTransProbs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.TransitionProbabilitiesProperty</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.continuum_processes.IndexSetterMixin</span></code></p>
@@ -758,7 +833,7 @@ radiative ionization.</p>
 </dl>
 <dl class="py method">
 <dt id="tardis.plasma.properties.continuum_processes.RawPhotoIonTransProbs.calculate">
-<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_corr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo_ion_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#RawPhotoIonTransProbs.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawPhotoIonTransProbs.calculate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gamma_corr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energy_i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photo_ion_idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/continuum_processes.html#RawPhotoIonTransProbs.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.continuum_processes.RawPhotoIonTransProbs.calculate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
