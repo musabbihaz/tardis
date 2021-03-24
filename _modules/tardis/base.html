@@ -203,7 +203,11 @@
 
 
 <div class="viewcode-block" id="run_tardis"><a class="viewcode-back" href="../../api/tardis.base.html#tardis.base.run_tardis">[docs]</a><span class="k">def</span> <span class="nf">run_tardis</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">,</span> <span class="n">atom_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">packet_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">simulation_callbacks</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">config</span><span class="p">,</span>
+    <span class="n">atom_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">packet_source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">simulation_callbacks</span><span class="o">=</span><span class="p">[],</span>
+    <span class="n">virtual_packet_logging</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function is one of the core functions to run TARDIS from a given</span>
@@ -220,6 +224,13 @@
 <span class="sd">        the atomic data. Atomic data to use for this TARDIS simulation. If set to None, the</span>
 <span class="sd">        atomic data will be loaded according to keywords set in the configuration</span>
 <span class="sd">        [default=None]</span>
+<span class="sd">    virtual_packet_logging : bool</span>
+<span class="sd">        option to enable virtual packet logging</span>
+<span class="sd">        [default=False]</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Simulation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">tardis.io.config_reader</span> <span class="kn">import</span> <span class="n">Configuration</span>
     <span class="kn">from</span> <span class="nn">tardis.io.atom_data.base</span> <span class="kn">import</span> <span class="n">AtomData</span>
@@ -237,7 +248,10 @@
         <span class="n">tardis_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">from_config_dict</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
     <span class="n">simulation</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span>
-        <span class="n">tardis_config</span><span class="p">,</span> <span class="n">packet_source</span><span class="o">=</span><span class="n">packet_source</span><span class="p">,</span> <span class="n">atom_data</span><span class="o">=</span><span class="n">atom_data</span>
+        <span class="n">tardis_config</span><span class="p">,</span>
+        <span class="n">packet_source</span><span class="o">=</span><span class="n">packet_source</span><span class="p">,</span>
+        <span class="n">atom_data</span><span class="o">=</span><span class="n">atom_data</span><span class="p">,</span>
+        <span class="n">virtual_packet_logging</span><span class="o">=</span><span class="n">virtual_packet_logging</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">simulation_callbacks</span><span class="p">:</span>
         <span class="n">simulation</span><span class="o">.</span><span class="n">add_callback</span><span class="p">(</span><span class="o">*</span><span class="n">cb</span><span class="p">)</span>
