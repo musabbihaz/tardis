@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Parallel execution with Numba and OpenMP &mdash; TARDIS v3.0.dev1</title>
@@ -101,7 +100,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Using TARDIS</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../components/index.html">Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../visualization/index.html">Visualization Tools &amp; Widgets</a></li>
@@ -112,33 +111,33 @@
 </ul>
 </li>
 </ul>
-<p><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../physics/plasma/index.html">Plasma</a></li>
 </ul>
-<p><span class="caption-text">Research with TARDIS</span></p>
+<p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../research/index.html">Overview</a></li>
 </ul>
-<p><span class="caption-text">Team &amp; Credits</span></p>
+<p class="caption"><span class="caption-text">Team &amp; Credits</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../team_and_governance/index.html">Team and Governance</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../credits.html">Credits &amp; Publication Policies</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CODE_OF_CONDUCT.html">Code of Conduct</a></li>
 </ul>
-<p><span class="caption-text">Contributing to TARDIS</span></p>
+<p class="caption"><span class="caption-text">Contributing to TARDIS</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../CONTRIBUTING.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../development/index.html">Developer Workflow</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../CHANGELOG.html">Change Log</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../roadmap.html">Development Roadmap</a></li>
 </ul>
-<p><span class="caption-text">API</span></p>
+<p class="caption"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">tardis</a></li>
 </ul>
-<p><span class="caption-text">References</span></p>
+<p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">TARDIS Papers and useful References</a></li>
 </ul>
@@ -232,9 +231,9 @@
     text-align: unset;
 }
 </style>
-<section id="parallel-execution-with-numba-and-openmp">
+<div class="section" id="parallel-execution-with-numba-and-openmp">
 <span id="parallelisation"></span><h1>Parallel execution with Numba and OpenMP<a class="headerlink" href="#parallel-execution-with-numba-and-openmp" title="Permalink to this headline">¶</a></h1>
-<section id="enabling-parallel-execution-with-openmp">
+<div class="section" id="enabling-parallel-execution-with-openmp">
 <h2>Enabling parallel execution with OpenMP<a class="headerlink" href="#enabling-parallel-execution-with-openmp" title="Permalink to this headline">¶</a></h2>
 <p>Manually, cloning the repository enables other options such as running the code in parallel (enabling OpenMP).
 In general, we encourage downloading the compilers from <cite>conda</cite> as we then can ensure that they work with TARDIS.
@@ -254,15 +253,15 @@ Within the TARDIS conda environment do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">openmp</span>
 </pre></div>
 </div>
-</section>
-<section id="numba-usage-guide">
+</div>
+<div class="section" id="numba-usage-guide">
 <h2>Numba Usage Guide<a class="headerlink" href="#numba-usage-guide" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">montecarlo</span></code> section of the Configuration file accepts the parameter <code class="docutils literal notranslate"><span class="pre">nthreads</span></code> which sets the number of
 threads to be used for parallelisation. Setting the value of the parameter between 1 and the environment variable
 <code class="docutils literal notranslate"><span class="pre">NUMBA_NUM_THREADS</span></code> (which is, by default, the number of CPU cores on your system) will automatically invoke Numba
 to parallelise the code. (See <a class="reference internal" href="../components/configuration/configuration.html#config-file"><span class="std std-ref">Configuration File</span></a> section).</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
