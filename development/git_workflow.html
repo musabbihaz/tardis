@@ -298,7 +298,7 @@ Anaconda for this purpose; refer to our <a class="reference internal" href="../i
 <span id="forking"></span><h2>Creating a fork<a class="headerlink" href="#creating-a-fork" title="Permalink to this headline">¶</a></h2>
 <p>You need to do this only once for each package you want to contribute to. The
 instructions here are very similar to the instructions at
-<a class="reference external" href="http://help.github.com/fork-a-repo/">http://help.github.com/fork-a-repo/</a> — please see that page for more
+<a class="reference external" href="https://help.github.com/fork-a-repo/">https://help.github.com/fork-a-repo/</a> — please see that page for more
 details. We’re repeating some of it here just to give the specifics for the
 <a class="reference external" href="http://tardis.readthedocs.org">TARDIS</a> project, and to suggest some default names.</p>
 </div>
@@ -306,7 +306,7 @@ details. We’re repeating some of it here just to give the specifics for the
 <h2>Set up and configure a GitHub account<a class="headerlink" href="#set-up-and-configure-a-github-account" title="Permalink to this headline">¶</a></h2>
 <p>If you don’t have a GitHub account, go to the <a class="reference external" href="http://github.com">GitHub</a> page and make one.</p>
 <p>You then need to configure your account to allow write access — see
-the <a class="reference external" href="http://help.github.com/articles/generating-ssh-keys">Generating SSH keys</a> help on <a class="reference external" href="http://help.github.com">GitHub Help</a>.</p>
+the <a class="reference external" href="https://help.github.com/articles/generating-ssh-keys">Generating SSH keys</a> help on <a class="reference external" href="http://help.github.com">GitHub Help</a>.</p>
 </div>
 <div class="section" id="create-your-own-fork-of-a-repository">
 <h2>Create your own fork of a repository<a class="headerlink" href="#create-your-own-fork-of-a-repository" title="Permalink to this headline">¶</a></h2>
@@ -430,8 +430,8 @@ your contribution behaves correctly (see <a class="reference external" href="htt
 <li><p>As the code is converging to a final state, ensure your
 documentation follows the guidelines (see <a class="reference external" href="https://docs.astropy.org/en/stable/development/docguide.html#documentation-guidelines" title="(in Astropy v4.2)"><span>Writing Documentation</span></a>).</p></li>
 <li><p>Once your code is ready to be accepted, please add an entry to the changelog
-(see <a class="reference external" href="https://docs.astropy.org/en/stable/development/workflow/maintainer_workflow.html#changelog-format" title="(in Astropy v4.2)"><span>Updating and Maintaining the Changelog</span></a>).  If you’re sure where to put this, please at
-least suggest a brief (one or two sentence) description of your change so
+(see <a class="reference external" href="https://docs.astropy.org/en/stable/development/workflow/maintainer_workflow.html#changelog-format" title="(in Astropy v4.2)"><span>Updating and Maintaining the Changelog</span></a>).  If you’re not sure where to put this, please
+at least suggest a brief (one or two sentence) description of your change so
 that another developer can add it to the changelog.</p></li>
 </ul>
 <p>This way of working helps to keep work well-organized, with readable history.
@@ -469,7 +469,7 @@ or <code class="docutils literal notranslate"><span class="pre">buxfix-for-issue
 <span class="n">git</span> <span class="n">fetch</span> <span class="n">upstream</span>
 
 <span class="c1"># Make new feature branch starting at current trunk</span>
-<span class="n">git</span> <span class="n">checkout</span> <span class="n">upstream</span><span class="o">/</span><span class="n">master</span> <span class="c1"># checking out the newest master versio</span>
+<span class="n">git</span> <span class="n">checkout</span> <span class="n">upstream</span><span class="o">/</span><span class="n">master</span> <span class="c1"># checking out the newest master version</span>
 <span class="n">git</span> <span class="n">checkout</span> <span class="o">-</span><span class="n">b</span> <span class="n">my</span><span class="o">-</span><span class="n">new</span><span class="o">-</span><span class="n">feature</span>
 </pre></div>
 </div>
@@ -505,7 +505,7 @@ push up to your own repo on GitHub with:</p>
 <ol class="arabic">
 <li><p>Make some changes</p></li>
 <li><p>Once you are a bit further along, test your changes do not lead to
-regressions, and add new tests (see the Astropy <a class="reference external" href="https://numpy.org/doc/stable/reference/testing.html#testing-guidelines" title="(in NumPy v1.20)"><span>Testing Guidelines</span></a> we follow).:</p>
+regressions, and add new tests (see the Astropy <a class="reference external" href="https://numpy.org/doc/stable/reference/testing.html#testing-guidelines" title="(in NumPy v1.20)"><span>Testing Guidelines</span></a> we follow):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">test</span>
 </pre></div>
 </div>
@@ -520,7 +520,7 @@ any warnings.  (For more details, see the Astropy
 </li>
 <li><p>See which files have changed with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> (see <a class="reference external" href="http://schacon.github.com/git/git-status.html">git status</a>).
 You’ll see a listing like this one:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># On branch ny-new-feature</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># On branch my-new-feature</span>
 <span class="c1"># Changed but not updated:</span>
 <span class="c1">#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)</span>
 <span class="c1">#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)</span>
@@ -562,7 +562,7 @@ commit</a> manual page might also be useful.</p>
 <p>When you are ready to ask for someone to review your code and consider a merge:</p>
 <ol class="arabic">
 <li><p>Go to the URL of your forked repo, e.g.,
-<code class="docutils literal notranslate"><span class="pre">http://github.com/your-user-name/tardis</span></code>.</p></li>
+<code class="docutils literal notranslate"><span class="pre">https://github.com/your-user-name/tardis</span></code>.</p></li>
 <li><p>Use the ‘Switch Branches’ dropdown menu near the top left of the page to
 select the branch with your changes:</p>
 <img alt="../_images/branch_dropdown.png" src="../_images/branch_dropdown.png" />
@@ -687,8 +687,8 @@ straightforward to recover from such mistakes.</p>
 </div>
 <div class="section" id="reviewing-and-helping-others-with-pull-requests">
 <span id="reviewing-and-helping-with-pr"></span><h2>Reviewing and helping others with Pull Requests<a class="headerlink" href="#reviewing-and-helping-others-with-pull-requests" title="Permalink to this headline">¶</a></h2>
-<p>Github offers an extensive array of tools to comment on Pull Requests (line-based, normal forum-like discussion, etc.). This system is described here in
-detail <a class="reference external" href="http://help.github.com/articles/using-pull-requests">http://help.github.com/articles/using-pull-requests</a>.</p>
+<p>GitHub offers an extensive array of tools to comment on Pull Requests (line-based, normal forum-like discussion, etc.). This system is described here in
+detail <a class="reference external" href="https://help.github.com/articles/using-pull-requests">https://help.github.com/articles/using-pull-requests</a>.</p>
 <p>However, it is sometimes easier to just add a few changes yourself to quickly
 show what you would suggest to be changed. So it is possible to make a
 Pull Request on a Pull Request.</p>
@@ -733,7 +733,7 @@ upstream:</p>
 <span class="n">HEAD</span> <span class="ow">is</span> <span class="n">now</span> <span class="n">at</span> <span class="n">b1f32ba</span><span class="o">...</span> <span class="n">added</span> <span class="n">the</span> <span class="n">git</span> <span class="n">workflow</span> <span class="n">still</span> <span class="n">WIP</span>
 </pre></div>
 </div>
-<p>Finally, you can make a new branch <cite>git checkout -b helping-with-PR116</cite> and work
+<p>Finally, you can make a new branch <cite>git checkout -b helping-with-PR116</cite> and
 implement your work.</p>
 <p>After committing your changes you push your change to your repository
 <cite>git push origin helping-with-PR116</cite>.</p>
