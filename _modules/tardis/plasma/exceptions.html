@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.plasma.exceptions &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.plasma.exceptions &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -207,10 +207,8 @@
 <div class="viewcode-block" id="IncompleteAtomicData"><a class="viewcode-back" href="../../../api/tardis.plasma.exceptions.html#tardis.plasma.exceptions.IncompleteAtomicData">[docs]</a><span class="k">class</span> <span class="nc">IncompleteAtomicData</span><span class="p">(</span><span class="n">PlasmaException</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">atomic_data_name</span><span class="p">):</span>
         <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s2">&quot;The current plasma calculation requires </span><span class="si">{0}</span><span class="s2">, &quot;</span>
-            <span class="s2">&quot;which is not provided by the given atomic data&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">atomic_data_name</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;The current plasma calculation requires </span><span class="si">{</span><span class="n">atomic_data_name</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;which is not provided by the given atomic data&quot;</span>
         <span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">PlasmaException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 

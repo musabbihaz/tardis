@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.analysis &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.analysis &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -502,9 +502,8 @@
             <span class="n">iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="n">iterations</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
-            <span class="n">current_iter</span> <span class="o">=</span> <span class="s2">&quot;iter</span><span class="si">{:03d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
-            <span class="n">ws_dict</span><span class="p">[</span><span class="n">current_iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf_store</span><span class="p">[</span><span class="s2">&quot;model</span><span class="si">{:03d}</span><span class="s2">/ws&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)]</span>
-
+            <span class="n">current_iter</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;iter</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">ws_dict</span><span class="p">[</span><span class="n">current_iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf_store</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;model</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">/ws&quot;</span><span class="p">]</span>
         <span class="n">hdf_store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ws_dict</span><span class="p">)</span></div>
@@ -524,7 +523,7 @@
         <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
             <span class="n">current_iter</span> <span class="o">=</span> <span class="s2">&quot;iter</span><span class="si">%03d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">iter</span>
             <span class="n">level_populations_dict</span><span class="p">[</span><span class="n">current_iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf_store</span><span class="p">[</span>
-                <span class="s2">&quot;model</span><span class="si">{:03d}</span><span class="s2">/level_populations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;model</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">/level_populations&quot;</span>
             <span class="p">]</span>
 
         <span class="n">hdf_store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -546,10 +545,8 @@
             <span class="n">iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="n">iterations</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
-            <span class="n">current_iter</span> <span class="o">=</span> <span class="s2">&quot;iter</span><span class="si">{:03d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
-            <span class="n">jblues_dict</span><span class="p">[</span><span class="n">current_iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf_store</span><span class="p">[</span>
-                <span class="s2">&quot;model</span><span class="si">{:03d}</span><span class="s2">/j_blues&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
-            <span class="p">]</span>
+            <span class="n">current_iter</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;iter</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">jblues_dict</span><span class="p">[</span><span class="n">current_iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf_store</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;model</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">/j_blues&quot;</span><span class="p">]</span>
 
         <span class="n">hdf_store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">is_scalar</span><span class="p">:</span>
@@ -571,9 +568,9 @@
             <span class="n">iterations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">[</span><span class="n">iterations</span><span class="p">]</span>
 
         <span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="n">iterations</span><span class="p">:</span>
-            <span class="n">current_iter</span> <span class="o">=</span> <span class="s2">&quot;iter</span><span class="si">{:03d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+            <span class="n">current_iter</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;iter</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">ion_populations_dict</span><span class="p">[</span><span class="n">current_iter</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdf_store</span><span class="p">[</span>
-                <span class="s2">&quot;model</span><span class="si">{:03d}</span><span class="s2">/ion_populations&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">iter</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;model</span><span class="si">{</span><span class="nb">iter</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">/ion_populations&quot;</span>
             <span class="p">]</span>
 
         <span class="n">hdf_store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>

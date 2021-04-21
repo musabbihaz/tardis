@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.model.density &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.model.density &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -289,8 +289,8 @@
                                                           <span class="n">d_conf</span><span class="o">.</span><span class="n">rho_0</span><span class="p">)</span>
                 <span class="n">time_0</span> <span class="o">=</span> <span class="n">d_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;time_0&#39;</span><span class="p">,</span> <span class="n">time_explosion</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unrecognized density type &quot;</span>
-                                 <span class="s2">&quot;&#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d_conf</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized density type &quot;</span>
+                                 <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">d_conf</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">density_0</span><span class="p">,</span> <span class="n">time_0</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="HomologousDensity.from_config"><a class="viewcode-back" href="../../../api/tardis.model.density.html#tardis.model.density.HomologousDensity.from_config">[docs]</a>    <span class="nd">@classmethod</span>
@@ -336,8 +336,8 @@
                                                       <span class="n">d_conf</span><span class="o">.</span><span class="n">rho_0</span><span class="p">)</span>
             <span class="n">time_0</span> <span class="o">=</span> <span class="n">d_conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;time_0&#39;</span><span class="p">,</span> <span class="n">time_explosion</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unrecognized density type &quot;</span>
-                             <span class="s2">&quot;&#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d_conf</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unrecognized density type &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">d_conf</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">density_0</span><span class="p">,</span> <span class="n">time_0</span><span class="p">)</span></div></div>
 
 

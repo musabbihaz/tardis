@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.plasma.properties.nlte &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.plasma.properties.nlte &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -394,7 +394,7 @@
         <span class="c1"># Outputting data required by SH module</span>
         <span class="k">for</span> <span class="n">zone</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/shellconditions_</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/shellconditions_</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
                 <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ion_number_density</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">zone</span><span class="p">])</span>
                 <span class="n">output_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">[</span><span class="n">zone</span><span class="p">])</span>
@@ -408,7 +408,7 @@
 
         <span class="k">for</span> <span class="n">zone</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/abundances_</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/abundances_</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">31</span><span class="p">):</span>
                     <span class="k">try</span><span class="p">:</span>
@@ -423,7 +423,7 @@
             <span class="n">helium_lines</span> <span class="o">=</span> <span class="n">helium_lines</span><span class="p">[</span><span class="n">helium_lines</span><span class="p">[</span><span class="s2">&quot;ion_number&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">zone</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/discradfield_</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/discradfield_</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">output_file</span><span class="p">:</span>
                 <span class="n">j_blues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">j_blues</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">lines</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
                 <span class="n">helium_j_blues</span> <span class="o">=</span> <span class="n">j_blues</span><span class="p">[</span><span class="n">zone</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">helium_lines</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
@@ -437,36 +437,36 @@
         <span class="c1"># Running numerical simulations</span>
         <span class="k">for</span> <span class="n">zone</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/abundances</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/abundances</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;He_NLTE_Files/abundances_current.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/shellconditions</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/shellconditions</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;He_NLTE_Files/shellconditions_current.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/discradfield</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/discradfield</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;He_NLTE_Files/discradfield_current.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;nlte-solver-module/bin/nlte_solvertest &gt;/dev/null&quot;</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
                 <span class="s2">&quot;He_NLTE_Files/abundances_current.txt&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;He_NLTE_Files/abundances</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/abundances</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
                 <span class="s2">&quot;He_NLTE_Files/shellconditions_current.txt&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;He_NLTE_Files/shellconditions</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/shellconditions</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
                 <span class="s2">&quot;He_NLTE_Files/discradfield_current.txt&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;He_NLTE_Files/discradfield</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/discradfield</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;debug_occs.dat&quot;</span><span class="p">,</span> <span class="s2">&quot;He_NLTE_Files/occs</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">))</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s2">&quot;debug_occs.dat&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/occs</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">)</span>
         <span class="c1"># Reading in populations from files</span>
         <span class="n">helium_population</span> <span class="o">=</span> <span class="n">level_boltzmann_factor</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">zone</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">electron_densities</span><span class="p">):</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span>
-                <span class="s2">&quot;He_NLTE_Files/discradfield</span><span class="si">{}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zone</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;He_NLTE_Files/discradfield</span><span class="si">{</span><span class="n">zone</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span>
             <span class="p">)</span> <span class="k">as</span> <span class="n">read_file</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">35</span><span class="p">):</span>
                     <span class="n">level_population</span> <span class="o">=</span> <span class="n">read_file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>

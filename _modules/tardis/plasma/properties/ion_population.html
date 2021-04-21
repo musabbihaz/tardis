@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.plasma.properties.ion_population &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.plasma.properties.ion_population &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -375,13 +375,9 @@
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">zeta</span><span class="p">)):</span>
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                <span class="s2">&quot;t_rads outside of zeta factor interpolation&quot;</span>
-                <span class="s2">&quot; zeta_min=</span><span class="si">{0:.2f}</span><span class="s2"> zeta_max=</span><span class="si">{1:.2f}</span><span class="s2"> &quot;</span>
-                <span class="s2">&quot;- replacing with 1s&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">zeta_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span>
-                    <span class="n">zeta_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
-                    <span class="n">t_rad</span><span class="p">,</span>
-                <span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;t_rads outside of zeta factor interpolation&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot; zeta_min=</span><span class="si">{</span><span class="n">zeta_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> zeta_max=</span><span class="si">{</span><span class="n">zeta_data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;- replacing with </span><span class="si">{</span><span class="n">t_rad</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
             <span class="n">zeta</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">zeta</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">1.0</span>
 
@@ -568,10 +564,8 @@
                 <span class="n">n_electron_iterations</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">n_electron_iterations</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                        <span class="s2">&quot;n_electron iterations above 100 (</span><span class="si">{0}</span><span class="s2">) -&quot;</span>
-                        <span class="s2">&quot; something is probably wrong&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                            <span class="n">n_electron_iterations</span>
-                        <span class="p">)</span>
+                        <span class="sa">f</span><span class="s2">&quot;n_electron iterations above 100 (</span><span class="si">{</span><span class="n">n_electron_iterations</span><span class="si">}</span><span class="s2">) -&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot; something is probably wrong&quot;</span>
                     <span class="p">)</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_n_electron</span> <span class="o">-</span> <span class="n">n_electron</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_electron</span>
@@ -691,10 +685,8 @@
                 <span class="n">n_electron_iterations</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">n_electron_iterations</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-                        <span class="s2">&quot;n_electron iterations above 100 (</span><span class="si">{0}</span><span class="s2">) -&quot;</span>
-                        <span class="s2">&quot; something is probably wrong&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                            <span class="n">n_electron_iterations</span>
-                        <span class="p">)</span>
+                        <span class="sa">f</span><span class="s2">&quot;n_electron iterations above 100 (</span><span class="si">{</span><span class="n">n_electron_iterations</span><span class="si">}</span><span class="s2">) -&quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot; something is probably wrong&quot;</span>
                     <span class="p">)</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
                     <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_n_electron</span> <span class="o">-</span> <span class="n">n_electron</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_electron</span>

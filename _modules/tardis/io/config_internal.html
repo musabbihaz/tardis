@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.io.config_internal &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.io.config_internal &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -221,9 +221,7 @@
     <span class="n">config_fpath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_config_dir</span><span class="p">(),</span> <span class="s2">&quot;tardis_internal_config.yml&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">config_fpath</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-            <span class="s2">&quot;Configuration File </span><span class="si">{0}</span><span class="s2"> does not exist - creating new one from default&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">config_fpath</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;Configuration File </span><span class="si">{</span><span class="n">config_fpath</span><span class="si">}</span><span class="s2"> does not exist - creating new one from default&quot;</span>
         <span class="p">)</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_PATH</span><span class="p">,</span> <span class="n">config_fpath</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_fpath</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_fh</span><span class="p">:</span>
@@ -239,15 +237,11 @@
             <span class="n">get_config_dir</span><span class="p">(),</span> <span class="s2">&quot;tardis_internal_config.yml&quot;</span>
         <span class="p">)</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span>
-            <span class="s2">&quot;</span><span class="se">\n</span><span class="si">{line_stars}</span><span class="se">\n\n</span><span class="s2">TARDIS will download different kinds of data (e.g. atomic) to its data directory </span><span class="si">{default_data_dir}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;TARDIS DATA DIRECTORY not specified in </span><span class="si">{config_file}</span><span class="s2">:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;ASSUMING DEFAULT DATA DIRECTORY </span><span class="si">{default_data_dir}</span><span class="se">\n</span><span class="s2"> &quot;</span>
-            <span class="s2">&quot;YOU CAN CHANGE THIS AT ANY TIME IN </span><span class="si">{config_file}</span><span class="s2"> </span><span class="se">\n\n</span><span class="s2">&quot;</span>
-            <span class="s2">&quot;</span><span class="si">{line_stars}</span><span class="s2"> </span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">line_stars</span><span class="o">=</span><span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">,</span>
-                <span class="n">config_file</span><span class="o">=</span><span class="n">config_fpath</span><span class="p">,</span>
-                <span class="n">default_data_dir</span><span class="o">=</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">,</span>
-            <span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">TARDIS will download different kinds of data (e.g. atomic) to its data directory </span><span class="si">{</span><span class="n">DEFAULT_DATA_DIR</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;TARDIS DATA DIRECTORY not specified in </span><span class="si">{</span><span class="n">config_fpath</span><span class="si">}</span><span class="s2">:</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;ASSUMING DEFAULT DATA DIRECTORY </span><span class="si">{</span><span class="n">DEFAULT_DATA_DIR</span><span class="si">}</span><span class="se">\n</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;YOU CAN CHANGE THIS AT ANY TIME IN </span><span class="si">{</span><span class="n">config_fpath</span><span class="si">}</span><span class="s2"> </span><span class="se">\n\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;*&#39;</span> <span class="o">*</span> <span class="mi">80</span><span class="si">}</span><span class="s2"> </span><span class="se">\n\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">DEFAULT_DATA_DIR</span><span class="p">)</span>
@@ -256,9 +250,7 @@
         <span class="n">data_dir</span> <span class="o">=</span> <span class="n">DEFAULT_DATA_DIR</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">data_dir</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span>
-            <span class="s2">&quot;Data directory specified in </span><span class="si">{0}</span><span class="s2"> does not exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Data directory specified in </span><span class="si">{</span><span class="n">data_dir</span><span class="si">}</span><span class="s2"> does not exist&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">data_dir</span></div>
 </pre></div>

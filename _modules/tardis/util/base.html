@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.util.base &mdash; TARDIS v3.0.dev3937</title>
+  <title>tardis.util.base &mdash; TARDIS v3.0.dev3938</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3937
+                3.0.dev3938
               </div>
             
           
@@ -262,7 +262,7 @@
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="s1">&#39;Expecting a species notation (e.g. &quot;Si 2&quot;, &quot;Si II&quot;, &quot;Fe IV&quot;) &#39;</span>
-            <span class="s2">&quot;- supplied </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">malformed_element_symbol</span><span class="p">)</span>
+            <span class="sa">f</span><span class="s2">&quot;- supplied </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">malformed_element_symbol</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span></div>
 
 
@@ -271,9 +271,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">malformed_element_symbol</span> <span class="o">=</span> <span class="n">malformed_element_symbol</span>
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Expecting an atomic symbol (e.g. Fe) - supplied </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">malformed_element_symbol</span>
-        <span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Expecting an atomic symbol (e.g. Fe) - supplied </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">malformed_element_symbol</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="MalformedQuantityError"><a class="viewcode-back" href="../../../api/tardis.util.base.html#tardis.util.base.MalformedQuantityError">[docs]</a><span class="k">class</span> <span class="nc">MalformedQuantityError</span><span class="p">(</span><span class="n">MalformedError</span><span class="p">):</span>
@@ -282,9 +280,9 @@
 
     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="s1">&#39;Expecting a quantity string(e.g. &quot;5 km/s&quot;) for keyword &#39;</span>
-            <span class="s2">&quot;- supplied </span><span class="si">{0}</span><span class="s2">&quot;</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">malformed_quantity_string</span><span class="p">)</span></div>
+            <span class="sa">f</span><span class="s1">&#39;Expecting a quantity string(e.g. &quot;5 km/s&quot;) for keyword &#39;</span>
+            <span class="sa">f</span><span class="s2">&quot;- supplied </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">malformed_quantity_string</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="int_to_roman"><a class="viewcode-back" href="../../../api/tardis.util.base.html#tardis.util.base.int_to_roman">[docs]</a><span class="k">def</span> <span class="nf">int_to_roman</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
@@ -327,18 +325,14 @@
     <span class="n">NUMERALS_SET</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">NUMERAL_MAP</span><span class="p">))[</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">roman_string</span> <span class="o">=</span> <span class="n">roman_string</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">roman_string</span><span class="o">.</span><span class="n">upper</span><span class="p">()))</span> <span class="o">-</span> <span class="n">NUMERALS_SET</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> does not seem to be a roman numeral&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">roman_string</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">roman_string</span><span class="si">}</span><span class="s2"> does not seem to be a roman numeral&quot;</span><span class="p">)</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">integer</span><span class="p">,</span> <span class="n">numeral</span> <span class="ow">in</span> <span class="n">NUMERAL_MAP</span><span class="p">:</span>
         <span class="k">while</span> <span class="n">roman_string</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)]</span> <span class="o">==</span> <span class="n">numeral</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">+=</span> <span class="n">integer</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numeral</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">result</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;Can not interpret Roman Numeral </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">roman_string</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can not interpret Roman Numeral </span><span class="si">{</span><span class="n">roman_string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -535,9 +529,9 @@
     <span class="n">element_symbol</span> <span class="o">=</span> <span class="n">ATOMIC_NUMBER2SYMBOL</span><span class="p">[</span><span class="n">atomic_number</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">roman_numerals</span><span class="p">:</span>
         <span class="n">roman_ion_number</span> <span class="o">=</span> <span class="n">int_to_roman</span><span class="p">(</span><span class="n">ion_number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">element_symbol</span><span class="p">),</span> <span class="n">roman_ion_number</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">element_symbol</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">roman_ion_number</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}</span><span class="s2"> </span><span class="si">{1:d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">element_symbol</span><span class="p">,</span> <span class="n">ion_number</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">element_symbol</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">ion_number</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 
 <div class="viewcode-block" id="species_string_to_tuple"><a class="viewcode-back" href="../../../api/tardis.util.base.html#tardis.util.base.species_string_to_tuple">[docs]</a><span class="k">def</span> <span class="nf">species_string_to_tuple</span><span class="p">(</span><span class="n">species_string</span><span class="p">):</span>
@@ -569,8 +563,8 @@
             <span class="n">element_symbol</span><span class="p">,</span> <span class="n">ion_number_string</span> <span class="o">=</span> <span class="n">species_string</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MalformedSpeciesError</span><span class="p">(</span>
-                <span class="s1">&#39;Species string &quot;</span><span class="si">{0}</span><span class="s1">&quot; is not of format &lt;element_symbol&gt;&lt;number&gt;&#39;</span>
-                <span class="s2">&quot; (e.g. Fe 2, Fe2, ..)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">species_string</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s1">&#39;Species string &quot;</span><span class="si">{</span><span class="n">species_string</span><span class="si">}</span><span class="s1">&quot; is not of format &lt;element_symbol&gt;&lt;number&gt;&#39;</span>
+                <span class="sa">f</span><span class="s2">&quot; (e.g. Fe 2, Fe2, ..)&quot;</span>
             <span class="p">)</span>
 
     <span class="n">atomic_number</span> <span class="o">=</span> <span class="n">element_symbol2atomic_number</span><span class="p">(</span><span class="n">element_symbol</span><span class="p">)</span>
@@ -582,9 +576,7 @@
             <span class="n">ion_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ion_number_string</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MalformedSpeciesError</span><span class="p">(</span>
-                <span class="s2">&quot;Given ion number (&#39;</span><span class="si">{}</span><span class="s2">&#39;) could not be parsed&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">ion_number_string</span>
-                <span class="p">)</span>
+                <span class="sa">f</span><span class="s2">&quot;Given ion number (&#39;</span><span class="si">{</span><span class="n">ion_number_string</span><span class="si">}</span><span class="s2">&#39;) could not be parsed&quot;</span>
             <span class="p">)</span>
 
     <span class="k">if</span> <span class="n">ion_number</span> <span class="o">&gt;</span> <span class="n">atomic_number</span><span class="p">:</span>
