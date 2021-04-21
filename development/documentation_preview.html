@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Documentation Preview &mdash; TARDIS v3.0.dev3936</title>
+  <title>Documentation Preview &mdash; TARDIS v3.0.dev3937</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                3.0.dev3936
+                3.0.dev3937
               </div>
             
           
@@ -132,11 +132,7 @@
 <li class="toctree-l2"><a class="reference internal" href="documentation_guidelines.html">Documentation Guidelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="running_tests.html">Running tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="code_quality.html">Code Quality Guidelines</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Documentation Preview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#procedure">Procedure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#limitations">Limitations</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Documentation Preview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="developer_faq.html">Developer FAQ</a></li>
 <li class="toctree-l2"><a class="reference internal" href="index.html#tardis-core-team-instructions">TARDIS core team Instructions</a></li>
 </ul>
@@ -248,36 +244,13 @@
 <span id="doc-preview"></span><h1>Documentation Preview<a class="headerlink" href="#documentation-preview" title="Permalink to this headline">¶</a></h1>
 <p>Most of the time it’s enough to build the documentation locally and see how things are going. But sometimes
 it’s nice to share our changes and get some feedback from other collaborators.</p>
-<p>Unfortunately, GitHub Pages does not provide a simple way to preview documentation changes from pull requests
-(as ReadTheDocs does) but there’s a way to achieve this that suits for most of our use cases.</p>
-<div class="section" id="procedure">
-<h2>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h2>
-<p>Imagine you are developing a new feature for TARDIS on your local
-branch named <code class="docutils literal notranslate"><span class="pre">new-feature</span></code> and follow these steps:</p>
-<ol class="arabic">
-<li><p>Go to your fork’s <em>Settings</em> tab make sure GitHub Pages are building from the <em>gh-pages</em> branch.</p></li>
-<li><p>Checkout to a new branch with a suitable name, like <code class="docutils literal notranslate"><span class="pre">new-feature-docs</span></code>.</p></li>
-<li><p>Edit <code class="docutils literal notranslate"><span class="pre">.github/workflows/documentation-build.yml</span></code> and add a new trigger below the <em>push</em> trigger:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pull_request</span><span class="p">:</span>
-  <span class="n">branches</span><span class="p">:</span>
-    <span class="o">-</span> <span class="n">master</span>
-</pre></div>
-</div>
-</li>
-<li><p>Push changes and make a new pull request to <strong>your fork’s</strong> <em>master</em> branch.</p></li>
-<li><p>If everything is ok, the documentation preview should be available at <code class="docutils literal notranslate"><span class="pre">&lt;your-username&gt;.github.io/tardis</span></code>.</p></li>
+<p>To preview your changes to the documentation first make sure you have GitHub Actions activated on your fork
+(see the Actions tab). Then, there are two ways to trigger the build:</p>
+<ol class="arabic simple">
+<li><p>If the branch you are working on contains the word <code class="docutils literal notranslate"><span class="pre">doc</span></code> in it, then every commit will trigger the build.</p></li>
+<li><p>Add the tag <code class="docutils literal notranslate"><span class="pre">[build</span> <span class="pre">docs]</span></code> on the commit message before pushing.</p></li>
 </ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Remember you will need to rebase <code class="docutils literal notranslate"><span class="pre">new-feature-docs</span></code> to <code class="docutils literal notranslate"><span class="pre">new-feature</span></code> every time you push changes to <code class="docutils literal notranslate"><span class="pre">new-feature</span></code>.</p>
-</div>
-</div>
-<div class="section" id="limitations">
-<h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h2>
-<p>This method has a major drawback: you can build just a single preview for your entire fork. This means if
-your are working on multiple pull request, your site <code class="docutils literal notranslate"><span class="pre">&lt;your-username.github.io/tardis&gt;</span></code> will display just
-the latest successful build, overwriting the previous one.</p>
-</div>
+<p>Your preview will be available at <code class="docutils literal notranslate"><span class="pre">&lt;username&gt;.github.io/tardis/branch/&lt;branch</span> <span class="pre">name&gt;/index.html</span></code>.</p>
 </div>
 
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Continuous Integration &mdash; TARDIS v3.0.dev3936</title>
+  <title>Continuous Integration &mdash; TARDIS v3.0.dev3937</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                3.0.dev3936
+                3.0.dev3937
               </div>
             
           
@@ -474,10 +474,14 @@ to start a new pipeline use:</p>
 </ul>
 <p>See the <a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops">Azure documentation section on templates</a> for more information.</p>
 </div>
-<div class="section" id="documentation-pipeline">
-<h3>Documentation pipeline<a class="headerlink" href="#documentation-pipeline" title="Permalink to this headline">¶</a></h3>
-<p>Builds and deploys the TARDIS documentation website. Currently, we use
-GitHub Actions for this purpose.</p>
+<div class="section" id="documentation-build-pipeline">
+<h3>Documentation build pipeline<a class="headerlink" href="#documentation-build-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>A GitHub Actions workflow that builds and deploys the TARDIS documentation website.</p>
+</div>
+<div class="section" id="documentation-preview-pipeline">
+<h3>Documentation preview pipeline<a class="headerlink" href="#documentation-preview-pipeline" title="Permalink to this headline">¶</a></h3>
+<p>This workflow does not run on the main repository, just on forks.
+See the <a class="reference internal" href="documentation_preview.html#doc-preview"><span class="std std-ref">Documentation Preview</span></a> section for more information.</p>
 </div>
 <div class="section" id="id2">
 <h3>Testing pipeline<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
