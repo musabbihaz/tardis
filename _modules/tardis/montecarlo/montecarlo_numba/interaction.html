@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.interaction &mdash; TARDIS v3.0.dev3940</title>
+  <title>tardis.montecarlo.montecarlo_numba.interaction &mdash; TARDIS v3.0.dev3941</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3940
+                3.0.dev3941
               </div>
             
           
@@ -201,7 +201,7 @@
             
   <h1>Source code for tardis.montecarlo.montecarlo_numba.interaction</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
-<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba</span> <span class="kn">import</span> <span class="n">njit_dict</span><span class="p">,</span><span class="n">njit_dict_no_parallel</span>
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba</span> <span class="kn">import</span> <span class="n">njit_dict</span><span class="p">,</span> <span class="n">njit_dict_no_parallel</span>
 <span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.numba_interface</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">LineInteractionType</span><span class="p">,</span>
 <span class="p">)</span>
@@ -209,13 +209,16 @@
 <span class="kn">from</span> <span class="nn">tardis.montecarlo</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">montecarlo_configuration</span> <span class="k">as</span> <span class="n">montecarlo_configuration</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.r_packet</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.frame_transformations</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">get_doppler_factor</span><span class="p">,</span>
     <span class="n">get_inverse_doppler_factor</span><span class="p">,</span>
-    <span class="n">get_random_mu</span><span class="p">,</span>
     <span class="n">angle_aberration_CMF_to_LF</span><span class="p">,</span>
-    <span class="n">test_for_close_line</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.r_packet</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">test_for_close_line</span><span class="p">,</span>
+    <span class="n">InteractionType</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.utils</span> <span class="kn">import</span> <span class="n">get_random_mu</span>
 <span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.macro_atom</span> <span class="kn">import</span> <span class="n">macro_atom</span>
 
 
@@ -256,7 +259,7 @@
 <span class="k">def</span> <span class="nf">line_scatter</span><span class="p">(</span><span class="n">r_packet</span><span class="p">,</span> <span class="n">time_explosion</span><span class="p">,</span> <span class="n">line_interaction_type</span><span class="p">,</span> <span class="n">numba_plasma</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Line scatter function that handles the scattering itself, including new angle drawn, and calculating nu out using macro atom</span>
-<span class="sd">    </span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    r_packet : tardis.montecarlo.montecarlo_numba.r_packet.RPacket</span>

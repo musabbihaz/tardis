@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.vpacket &mdash; TARDIS v3.0.dev3940</title>
+  <title>tardis.montecarlo.montecarlo_numba.vpacket &mdash; TARDIS v3.0.dev3941</title>
   
 
   
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                3.0.dev3940
+                3.0.dev3941
               </div>
             
           
@@ -200,28 +200,36 @@
            <div itemprop="articleBody">
             
   <h1>Source code for tardis.montecarlo.montecarlo_numba.vpacket</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">float64</span><span class="p">,</span> <span class="n">int64</span><span class="p">,</span> <span class="n">boolean</span>
+<span></span><span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">float64</span><span class="p">,</span> <span class="n">int64</span><span class="p">,</span> <span class="n">boolean</span>
 <span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span><span class="p">,</span> <span class="n">gdb</span>
 <span class="kn">from</span> <span class="nn">numba.experimental</span> <span class="kn">import</span> <span class="n">jitclass</span>
 
-<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba</span> <span class="kn">import</span> <span class="n">njit_dict</span> <span class="p">,</span> <span class="n">njit_dict_no_parallel</span>
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba</span> <span class="kn">import</span> <span class="n">njit_dict</span><span class="p">,</span> <span class="n">njit_dict_no_parallel</span>
 <span class="kn">from</span> <span class="nn">tardis.montecarlo</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">montecarlo_configuration</span> <span class="k">as</span> <span class="n">montecarlo_configuration</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.r_packet</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">calculate_distance_boundary</span><span class="p">,</span>
-    <span class="n">get_doppler_factor</span><span class="p">,</span>
-    <span class="n">calculate_distance_line</span><span class="p">,</span>
-    <span class="n">calculate_tau_electron</span><span class="p">,</span>
     <span class="n">PacketStatus</span><span class="p">,</span>
     <span class="n">move_packet_across_shell_boundary</span><span class="p">,</span>
-    <span class="n">angle_aberration_LF_to_CMF</span><span class="p">,</span>
-    <span class="n">angle_aberration_CMF_to_LF</span><span class="p">,</span>
     <span class="n">test_for_close_line</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.calculate_distances</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">calculate_distance_boundary</span><span class="p">,</span>
+    <span class="n">calculate_distance_line</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.frame_transformations</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">get_doppler_factor</span><span class="p">,</span>
+    <span class="n">angle_aberration_LF_to_CMF</span><span class="p">,</span>
+    <span class="n">angle_aberration_CMF_to_LF</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.opacities</span> <span class="kn">import</span> <span class="n">calculate_tau_electron</span>
 
 <span class="n">vpacket_spec</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">float64</span><span class="p">),</span>
