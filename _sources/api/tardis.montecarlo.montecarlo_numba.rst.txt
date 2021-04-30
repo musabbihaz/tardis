@@ -10,6 +10,7 @@ Submodules
    tardis.montecarlo.montecarlo_numba.base
    tardis.montecarlo.montecarlo_numba.calculate_distances
    tardis.montecarlo.montecarlo_numba.estimators
+   tardis.montecarlo.montecarlo_numba.formal_integral
    tardis.montecarlo.montecarlo_numba.frame_transformations
    tardis.montecarlo.montecarlo_numba.interaction
    tardis.montecarlo.montecarlo_numba.macro_atom

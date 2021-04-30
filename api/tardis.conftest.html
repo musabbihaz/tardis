@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.conftest module &mdash; TARDIS v3.0.dev3942</title>
+  <title>tardis.conftest module &mdash; TARDIS v3.0.dev3943</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                3.0.dev3942
+                3.0.dev3943
               </div>
             
           
@@ -139,7 +139,6 @@
 <li class="toctree-l4"><a class="reference internal" href="tardis.base.html">tardis.base module</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">tardis.conftest module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="tardis.constants.html">tardis.constants module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="tardis.cython_version.html">tardis.cython_version module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="tardis.version.html">tardis.version module</a></li>
 </ul>
 </li>
@@ -247,8 +246,48 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="tardis-conftest-module">
-<h1>tardis.conftest module<a class="headerlink" href="#tardis-conftest-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-tardis.conftest">
+<span id="tardis-conftest-module"></span><h1>tardis.conftest module<a class="headerlink" href="#module-tardis.conftest" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="tardis.conftest.config_verysimple">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">config_verysimple</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#config_verysimple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.config_verysimple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.generate_reference">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">generate_reference</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#generate_reference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.generate_reference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.hdf_file_path">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">hdf_file_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tmpdir_factory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#hdf_file_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.hdf_file_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.pytest_addoption">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">pytest_addoption</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#pytest_addoption"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.pytest_addoption" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.simulation_verysimple">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">simulation_verysimple</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_verysimple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atomic_dataset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#simulation_verysimple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.simulation_verysimple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.tardis_config_verysimple">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">tardis_config_verysimple</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#tardis_config_verysimple"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.tardis_config_verysimple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.tardis_ref_data">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">tardis_ref_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tardis_ref_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_reference</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#tardis_ref_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.tardis_ref_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="tardis.conftest.tardis_ref_path">
+<code class="sig-prename descclassname"><span class="pre">tardis.conftest.</span></code><code class="sig-name descname"><span class="pre">tardis_ref_path</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/conftest.html#tardis_ref_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.conftest.tardis_ref_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 

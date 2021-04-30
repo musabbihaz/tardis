@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.visualization.widgets.shell_info module &mdash; TARDIS v3.0.dev3942</title>
+  <title>tardis.visualization.widgets.shell_info module &mdash; TARDIS v3.0.dev3943</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                3.0.dev3942
+                3.0.dev3943
               </div>
             
           
@@ -254,8 +254,274 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="tardis-visualization-widgets-shell-info-module">
-<h1>tardis.visualization.widgets.shell_info module<a class="headerlink" href="#tardis-visualization-widgets-shell-info-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-tardis.visualization.widgets.shell_info">
+<span id="tardis-visualization-widgets-shell-info-module"></span><h1>tardis.visualization.widgets.shell_info module<a class="headerlink" href="#module-tardis.visualization.widgets.shell_info" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="tardis.visualization.widgets.shell_info.BaseShellInfo">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.shell_info.</span></code><code class="sig-name descname"><span class="pre">BaseShellInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_radiative</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abundance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_density</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ion_number_density</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_number_density</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#BaseShellInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.BaseShellInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The simulation information that is used by shell info widget</p>
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.BaseShellInfo.element_count">
+<code class="sig-name descname"><span class="pre">element_count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shell_num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#BaseShellInfo.element_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.BaseShellInfo.element_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates fractional abundance of elements present in a specific
+shell in a form that can be used by a table widget</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shell_num</strong><span class="classifier">int</span></dt><dd><p>Shell number (note: starts from 1, not 0 which is what simulation
+model use)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Dataframe containing element symbol and fractional abundance in a
+specific shell, against each atomic number</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.BaseShellInfo.ion_count">
+<code class="sig-name descname"><span class="pre">ion_count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell_num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#BaseShellInfo.ion_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.BaseShellInfo.ion_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates fractional abundance of ions of a specific element and
+shell, in a form that can be used by a table widget</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>atomic_num</strong><span class="classifier">int</span></dt><dd><p>Atomic number of element</p>
+</dd>
+<dt><strong>shell_num</strong><span class="classifier">int</span></dt><dd><p>Shell number (note: starts from 1, not 0 which is what simulation
+model use)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Dataframe containing ion specie and fractional abundance for a
+specific element, against each ion number</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.BaseShellInfo.level_count">
+<code class="sig-name descname"><span class="pre">level_count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atomic_num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell_num</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#BaseShellInfo.level_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.BaseShellInfo.level_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates fractional abundance of levels of a specific ion, element
+and shell, in a form that can be used by a table widget</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ion</strong><span class="classifier">int</span></dt><dd><p>Ion number (note: starts from 0, same what is used by simulation
+model)</p>
+</dd>
+<dt><strong>atomic_num</strong><span class="classifier">int</span></dt><dd><p>Atomic number of element</p>
+</dd>
+<dt><strong>shell_num</strong><span class="classifier">int</span></dt><dd><p>Shell number (note: starts from 1, not 0 which is what simulation
+model use)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Dataframe containing fractional abundance for a specific ion,
+against each level number</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.BaseShellInfo.shells_data">
+<code class="sig-name descname"><span class="pre">shells_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#BaseShellInfo.shells_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.BaseShellInfo.shells_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates shells data in a form that can be used by a table widget</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>pandas.DataFrame</dt><dd><p>Dataframe containing Rad. Temp. and W against each shell of
+simulation model</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tardis.visualization.widgets.shell_info.HDFShellInfo">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.shell_info.</span></code><code class="sig-name descname"><span class="pre">HDFShellInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hdf_fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#HDFShellInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.HDFShellInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tardis.visualization.widgets.shell_info.BaseShellInfo" title="tardis.visualization.widgets.shell_info.BaseShellInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.visualization.widgets.shell_info.BaseShellInfo</span></code></a></p>
+<p>The simulation information that is used by shell info widget, obtained
+from a simulation HDF file</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="tardis.visualization.widgets.shell_info.ShellInfoWidget">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.shell_info.</span></code><code class="sig-name descname"><span class="pre">ShellInfoWidget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shell_info_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#ShellInfoWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.ShellInfoWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The Shell Info Widget to explore abundances in different shells.</p>
+<p>It consists of four interlinked table widgets - shells table; element count,
+ion count and level count tables - allowing to explore fractional abundances
+all the way from elements, to ions, to levels by clicking on the rows of
+tables.</p>
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.ShellInfoWidget.display">
+<code class="sig-name descname"><span class="pre">display</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shells_table_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'30%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element_count_table_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'24%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ion_count_table_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'24%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level_count_table_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'18%'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">layout_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#ShellInfoWidget.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.ShellInfoWidget.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the shell info widget by putting all component widgets nicely
+together and allowing interaction between the table widgets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>shells_table_width</strong><span class="classifier">str, optional</span></dt><dd><p>CSS <code class="code docutils literal notranslate"><span class="pre">width</span></code> property value for shells table, by default ‘30%’</p>
+</dd>
+<dt><strong>element_count_table_width</strong><span class="classifier">str, optional</span></dt><dd><p>CSS <code class="code docutils literal notranslate"><span class="pre">width</span></code> property value for element count table, by default ‘24%’</p>
+</dd>
+<dt><strong>ion_count_table_width</strong><span class="classifier">str, optional</span></dt><dd><p>CSS <code class="code docutils literal notranslate"><span class="pre">width</span></code> property value for ion count table, by default ‘24%’</p>
+</dd>
+<dt><strong>level_count_table_width</strong><span class="classifier">str, optional</span></dt><dd><p>CSS <code class="code docutils literal notranslate"><span class="pre">width</span></code> property value for level count table, by default ‘18%’</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ipywidgets.Box</dt><dd><p>Shell info widget containing all component widgets</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Other Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>**layout_kwargs</strong></dt><dd><p>Any valid CSS properties to be passed to the <code class="code docutils literal notranslate"><span class="pre">layout</span></code> attribute
+of table widgets container (HTML <code class="code docutils literal notranslate"><span class="pre">div</span></code>) as explained in
+<a class="reference external" href="https://ipywidgets.readthedocs.io/en/stable/examples/Widget%20Styling.html#The-layout-attribute">ipywidgets documentation</a></p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.ShellInfoWidget.update_element_count_table">
+<code class="sig-name descname"><span class="pre">update_element_count_table</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qgrid_widget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#ShellInfoWidget.update_element_count_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.ShellInfoWidget.update_element_count_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event listener to update the data in element count table widget based
+on interaction (row selected event) in shells table widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>event</strong><span class="classifier">dict</span></dt><dd><p>Dictionary that holds information about event (see Notes section)</p>
+</dd>
+<dt><strong>qgrid_widget</strong><span class="classifier">qgrid.QgridWidget</span></dt><dd><p>QgridWidget instance that fired the event (see Notes section)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>You will never need to pass any of these arguments explicitly. This is
+the expected signature of the function passed to <code class="code docutils literal notranslate"><span class="pre">handler</span></code> argument
+of <code class="code docutils literal notranslate"><span class="pre">on</span></code> method of a table widget (qgrid.QgridWidget object) as
+explained in <a class="reference external" href="https://qgrid.readthedocs.io/en/latest/#qgrid.QgridWidget.on">qrid documentation</a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.ShellInfoWidget.update_ion_count_table">
+<code class="sig-name descname"><span class="pre">update_ion_count_table</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qgrid_widget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#ShellInfoWidget.update_ion_count_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.ShellInfoWidget.update_ion_count_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event listener to update the data in ion count table widget based
+on interaction (row selected event) in element count table widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>event</strong><span class="classifier">dict</span></dt><dd><p>Dictionary that holds information about event (see Notes section)</p>
+</dd>
+<dt><strong>qgrid_widget</strong><span class="classifier">qgrid.QgridWidget</span></dt><dd><p>QgridWidget instance that fired the event (see Notes section)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>You will never need to pass any of these arguments explicitly. This is
+the expected signature of the function passed to <code class="code docutils literal notranslate"><span class="pre">handler</span></code> argument
+of <code class="code docutils literal notranslate"><span class="pre">on</span></code> method of a table widget (qgrid.QgridWidget object) as
+explained in <a class="reference external" href="https://qgrid.readthedocs.io/en/latest/#qgrid.QgridWidget.on">qrid documentation</a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="tardis.visualization.widgets.shell_info.ShellInfoWidget.update_level_count_table">
+<code class="sig-name descname"><span class="pre">update_level_count_table</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qgrid_widget</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#ShellInfoWidget.update_level_count_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.ShellInfoWidget.update_level_count_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event listener to update the data in level count table widget based
+on interaction (row selected event) in ion count table widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>event</strong><span class="classifier">dict</span></dt><dd><p>Dictionary that holds information about event (see Notes section)</p>
+</dd>
+<dt><strong>qgrid_widget</strong><span class="classifier">qgrid.QgridWidget</span></dt><dd><p>QgridWidget instance that fired the event (see Notes section)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>You will never need to pass any of these arguments explicitly. This is
+the expected signature of the function passed to <code class="code docutils literal notranslate"><span class="pre">handler</span></code> argument
+of <code class="code docutils literal notranslate"><span class="pre">on</span></code> method of a table widget (qgrid.QgridWidget object) as
+explained in <a class="reference external" href="https://qgrid.readthedocs.io/en/latest/#qgrid.QgridWidget.on">qrid documentation</a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="tardis.visualization.widgets.shell_info.SimulationShellInfo">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.shell_info.</span></code><code class="sig-name descname"><span class="pre">SimulationShellInfo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#SimulationShellInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.SimulationShellInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#tardis.visualization.widgets.shell_info.BaseShellInfo" title="tardis.visualization.widgets.shell_info.BaseShellInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.visualization.widgets.shell_info.BaseShellInfo</span></code></a></p>
+<p>The simulation information that is used by shell info widget, obtained
+from a TARDIS Simulation object</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tardis.visualization.widgets.shell_info.shell_info_from_hdf">
+<code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.shell_info.</span></code><code class="sig-name descname"><span class="pre">shell_info_from_hdf</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hdf_fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#shell_info_from_hdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.shell_info_from_hdf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create shell info widget from a simulation HDF file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>hdf_fpath</strong><span class="classifier">str</span></dt><dd><p>A valid path to a simulation HDF file (HDF file must be created
+from a TARDIS Simulation object using <code class="code docutils literal notranslate"><span class="pre">to_hdf</span></code> method with
+default arguments)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ShellInfoWidget</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tardis.visualization.widgets.shell_info.shell_info_from_simulation">
+<code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.shell_info.</span></code><code class="sig-name descname"><span class="pre">shell_info_from_simulation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/shell_info.html#shell_info_from_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.shell_info.shell_info_from_simulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create shell info widget from a TARDIS simulation object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>sim_model</strong><span class="classifier">tardis.simulation.Simulation</span></dt><dd><p>TARDIS Simulation object produced by running a simulation</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>ShellInfoWidget</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

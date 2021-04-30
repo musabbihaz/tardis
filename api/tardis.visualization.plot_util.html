@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.visualization.plot_util module &mdash; TARDIS v3.0.dev3942</title>
+  <title>tardis.visualization.plot_util module &mdash; TARDIS v3.0.dev3943</title>
   
 
   
@@ -71,7 +71,7 @@
             
             
               <div class="version">
-                3.0.dev3942
+                3.0.dev3943
               </div>
             
           
@@ -252,8 +252,54 @@
     text-align: unset;
 }
 </style>
-<div class="section" id="tardis-visualization-plot-util-module">
-<h1>tardis.visualization.plot_util module<a class="headerlink" href="#tardis-visualization-plot-util-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-tardis.visualization.plot_util">
+<span id="tardis-visualization-plot-util-module"></span><h1>tardis.visualization.plot_util module<a class="headerlink" href="#module-tardis.visualization.plot_util" title="Permalink to this headline">¶</a></h1>
+<p>Utility functions to be used in plotting.</p>
+<dl class="py function">
+<dt id="tardis.visualization.plot_util.axis_label_in_latex">
+<code class="sig-prename descclassname"><span class="pre">tardis.visualization.plot_util.</span></code><code class="sig-name descname"><span class="pre">axis_label_in_latex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label_text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/plot_util.html#axis_label_in_latex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.plot_util.axis_label_in_latex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get axis label for plotly plots that can show units in latex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>label_text</strong><span class="classifier">str</span></dt><dd><p>Text to show on label, may be expressed in latex</p>
+</dd>
+<dt><strong>unit</strong><span class="classifier">astropy.units</span></dt><dd><p>Unit of the label which needs to be expressed in latex</p>
+</dd>
+<dt><strong>only_text</strong><span class="classifier">bool</span></dt><dd><p>If label_text is expressed purely in text (i.e. without
+using latex) or not. Default value is True</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>str</dt><dd><p>Latex string for label renderable by plotly</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tardis.visualization.plot_util.get_mid_point_idx">
+<code class="sig-prename descclassname"><span class="pre">tardis.visualization.plot_util.</span></code><code class="sig-name descname"><span class="pre">get_mid_point_idx</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/plot_util.html#get_mid_point_idx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.plot_util.get_mid_point_idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get index of the middle point of a sorted array (ascending or descending).</p>
+<p>The values in array may not be evenly distributed so it picks the middle
+point not by index but by their values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>arr</strong><span class="classifier">np.array</span></dt><dd></dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>int</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

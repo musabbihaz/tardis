@@ -16,12 +16,9 @@ Submodules
    :maxdepth: 4
 
    tardis.montecarlo.base
-   tardis.montecarlo.formal_integral
-   tardis.montecarlo.montecarlo
    tardis.montecarlo.montecarlo_configuration
    tardis.montecarlo.packet_source
    tardis.montecarlo.spectrum
-   tardis.montecarlo.struct
 
 Module contents
 ---------------

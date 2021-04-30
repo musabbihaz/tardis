@@ -27,7 +27,6 @@ Submodules
    tardis.base
    tardis.conftest
    tardis.constants
-   tardis.cython_version
    tardis.version
 
 Module contents
