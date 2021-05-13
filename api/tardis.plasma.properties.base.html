@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.plasma.properties.base module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.plasma.properties.base module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -257,32 +260,32 @@
 <div class="section" id="module-tardis.plasma.properties.base">
 <span id="tardis-plasma-properties-base-module"></span><h1>tardis.plasma.properties.base module<a class="headerlink" href="#module-tardis.plasma.properties.base" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.ArrayInput">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">ArrayInput</span></code><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ArrayInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ArrayInput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.ArrayInput">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">ArrayInput</span></span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ArrayInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ArrayInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.Input" title="tardis.plasma.properties.base.Input"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.Input</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.BaseAtomicDataProperty">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">BaseAtomicDataProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BaseAtomicDataProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BaseAtomicDataProperty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BaseAtomicDataProperty">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">BaseAtomicDataProperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BaseAtomicDataProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BaseAtomicDataProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
 <p>Used for atomic data properties. Main feature is the ability to filter atomic data by the elements required for
 the simulation.</p>
 <dl class="py method">
-<dt id="tardis.plasma.properties.base.BaseAtomicDataProperty.calculate">
-<code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BaseAtomicDataProperty.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BaseAtomicDataProperty.calculate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BaseAtomicDataProperty.calculate">
+<span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atomic_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BaseAtomicDataProperty.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BaseAtomicDataProperty.calculate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="tardis.plasma.properties.base.BaseAtomicDataProperty.inputs">
-<code class="sig-name descname"><span class="pre">inputs</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['atomic_data',</span> <span class="pre">'selected_atoms']</span></em><a class="headerlink" href="#tardis.plasma.properties.base.BaseAtomicDataProperty.inputs" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BaseAtomicDataProperty.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['atomic_data',</span> <span class="pre">'selected_atoms']</span></em><a class="headerlink" href="#tardis.plasma.properties.base.BaseAtomicDataProperty.inputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.BasePlasmaProperty">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">BasePlasmaProperty</span></code><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BasePlasmaProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BasePlasmaProperty">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">BasePlasmaProperty</span></span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BasePlasmaProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -297,31 +300,31 @@ the simulation.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="tardis.plasma.properties.base.BasePlasmaProperty.get_latex_label">
-<code class="sig-name descname"><span class="pre">get_latex_label</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BasePlasmaProperty.get_latex_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty.get_latex_label" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BasePlasmaProperty.get_latex_label">
+<span class="sig-name descname"><span class="pre">get_latex_label</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#BasePlasmaProperty.get_latex_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty.get_latex_label" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="tardis.plasma.properties.base.BasePlasmaProperty.name">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">name</span></code><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty.name" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BasePlasmaProperty.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty.name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="tardis.plasma.properties.base.BasePlasmaProperty.outputs">
-<em class="property"><span class="pre">abstract</span> <span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">outputs</span></code><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty.outputs" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.BasePlasmaProperty.outputs">
+<em class="property"><span class="pre">abstract</span> <span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">outputs</span></span><a class="headerlink" href="#tardis.plasma.properties.base.BasePlasmaProperty.outputs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.DataFrameInput">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">DataFrameInput</span></code><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#DataFrameInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.DataFrameInput" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.DataFrameInput">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">DataFrameInput</span></span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#DataFrameInput"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.DataFrameInput" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.Input" title="tardis.plasma.properties.base.Input"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.Input</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.HiddenPlasmaProperty">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">HiddenPlasmaProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#HiddenPlasmaProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.HiddenPlasmaProperty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.HiddenPlasmaProperty">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">HiddenPlasmaProperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#HiddenPlasmaProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.HiddenPlasmaProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="tardis.plasma.properties.base.ProcessingPlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.ProcessingPlasmaProperty</span></code></a></p>
 <p>Used for plasma properties that should not be displayed in the final graph (e.g. lines_lower_level_index).
 The code will automatically remove these property names from the graph and instead connect their inputs directly
@@ -329,36 +332,36 @@ to their outputs.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.Input">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">Input</span></code><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#Input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.Input" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.Input">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">Input</span></span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#Input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.Input" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.BasePlasmaProperty" title="tardis.plasma.properties.base.BasePlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.BasePlasmaProperty</span></code></a></p>
 <p>The plasma property class for properties that are input directly from model
 and not calculated within the plasma module, e.g. t_rad.</p>
 <dl class="py method">
-<dt id="tardis.plasma.properties.base.Input.set_value">
-<code class="sig-name descname"><span class="pre">set_value</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#Input.set_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.Input.set_value" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.Input.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#Input.set_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.Input.set_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.PreviousIterationProperty">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">PreviousIterationProperty</span></code><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#PreviousIterationProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.PreviousIterationProperty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.PreviousIterationProperty">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">PreviousIterationProperty</span></span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#PreviousIterationProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.PreviousIterationProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.BasePlasmaProperty" title="tardis.plasma.properties.base.BasePlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.BasePlasmaProperty</span></code></a></p>
 <p>This class is used for properties where, to prevent a property calculation loop, the property values from the
 previous iteration (which are static) are used in the current calculation. Usually only required for NLTE
 calculations. Given a sufficient number of iterations, the values should converge successfully on the correct
 solution.</p>
 <dl class="py method">
-<dt id="tardis.plasma.properties.base.PreviousIterationProperty.set_value">
-<code class="sig-name descname"><span class="pre">set_value</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#PreviousIterationProperty.set_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.PreviousIterationProperty.set_value" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.PreviousIterationProperty.set_value">
+<span class="sig-name descname"><span class="pre">set_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#PreviousIterationProperty.set_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.PreviousIterationProperty.set_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.plasma.properties.base.ProcessingPlasmaProperty">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></code><code class="sig-name descname"><span class="pre">ProcessingPlasmaProperty</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ProcessingPlasmaProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.ProcessingPlasmaProperty">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.plasma.properties.base.</span></span><span class="sig-name descname"><span class="pre">ProcessingPlasmaProperty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plasma_parent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ProcessingPlasmaProperty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#tardis.plasma.properties.base.BasePlasmaProperty" title="tardis.plasma.properties.base.BasePlasmaProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.plasma.properties.base.BasePlasmaProperty</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -369,13 +372,13 @@ solution.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="tardis.plasma.properties.base.ProcessingPlasmaProperty.calculate">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">calculate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ProcessingPlasmaProperty.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty.calculate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.ProcessingPlasmaProperty.calculate">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">calculate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ProcessingPlasmaProperty.calculate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty.calculate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="tardis.plasma.properties.base.ProcessingPlasmaProperty.update">
-<code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ProcessingPlasmaProperty.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty.update" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.plasma.properties.base.ProcessingPlasmaProperty.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/plasma/properties/base.html#ProcessingPlasmaProperty.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.plasma.properties.base.ProcessingPlasmaProperty.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates the processing Plasma by calling the <cite>calculate</cite>-method with
 the required inputs</p>
 <dl class="field-list simple">

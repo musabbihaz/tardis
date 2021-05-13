@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>General Workflow to add a new feature &mdash; TARDIS v3.0.dev3945</title>
+  <title>General Workflow to add a new feature &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -428,9 +431,9 @@ you have not accidentally caused regressions, and add new tests to ensure
 your contribution behaves correctly (see <a class="reference external" href="https://numpy.org/doc/stable/reference/testing.html#testing-guidelines" title="(in NumPy v1.20)"><span>Testing Guidelines</span></a>).</p></li>
 <li><p>Issue a pull request on GitHub!</p></li>
 <li><p>As the code is converging to a final state, ensure your
-documentation follows the guidelines (see <a class="reference external" href="https://docs.astropy.org/en/stable/development/docguide.html#documentation-guidelines" title="(in Astropy v4.2)"><span>Writing Documentation</span></a>).</p></li>
+documentation follows the guidelines (see <span class="xref std std-ref">documentation-guidelines</span>).</p></li>
 <li><p>Once your code is ready to be accepted, please add an entry to the changelog
-(see <a class="reference external" href="https://docs.astropy.org/en/stable/development/workflow/maintainer_workflow.html#changelog-format" title="(in Astropy v4.2)"><span>Updating and Maintaining the Changelog</span></a>).  If you’re not sure where to put this, please
+(see <span class="xref std std-ref">changelog-format</span>).  If you’re not sure where to put this, please
 at least suggest a brief (one or two sentence) description of your change so
 that another developer can add it to the changelog.</p></li>
 </ul>
@@ -516,7 +519,7 @@ builds and looks correct:</p>
 </div>
 <p>The last line should just state <code class="docutils literal notranslate"><span class="pre">build</span> <span class="pre">succeeded</span></code>, and should not mention
 any warnings.  (For more details, see the Astropy
-<a class="reference external" href="https://docs.astropy.org/en/stable/development/docguide.html#documentation-guidelines" title="(in Astropy v4.2)"><span>Writing Documentation</span></a> we follow.)</p>
+<span class="xref std std-ref">documentation-guidelines</span> we follow.)</p>
 </li>
 <li><p>See which files have changed with <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> (see <a class="reference external" href="http://schacon.github.com/git/git-status.html">git status</a>).
 You’ll see a listing like this one:</p>

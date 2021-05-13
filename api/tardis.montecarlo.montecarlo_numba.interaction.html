@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.interaction module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.montecarlo.montecarlo_numba.interaction module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -257,8 +260,8 @@
 <div class="section" id="module-tardis.montecarlo.montecarlo_numba.interaction">
 <span id="tardis-montecarlo-montecarlo-numba-interaction-module"></span><h1>tardis.montecarlo.montecarlo_numba.interaction module<a class="headerlink" href="#module-tardis.montecarlo.montecarlo_numba.interaction" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.interaction.line_emission">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.interaction.</span></code><code class="sig-name descname"><span class="pre">line_emission</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emission_line_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/interaction.html#line_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.interaction.line_emission" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.interaction.line_emission">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.interaction.</span></span><span class="sig-name descname"><span class="pre">line_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">emission_line_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/interaction.html#line_emission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.interaction.line_emission" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the frequency of the RPacket properly given the emission channel</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -273,8 +276,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.interaction.line_scatter">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.interaction.</span></code><code class="sig-name descname"><span class="pre">line_scatter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_interaction_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/interaction.html#line_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.interaction.line_scatter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.interaction.line_scatter">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.interaction.</span></span><span class="sig-name descname"><span class="pre">line_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_interaction_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/interaction.html#line_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.interaction.line_scatter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Line scatter function that handles the scattering itself, including new angle drawn, and calculating nu out using macro atom</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -289,8 +292,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.interaction.thomson_scatter">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.interaction.</span></code><code class="sig-name descname"><span class="pre">thomson_scatter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/interaction.html#thomson_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.interaction.thomson_scatter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.interaction.thomson_scatter">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.interaction.</span></span><span class="sig-name descname"><span class="pre">thomson_scatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/interaction.html#thomson_scatter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.interaction.thomson_scatter" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Thomson scattering — no longer line scattering</p>
 </div></blockquote>

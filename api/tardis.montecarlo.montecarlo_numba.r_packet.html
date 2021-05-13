@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.r_packet module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.montecarlo.montecarlo_numba.r_packet module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -257,52 +260,52 @@
 <div class="section" id="module-tardis.montecarlo.montecarlo_numba.r_packet">
 <span id="tardis-montecarlo-montecarlo-numba-r-packet-module"></span><h1>tardis.montecarlo.montecarlo_numba.r_packet module<a class="headerlink" href="#module-tardis.montecarlo.montecarlo_numba.r_packet" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></code><code class="sig-name descname"><span class="pre">InteractionType</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#InteractionType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></span><span class="sig-name descname"><span class="pre">InteractionType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#InteractionType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.BOUNDARY">
-<code class="sig-name descname"><span class="pre">BOUNDARY</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.BOUNDARY" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.BOUNDARY">
+<span class="sig-name descname"><span class="pre">BOUNDARY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.BOUNDARY" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.ESCATTERING">
-<code class="sig-name descname"><span class="pre">ESCATTERING</span></code><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.ESCATTERING" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.ESCATTERING">
+<span class="sig-name descname"><span class="pre">ESCATTERING</span></span><em class="property"> <span class="pre">=</span> <span class="pre">3</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.ESCATTERING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.LINE">
-<code class="sig-name descname"><span class="pre">LINE</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.LINE" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.LINE">
+<span class="sig-name descname"><span class="pre">LINE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.InteractionType.LINE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></code><code class="sig-name descname"><span class="pre">PacketStatus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#PacketStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></span><span class="sig-name descname"><span class="pre">PacketStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#PacketStatus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a></p>
 <p>An enumeration.</p>
 <dl class="py attribute">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.EMITTED">
-<code class="sig-name descname"><span class="pre">EMITTED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.EMITTED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.EMITTED">
+<span class="sig-name descname"><span class="pre">EMITTED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.EMITTED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.IN_PROCESS">
-<code class="sig-name descname"><span class="pre">IN_PROCESS</span></code><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.IN_PROCESS" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.IN_PROCESS">
+<span class="sig-name descname"><span class="pre">IN_PROCESS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">0</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.IN_PROCESS" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.REABSORBED">
-<code class="sig-name descname"><span class="pre">REABSORBED</span></code><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.REABSORBED" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.REABSORBED">
+<span class="sig-name descname"><span class="pre">REABSORBED</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.PacketStatus.REABSORBED" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.move_packet_across_shell_boundary">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></code><code class="sig-name descname"><span class="pre">move_packet_across_shell_boundary</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_shell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_of_shells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#move_packet_across_shell_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.move_packet_across_shell_boundary" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.move_packet_across_shell_boundary">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></span><span class="sig-name descname"><span class="pre">move_packet_across_shell_boundary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_shell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_of_shells</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#move_packet_across_shell_boundary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.move_packet_across_shell_boundary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move packet across shell boundary - realizing if we are still in the simulation or have
 moved out through the inner boundary or outer boundary and updating packet
 status.</p>
@@ -321,8 +324,8 @@ status.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.move_r_packet">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></code><code class="sig-name descname"><span class="pre">move_r_packet</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_estimator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#move_r_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.move_r_packet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.move_r_packet">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></span><span class="sig-name descname"><span class="pre">move_r_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_estimator</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#move_r_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.move_r_packet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move packet a distance and recalculate the new angle mu</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -341,13 +344,13 @@ status.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.test_for_close_line">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></code><code class="sig-name descname"><span class="pre">test_for_close_line</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#test_for_close_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.test_for_close_line" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.test_for_close_line">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></span><span class="sig-name descname"><span class="pre">test_for_close_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nu_line</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#test_for_close_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.test_for_close_line" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.r_packet.trace_packet">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></code><code class="sig-name descname"><span class="pre">trace_packet</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#trace_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.trace_packet" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.r_packet.trace_packet">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.r_packet.</span></span><span class="sig-name descname"><span class="pre">trace_packet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r_packet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/r_packet.html#trace_packet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.r_packet.trace_packet" title="Permalink to this definition">¶</a></dt>
 <dd><p>Traces the RPacket through the ejecta and stops when an interaction happens (heart of the calculation)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

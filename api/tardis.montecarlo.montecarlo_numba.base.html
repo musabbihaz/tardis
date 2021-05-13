@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.base module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.montecarlo.montecarlo_numba.base module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -257,8 +260,8 @@
 <div class="section" id="module-tardis.montecarlo.montecarlo_numba.base">
 <span id="tardis-montecarlo-montecarlo-numba-base-module"></span><h1>tardis.montecarlo.montecarlo_numba.base module<a class="headerlink" href="#module-tardis.montecarlo.montecarlo_numba.base" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.base.montecarlo_main_loop">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.base.</span></code><code class="sig-name descname"><span class="pre">montecarlo_main_loop</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet_collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum_frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_vpackets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packet_seeds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/base.html#montecarlo_main_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.base.montecarlo_main_loop" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.base.montecarlo_main_loop">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.base.</span></span><span class="sig-name descname"><span class="pre">montecarlo_main_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">packet_collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numba_plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum_frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_vpackets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packet_seeds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/base.html#montecarlo_main_loop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.base.montecarlo_main_loop" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the main loop of the MonteCarlo routine that generates packets
 and sends them through the ejecta.</p>
 <dl class="field-list simple">
@@ -278,8 +281,8 @@ and sends them through the ejecta.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.montecarlo.montecarlo_numba.base.montecarlo_radial1d">
-<code class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.base.</span></code><code class="sig-name descname"><span class="pre">montecarlo_radial1d</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/base.html#montecarlo_radial1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.base.montecarlo_radial1d" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.montecarlo.montecarlo_numba.base.montecarlo_radial1d">
+<span class="sig-prename descclassname"><span class="pre">tardis.montecarlo.montecarlo_numba.base.</span></span><span class="sig-name descname"><span class="pre">montecarlo_radial1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plasma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runner</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/montecarlo/montecarlo_numba/base.html#montecarlo_radial1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.montecarlo.montecarlo_numba.base.montecarlo_radial1d" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

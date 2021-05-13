@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.io.config_validator module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.io.config_validator module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -255,8 +258,8 @@
 <div class="section" id="module-tardis.io.config_validator">
 <span id="tardis-io-config-validator-module"></span><h1>tardis.io.config_validator module<a class="headerlink" href="#module-tardis.io.config_validator" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="tardis.io.config_validator.extend_with_default">
-<code class="sig-prename descclassname"><span class="pre">tardis.io.config_validator.</span></code><code class="sig-name descname"><span class="pre">extend_with_default</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validator_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/config_validator.html#extend_with_default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.config_validator.extend_with_default" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.io.config_validator.extend_with_default">
+<span class="sig-prename descclassname"><span class="pre">tardis.io.config_validator.</span></span><span class="sig-name descname"><span class="pre">extend_with_default</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validator_class</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/config_validator.html#extend_with_default"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.config_validator.extend_with_default" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extend a <cite>jsonschema.IValidator</cite> to also set default
 values on properties. By default jsonschema ignores
 default values.</p>
@@ -276,13 +279,13 @@ default values.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.io.config_validator.validate_dict">
-<code class="sig-prename descclassname"><span class="pre">tardis.io.config_validator.</span></code><code class="sig-name descname"><span class="pre">validate_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">config_dict</span></em>, <em class="sig-param"><span class="pre">schemapath='/home/runner/work/tardis/tardis/tardis/io/schemas/base.yml'</span></em>, <em class="sig-param"><span class="pre">validator=&lt;class</span> <span class="pre">'jsonschema.validators.create.&lt;locals&gt;.Validator'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/config_validator.html#validate_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.config_validator.validate_dict" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.io.config_validator.validate_dict">
+<span class="sig-prename descclassname"><span class="pre">tardis.io.config_validator.</span></span><span class="sig-name descname"><span class="pre">validate_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">config_dict</span></em>, <em class="sig-param"><span class="pre">schemapath='/home/runner/work/tardis/tardis/tardis/io/schemas/base.yml'</span></em>, <em class="sig-param"><span class="pre">validator=&lt;class</span> <span class="pre">'jsonschema.validators.create.&lt;locals&gt;.Validator'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/config_validator.html#validate_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.config_validator.validate_dict" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="tardis.io.config_validator.validate_yaml">
-<code class="sig-prename descclassname"><span class="pre">tardis.io.config_validator.</span></code><code class="sig-name descname"><span class="pre">validate_yaml</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">configpath</span></em>, <em class="sig-param"><span class="pre">schemapath='/home/runner/work/tardis/tardis/tardis/io/schemas/base.yml'</span></em>, <em class="sig-param"><span class="pre">validator=&lt;class</span> <span class="pre">'jsonschema.validators.create.&lt;locals&gt;.Validator'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/config_validator.html#validate_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.config_validator.validate_yaml" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.io.config_validator.validate_yaml">
+<span class="sig-prename descclassname"><span class="pre">tardis.io.config_validator.</span></span><span class="sig-name descname"><span class="pre">validate_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">configpath</span></em>, <em class="sig-param"><span class="pre">schemapath='/home/runner/work/tardis/tardis/tardis/io/schemas/base.yml'</span></em>, <em class="sig-param"><span class="pre">validator=&lt;class</span> <span class="pre">'jsonschema.validators.create.&lt;locals&gt;.Validator'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/io/config_validator.html#validate_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.io.config_validator.validate_yaml" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

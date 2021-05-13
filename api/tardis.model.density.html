@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.model.density module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.model.density module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,13 +35,14 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.0/dist/embed-amd.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -73,7 +76,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -257,8 +260,8 @@
 <div class="section" id="module-tardis.model.density">
 <span id="tardis-model-density-module"></span><h1>tardis.model.density module<a class="headerlink" href="#module-tardis.model.density" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
-<dt id="tardis.model.density.HomologousDensity">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></code><code class="sig-name descname"><span class="pre">HomologousDensity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.HomologousDensity">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></span><span class="sig-name descname"><span class="pre">HomologousDensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="tardis.io.util.html#tardis.io.util.HDFWriterMixin" title="tardis.io.util.HDFWriterMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">tardis.io.util.HDFWriterMixin</span></code></a></p>
 <p>A class that holds an initial density and time</p>
 <dl class="field-list simple">
@@ -270,8 +273,8 @@
 </dd>
 </dl>
 <dl class="py method">
-<dt id="tardis.model.density.HomologousDensity.calculate_density_at_time_of_simulation">
-<code class="sig-name descname"><span class="pre">calculate_density_at_time_of_simulation</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity.calculate_density_at_time_of_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity.calculate_density_at_time_of_simulation" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.HomologousDensity.calculate_density_at_time_of_simulation">
+<span class="sig-name descname"><span class="pre">calculate_density_at_time_of_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity.calculate_density_at_time_of_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity.calculate_density_at_time_of_simulation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scale <cite>density_0</cite> from an <cite>time_0</cite> to the <cite>time_explosion</cite> by ^-3</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -288,8 +291,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="tardis.model.density.HomologousDensity.from_config">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity.from_config" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.HomologousDensity.from_config">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity.from_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new HomologousDensity instance from a Configuration object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -306,8 +309,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="tardis.model.density.HomologousDensity.from_csvy">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_csvy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvy_model_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity.from_csvy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity.from_csvy" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.HomologousDensity.from_csvy">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_csvy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvy_model_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#HomologousDensity.from_csvy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.HomologousDensity.from_csvy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new HomologousDensity instance from a base
 Configuration object and a csvy model Configuration object.</p>
 <dl class="field-list simple">
@@ -326,15 +329,15 @@ Configuration object and a csvy model Configuration object.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="tardis.model.density.HomologousDensity.hdf_properties">
-<code class="sig-name descname"><span class="pre">hdf_properties</span></code><em class="property"> <span class="pre">=</span> <span class="pre">['density_0',</span> <span class="pre">'time_0']</span></em><a class="headerlink" href="#tardis.model.density.HomologousDensity.hdf_properties" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.HomologousDensity.hdf_properties">
+<span class="sig-name descname"><span class="pre">hdf_properties</span></span><em class="property"> <span class="pre">=</span> <span class="pre">['density_0',</span> <span class="pre">'time_0']</span></em><a class="headerlink" href="#tardis.model.density.HomologousDensity.hdf_properties" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.model.density.calculate_density_after_time">
-<code class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></code><code class="sig-name descname"><span class="pre">calculate_density_after_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">densities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#calculate_density_after_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.calculate_density_after_time" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.calculate_density_after_time">
+<span class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></span><span class="sig-name descname"><span class="pre">calculate_density_after_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">densities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_explosion</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#calculate_density_after_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.calculate_density_after_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>scale the density from an initial time of the model to the
 time of the explosion by ^-3</p>
 <dl class="field-list simple">
@@ -357,8 +360,8 @@ time of the explosion by ^-3</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.model.density.calculate_exponential_density">
-<code class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></code><code class="sig-name descname"><span class="pre">calculate_exponential_density</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#calculate_exponential_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.calculate_exponential_density" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.calculate_exponential_density">
+<span class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></span><span class="sig-name descname"><span class="pre">calculate_exponential_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#calculate_exponential_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.calculate_exponential_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes the exponential density profile.
 <span class="math notranslate nohighlight">\(\rho = \rho_0 \times \exp \left( -\frac{v}{v_0} \right)\)</span></p>
 <dl class="field-list simple">
@@ -381,8 +384,8 @@ time of the explosion by ^-3</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.model.density.calculate_power_law_density">
-<code class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></code><code class="sig-name descname"><span class="pre">calculate_power_law_density</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exponent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#calculate_power_law_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.calculate_power_law_density" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.model.density.calculate_power_law_density">
+<span class="sig-prename descclassname"><span class="pre">tardis.model.density.</span></span><span class="sig-name descname"><span class="pre">calculate_power_law_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocity_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rho_0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exponent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/model/density.html#calculate_power_law_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.model.density.calculate_power_law_density" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function computes a descret exponential density profile.
 <span class="math notranslate nohighlight">\(\rho = \rho_0 \times \left( \frac{v}{v_0} \right)^n\)</span></p>
 <dl class="field-list simple">

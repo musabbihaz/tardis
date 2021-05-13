@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.visualization.widgets.util module &mdash; TARDIS v3.0.dev3945</title>
+  <title>tardis.visualization.widgets.util module &mdash; TARDIS v3.0.dev3948</title>
   
 
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../_static/plot_directive.css" type="text/css" />
 
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -71,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3945
+                3.0.dev3948
               </div>
             
           
@@ -258,15 +261,15 @@
 <span id="tardis-visualization-widgets-util-module"></span><h1>tardis.visualization.widgets.util module<a class="headerlink" href="#module-tardis.visualization.widgets.util" title="Permalink to this headline">¶</a></h1>
 <p>Utility classes and functions for widgets.</p>
 <dl class="py class">
-<dt id="tardis.visualization.widgets.util.TableSummaryLabel">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.util.</span></code><code class="sig-name descname"><span class="pre">TableSummaryLabel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_col_widths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/util.html#TableSummaryLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.util.TableSummaryLabel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.visualization.widgets.util.TableSummaryLabel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.util.</span></span><span class="sig-name descname"><span class="pre">TableSummaryLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_col_widths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/util.html#TableSummaryLabel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.util.TableSummaryLabel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Label like widget to show summary of a qgrid table widget.</p>
 <p>Also handles aligning the label with the table columns exactly like a
 summary row.</p>
 <dl class="py method">
-<dt id="tardis.visualization.widgets.util.TableSummaryLabel.update_and_resize">
-<code class="sig-name descname"><span class="pre">update_and_resize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/util.html#TableSummaryLabel.update_and_resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.util.TableSummaryLabel.update_and_resize" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.visualization.widgets.util.TableSummaryLabel.update_and_resize">
+<span class="sig-name descname"><span class="pre">update_and_resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/util.html#TableSummaryLabel.update_and_resize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.util.TableSummaryLabel.update_and_resize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the label value and resize it as per the size of target table.</p>
 <p>Resizing is done in such a way so as to match the width of components
 of label with columns of target table, making it look like another row.
@@ -285,8 +288,8 @@ layout of target table.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="tardis.visualization.widgets.util.create_table_widget">
-<code class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.util.</span></code><code class="sig-name descname"><span class="pre">create_table_widget</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_widths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">changeable_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/util.html#create_table_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.util.create_table_widget" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="tardis.visualization.widgets.util.create_table_widget">
+<span class="sig-prename descclassname"><span class="pre">tardis.visualization.widgets.util.</span></span><span class="sig-name descname"><span class="pre">create_table_widget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col_widths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">changeable_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tardis/visualization/widgets/util.html#create_table_widget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tardis.visualization.widgets.util.create_table_widget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create table widget object which supports interaction and updating the data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
