@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.base &mdash; TARDIS v3.0.dev3949</title>
+  <title>tardis.base &mdash; TARDIS v3.0.dev3952</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3949
+                3.0.dev3952
               </div>
             
           
@@ -221,8 +221,8 @@
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    config : str or dict</span>
-<span class="sd">        filename of configuration yaml file or dictionary</span>
+<span class="sd">    config : str or dict or tardis.io.config_reader.Configuration</span>
+<span class="sd">        filename of configuration yaml file or dictionary or TARDIS Configuration object</span>
 <span class="sd">    atom_data : str or tardis.atomic.AtomData</span>
 <span class="sd">        if atom_data is a string it is interpreted as a path to a file storing</span>
 <span class="sd">        the atomic data. Atomic data to use for this TARDIS simulation. If set to None, the</span>
@@ -246,10 +246,13 @@
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">atom_data</span> <span class="o">=</span> <span class="n">atom_data</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">tardis_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="n">tardis_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">from_config_dict</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">Configuration</span><span class="p">):</span>
+        <span class="n">tardis_config</span> <span class="o">=</span> <span class="n">config</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tardis_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="n">tardis_config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="o">.</span><span class="n">from_config_dict</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 
     <span class="n">simulation</span> <span class="o">=</span> <span class="n">Simulation</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span>
         <span class="n">tardis_config</span><span class="p">,</span>
