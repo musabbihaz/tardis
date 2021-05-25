@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Continuous Integration &mdash; TARDIS v3.0.dev3962</title>
+  <title>Continuous Integration &mdash; TARDIS v3.0.dev3967</title>
   
 
   
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3962
+                3.0.dev3967
               </div>
             
           
@@ -279,7 +279,7 @@ nor storage.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>https://dev.azure.com/tardis-sn/TARDIS/_apis/git/repositories/tardis-refdata/items?path=atom_data/kurucz_cd23_chianti_H_He.h5&amp;resolveLfs=true
 </pre></div>
 </div>
-<p>This mirror is automatically synced by <a class="reference external" href="https://github.com/tardis-sn/tardis-refdata/blob/master/.github/workflows/sync-mirror.yml">a GitHub workflow</a>. If you want
+<p>This mirror is automatically synced by <cite>a GitHub workflow</cite>. If you want
 to <a class="reference external" href="https://docs.microsoft.com/en-us/azure/devops/repos/git/import-git-repository?view=azure-devops#what-if-my-source-repository-contains-git-lfs-objects">update it manually</a>, remember to set <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">config</span> <span class="pre">http.version</span> <span class="pre">HTTP/1.1</span></code>
 to avoid <a class="reference external" href="https://developercommunity.visualstudio.com/content/problem/867488/git-lfs-push-got-413-error.html">error 413</a> while pushing large files.</p>
 </div>
@@ -375,7 +375,7 @@ Variables at the <em>stage</em> level override variables at the <em>root</em> le
 while variables at the <em>job</em> level override variables at the <em>root</em>
 and <em>stage</em> level.</p>
 <p>Also, variables are available to scripts through environment variables.
-The name is upper-cased and <code class="docutils literal notranslate"><span class="pre">.</span></code>  is replaced with <code class="docutils literal notranslate"><span class="pre">_</span></code>. For example:</p>
+The name is upper-cased and <code class="docutils literal notranslate"><span class="pre">.</span></code>  is replaced with <code class="docutils literal notranslate"><span class="pre">_</span></code>. For example</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>variables:
   my.var: &#39;foo&#39;
 

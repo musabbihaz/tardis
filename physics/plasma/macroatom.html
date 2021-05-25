@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Macro Atom &mdash; TARDIS v3.0.dev3962</title>
+  <title>Macro Atom &mdash; TARDIS v3.0.dev3967</title>
   
 
   
@@ -76,7 +76,7 @@
             
             
               <div class="version">
-                3.0.dev3962
+                3.0.dev3967
               </div>
             
           
@@ -247,13 +247,13 @@
 </style>
 <div class="section" id="macro-atom">
 <span id="macroatom"></span><h1>Macro Atom<a class="headerlink" href="#macro-atom" title="Permalink to this headline">¶</a></h1>
-<p>The macro atom is described in detail in <span class="bibtex" id="id1">[2002A&amp;A…384..725L]</span>. The basic principal is that when an energy packet
+<p>The macro atom is described in detail in <a class="bibtex reference internal" href="../../zreferences.html#lucy2002" id="id1">[Lucy02]</a>. The basic principal is that when an energy packet
 is absorbed that the macro atom is on a certain level. Three probabilities govern the next step the P<sub>up</sub>,
 P<sub>down</sub> and P<sub>down emission</sub> being the probability for going to a higher level, a lower level and a lower
-level and emitting a photon while doing this respectively (see Figure 1 in <span class="bibtex" id="id2">[2002A&amp;A…384..725L]</span> ).</p>
+level and emitting a photon while doing this respectively (see Figure 1 in <a class="bibtex reference internal" href="../../zreferences.html#lucy2002" id="id2">[Lucy02]</a> ).</p>
 <p>The macro atom is the most complex idea to implement as a data structure. The setup is done in <cite>~tardisatomic</cite>, but
 we will nonetheless discuss it here (as <cite>~tardisatomic</cite> is even less documented than this one).</p>
-<p>For each level,                                                                                               we look at the line list to see what transitions (upwards or downwards are possible). We create a two arrays,
+<p>For each level, we look at the line list to see what transitions (upwards or downwards are possible). We create a two arrays,
 the first is a long one-dimensional array containing the probabilities. Each level contains a set of probabilities. The first
 part of each set contains the upwards probabilities (internal upward), the second part the downwards probabilities
 (internal downward), and the last part is the downward and emission probability.</p>
@@ -285,8 +285,8 @@ part of each set contains the upwards probabilities (internal upward), the secon
 </tbody>
 </table>
 <p>We now will calculate the transition probabilites, using the radiative rates in Equation 20, 21, and 22
-in <span class="bibtex" id="id3">[2002A&amp;A…384..725L]</span>. Then we calculate the downward emission probability from Equation 5, the downward and
-upward internal transition probabilities in <span class="bibtex" id="id4">[2003A&amp;A…403..261L]</span>.</p>
+in <a class="bibtex reference internal" href="../../zreferences.html#lucy2002" id="id3">[Lucy02]</a>. Then we calculate the downward emission probability from Equation 5, the downward and
+upward internal transition probabilities in <a class="bibtex reference internal" href="../../zreferences.html#lucy2003" id="id4">[Lucy03]</a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}p_\textrm{emission down}&amp;= {\cal R}_{\textrm{i}\rightarrow\textrm{lower}}\,(\epsilon_\textrm{upper} - \epsilon_\textrm{lower}) / {\cal D}_{i}\\
 p_\textrm{internal down}&amp;= {\cal R}_{\textrm{i}\rightarrow\textrm{lower}}\,\epsilon_\textrm{lower}/{\cal D}_{i}\\,
@@ -297,7 +297,7 @@ p_\textrm{internal up}&amp;={\cal R}_{\textrm{i}\rightarrow\textrm{upper}}\,\eps
 </dl>
 <p>We ignore the probability to emit a k-packet as TARDIS only works with photon packets.
 Next we calculate the radiative
-rates using equation 10 in <span class="bibtex" id="id5">[2003A&amp;A…403..261L]</span>.</p>
+rates using equation 10 in <a class="bibtex reference internal" href="../../zreferences.html#lucy2003" id="id5">[Lucy03]</a>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}{\cal R}_{\textrm{upper}\rightarrow\textrm{lower}} &amp;=
 A_{\textrm{upper}\rightarrow\textrm{lower}}\beta_\textrm{Sobolev}n_\textrm{upper}\\
