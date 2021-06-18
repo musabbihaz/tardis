@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Credits &amp; Publication Policies &mdash; TARDIS v3.0.dev3985</title>
+  <title>Credits &amp; Publication Policies &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -103,17 +103,19 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -143,6 +145,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -241,101 +247,135 @@ adhere to a few policies and acknowledge the TARDIS Team.</p>
 <div class="section" id="publication-policies">
 <h2>Publication Policies<a class="headerlink" href="#publication-policies" title="Permalink to this headline">¶</a></h2>
 <p>If you use this code for any publications or presentations please acknowledge
-it.  Please cite <a class="reference external" href="http://adsabs.harvard.edu/abs/2014MNRAS.440..387K">Kerzendorf &amp; Sim 2014</a>  in the text.</p>
-<p>Please add this paragraph to the Acknowledgement:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This research made use of \textsc{Tardis}, a community-developed software
-package for spectral synthesis in supernovae
-\citep{2014MNRAS.440..387K, kerzendorf_wolfgang_2019_2590539}.
-The development of \textsc{Tardis} received support from the
-Google Summer of Code initiative
-and from ESA&#39;s Summer of Code in Space program. \textsc{Tardis} makes
-extensive use of Astropy and PyNE.
+it.  Please cite <a class="reference external" href="http://adsabs.harvard.edu/abs/2014MNRAS.440..387K">Kerzendorf &amp; Sim 2014</a>  in the text and add the
+following paragraph to the Acknowledgement section:</p>
+<pre class="literal-block">This research made use of textsc{Tardis}, a community-developed software package for spectral
+synthesis in supernovae citep{2014MNRAS.440..387K, kerzendorf_wolfgang_2021_4946458}. The
+development of textsc{Tardis} received support from the Google Summer of Code initiative and
+from ESA's Summer of Code in Space program. textsc{Tardis} makes extensive use of Astropy
+and PyNE.</pre>
+<p>If you use any of the full relativity treatments or use TARDIS for modelling
+Type II supernovae, also add <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2019A%26A...621A..29V">Spectral modeling of type II supernovae. I. Dilution factors</a>
+to the Acknowledgement.</p>
+<pre class="literal-block">citep{2019A&amp;A...621A..29V}</pre>
+<p>The following BibTeX entries are needed for the references:</p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@ARTICLE</span><span class="p">{</span><span class="nl">2014MNRAS.440..387K</span><span class="p">,</span>
+       <span class="na">author</span> <span class="p">=</span> <span class="s">{{Kerzendorf}, W.~E. and {Sim}, S.~A.}</span><span class="p">,</span>
+        <span class="na">title</span> <span class="p">=</span> <span class="s">&quot;{A spectral synthesis code for rapid modelling of supernovae}&quot;</span><span class="p">,</span>
+      <span class="na">journal</span> <span class="p">=</span> <span class="s">{\mnras}</span><span class="p">,</span>
+<span class="na">archivePrefix</span> <span class="p">=</span> <span class="s">&quot;arXiv&quot;</span><span class="p">,</span>
+       <span class="na">eprint</span> <span class="p">=</span> <span class="s">{1401.5469}</span><span class="p">,</span>
+ <span class="na">primaryClass</span> <span class="p">=</span> <span class="s">&quot;astro-ph.SR&quot;</span><span class="p">,</span>
+     <span class="na">keywords</span> <span class="p">=</span> <span class="s">{radiative transfer, methods: numerical, supernovae: general}</span><span class="p">,</span>
+         <span class="na">year</span> <span class="p">=</span> <span class="m">2014</span><span class="p">,</span>
+        <span class="na">month</span> <span class="p">=</span> <span class="nv">may</span><span class="p">,</span>
+       <span class="na">volume</span> <span class="p">=</span> <span class="m">440</span><span class="p">,</span>
+        <span class="na">pages</span> <span class="p">=</span> <span class="s">{387-404}</span><span class="p">,</span>
+          <span class="na">doi</span> <span class="p">=</span> <span class="s">{10.1093/mnras/stu055}</span><span class="p">,</span>
+       <span class="na">adsurl</span> <span class="p">=</span> <span class="s">{http://adsabs.harvard.edu/abs/2014MNRAS.440..387K}</span><span class="p">,</span>
+      <span class="na">adsnote</span> <span class="p">=</span> <span class="s">{Provided by the SAO/NASA Astrophysics Data System}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>If you use any of the full relativity treatments or use TARDIS for
-modelling Type II supernovae, you also add this citation to acknowledgement
-<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2019A%26A...621A..29V">Spectral modeling of type II supernovae. I. Dilution factors</a>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>\citep{2019A&amp;A...621A..29V}
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@ARTICLE</span><span class="p">{</span><span class="nl">2019A&amp;A...621A..29V</span><span class="p">,</span>
+       <span class="na">author</span> <span class="p">=</span> <span class="s">{{Vogl}, C. and {Sim}, S.~A. and {Noebauer}, U.~M. and {Kerzendorf}, W.~E. and {Hillebrandt}, W.}</span><span class="p">,</span>
+        <span class="na">title</span> <span class="p">=</span> <span class="s">&quot;{Spectral modeling of type II supernovae. I. Dilution factors}&quot;</span><span class="p">,</span>
+      <span class="na">journal</span> <span class="p">=</span> <span class="s">{\aap}</span><span class="p">,</span>
+     <span class="na">keywords</span> <span class="p">=</span> <span class="s">{radiative transfer, methods: numerical, stars: distances, supernovae: general, supernovae: individual: SN1999em, Astrophysics - High Energy Astrophysical Phenomena, Astrophysics - Solar and Stellar Astrophysics}</span><span class="p">,</span>
+         <span class="na">year</span> <span class="p">=</span> <span class="s">&quot;2019&quot;</span><span class="p">,</span>
+        <span class="na">month</span> <span class="p">=</span> <span class="s">&quot;Jan&quot;</span><span class="p">,</span>
+       <span class="na">volume</span> <span class="p">=</span> <span class="s">{621}</span><span class="p">,</span>
+          <span class="na">eid</span> <span class="p">=</span> <span class="s">{A29}</span><span class="p">,</span>
+        <span class="na">pages</span> <span class="p">=</span> <span class="s">{A29}</span><span class="p">,</span>
+          <span class="na">doi</span> <span class="p">=</span> <span class="s">{10.1051/0004-6361/201833701}</span><span class="p">,</span>
+<span class="na">archivePrefix</span> <span class="p">=</span> <span class="s">{arXiv}</span><span class="p">,</span>
+       <span class="na">eprint</span> <span class="p">=</span> <span class="s">{1811.02543}</span><span class="p">,</span>
+ <span class="na">primaryClass</span> <span class="p">=</span> <span class="s">{astro-ph.HE}</span><span class="p">,</span>
+       <span class="na">adsurl</span> <span class="p">=</span> <span class="s">{https://ui.adsabs.harvard.edu/abs/2019A&amp;A...621A..29V}</span><span class="p">,</span>
+      <span class="na">adsnote</span> <span class="p">=</span> <span class="s">{Provided by the SAO/NASA Astrophysics Data System}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>The following BibTeX entries are needed for the references.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>@ARTICLE{2014MNRAS.440..387K,
- author = {{Kerzendorf}, W.~E. and {Sim}, S.~A.},
-  title = &quot;{A spectral synthesis code for rapid modelling of supernovae}&quot;,
-journal = {\mnras},
-archivePrefix = &quot;arXiv&quot;,
- eprint = {1401.5469},
-primaryClass = &quot;astro-ph.SR&quot;,
-keywords = {radiative transfer, methods: numerical, supernovae: general},
-   year = 2014,
-  month = may,
- volume = 440,
-  pages = {387-404},
-    doi = {10.1093/mnras/stu055},
- adsurl = {http://adsabs.harvard.edu/abs/2014MNRAS.440..387K},
-adsnote = {Provided by the SAO/NASA Astrophysics Data System}
-}
-
-@ARTICLE{2019A&amp;A...621A..29V,
-       author = {{Vogl}, C. and {Sim}, S.~A. and {Noebauer}, U.~M. and
-         {Kerzendorf}, W.~E. and {Hillebrandt}, W.},
-        title = &quot;{Spectral modeling of type II supernovae. I. Dilution factors}&quot;,
-      journal = {\aap},
-     keywords = {radiative transfer, methods: numerical, stars: distances, supernovae: general, supernovae: individual: SN1999em, Astrophysics - High Energy Astrophysical Phenomena, Astrophysics - Solar and Stellar Astrophysics},
-         year = &quot;2019&quot;,
-        month = &quot;Jan&quot;,
-       volume = {621},
-          eid = {A29},
-        pages = {A29},
-          doi = {10.1051/0004-6361/201833701},
-archivePrefix = {arXiv},
-       eprint = {1811.02543},
- primaryClass = {astro-ph.HE},
-       adsurl = {https://ui.adsabs.harvard.edu/abs/2019A&amp;A...621A..29V},
-      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
-}
-
-
-@software{kerzendorf_wolfgang_2019_2590539,
-  author       = {Kerzendorf, Wolfgang and
-                  Nöbauer, Ulrich and
-                  Sim, Stuart and
-                  Lietzau, Stefan and
-                  Jančauskas, Vytautas and
-                  Vogl, Christian and
-                  Mishin, Mikhail and
-                  Tsamis, Fotis and
-                  Boyle, Aoife and
-                  Gupta, Vaibhav and
-                  Desai, Karan and
-                  Klauser, Michael and
-                  Beaujean, Frederik and
-                  Suban-Loewen, Adam and
-                  Heringer, Epson and
-                  Shingles, Luke and
-                  Barna, Barnabas and
-                  Gautam, Gaurav and
-                  Patel, Maryam and
-                  Barbosa, Talytha and
-                  Varanasi, Kaushik and
-                  Reinecke, Martin and
-                  Bylund, Tomas and
-                  Bentil, Laud and
-                  Rajagopalan, Srinath and
-                  Jain, Rinkle and
-                  Singh, Sourav and
-                  Talegaonkar, Chinmay and
-                  Sofiatti, Caroline and
-                  Patel, Pratik and
-                  Yap, Kevin and
-                  Wahi, Ujjwal and
-                  Gupta, Suyash},
-  title        = {tardis-sn/tardis: TARDIS v3.0 alpha2},
-  month        = mar,
-  year         = 2019,
-  doi          = {10.5281/zenodo.2590539},
-  url          = {https://doi.org/10.5281/zenodo.2590539}
-}
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@software</span><span class="p">{</span><span class="nl">kerzendorf_wolfgang_2021_4946458</span><span class="p">,</span>
+  <span class="na">author</span>       <span class="p">=</span> <span class="s">{Kerzendorf, Wolfgang and</span>
+<span class="s">                  Sim, Stuart and</span>
+<span class="s">                  Vogl, Christian and</span>
+<span class="s">                  Williamson, Marc and</span>
+<span class="s">                  Pássaro, Ezequiel and</span>
+<span class="s">                  Flörs, Andreas and</span>
+<span class="s">                  Camacho, Yssa and</span>
+<span class="s">                  Jančauskas, Vytautas and</span>
+<span class="s">                  Harpole, Alice and</span>
+<span class="s">                  Nöbauer, Ulrich and</span>
+<span class="s">                  Lietzau, Stefan and</span>
+<span class="s">                  Mishin, Mikhail and</span>
+<span class="s">                  Tsamis, Fotis and</span>
+<span class="s">                  Boyle, Aoife and</span>
+<span class="s">                  Shingles, Luke and</span>
+<span class="s">                  Gupta, Vaibhav and</span>
+<span class="s">                  Desai, Karan and</span>
+<span class="s">                  Klauser, Michael and</span>
+<span class="s">                  Beaujean, Frederik and</span>
+<span class="s">                  Suban-Loewen, Adam and</span>
+<span class="s">                  Heringer, Epson and</span>
+<span class="s">                  Barna, Barnabás and</span>
+<span class="s">                  Nayak U, Ashwin and</span>
+<span class="s">                  Gautam, Gaurav and</span>
+<span class="s">                  Kumar, Atul and</span>
+<span class="s">                  Kharkar, Atharwa and</span>
+<span class="s">                  Yap, Kevin and</span>
+<span class="s">                  Dasgupta, Debajyoti and</span>
+<span class="s">                  Volodin, Dmitry and</span>
+<span class="s">                  Sandler, Morgan and</span>
+<span class="s">                  k, chaitanya and</span>
+<span class="s">                  Patra, Nilesh and</span>
+<span class="s">                  Singh Rathore, Parikshit and</span>
+<span class="s">                  Patel, Pratik and</span>
+<span class="s">                  Sharma, Sampark and</span>
+<span class="s">                  Gupta, Suyash and</span>
+<span class="s">                  Wahi, Ujjwal and</span>
+<span class="s">                  Aggarwal, Yash and</span>
+<span class="s">                  Sarafina, Nance and</span>
+<span class="s">                  Kowalski, Nathan and</span>
+<span class="s">                  Sofiatti, Caroline and</span>
+<span class="s">                  Selsing, Jonatan and</span>
+<span class="s">                  Talegaonkar, Chinmay and</span>
+<span class="s">                  Yu, Jenny and</span>
+<span class="s">                  Brar, Antreev and</span>
+<span class="s">                  Singh, Sourav and</span>
+<span class="s">                  Jain, Rinkle and</span>
+<span class="s">                  Floers, Andreas and</span>
+<span class="s">                  Reichenbach, John and</span>
+<span class="s">                  Mishra, Sashank and</span>
+<span class="s">                  Rajagopalan, Srinath and</span>
+<span class="s">                  Magee, Mark and</span>
+<span class="s">                  Livneh, Ran and</span>
+<span class="s">                  Arya, Atharva and</span>
+<span class="s">                  Alam, Arib and</span>
+<span class="s">                  Sondhi, Dhruv and</span>
+<span class="s">                  Eguren, Jordi and</span>
+<span class="s">                  Bentil, Laud and</span>
+<span class="s">                  Savel, Arjun and</span>
+<span class="s">                  Bylund, Tomas and</span>
+<span class="s">                  Eweis, Youssef and</span>
+<span class="s">                  Reinecke, Martin and</span>
+<span class="s">                  O&#39;Brien, Jack and</span>
+<span class="s">                  Gillanders, James and</span>
+<span class="s">                  Varanasi, Kaushik and</span>
+<span class="s">                  Patel, Maryam and</span>
+<span class="s">                  Barbosa, Talytha and</span>
+<span class="s">                  Smith, Isaac and</span>
+<span class="s">                  Singhal, Jaladh and</span>
+<span class="s">                  Cawley, Kevin and</span>
+<span class="s">                  Fullard, Andrew}</span><span class="p">,</span>
+  <span class="na">title</span>        <span class="p">=</span> <span class="s">{tardis-sn/tardis: TARDIS v3.0.dev3998}</span><span class="p">,</span>
+  <span class="na">month</span>        <span class="p">=</span> <span class="nv">jun</span><span class="p">,</span>
+  <span class="na">year</span>         <span class="p">=</span> <span class="m">2021</span><span class="p">,</span>
+  <span class="na">publisher</span>    <span class="p">=</span> <span class="s">{Zenodo}</span><span class="p">,</span>
+  <span class="na">version</span>      <span class="p">=</span> <span class="s">{v3.0.dev3998}</span><span class="p">,</span>
+  <span class="na">doi</span>          <span class="p">=</span> <span class="s">{10.5281/zenodo.4946458}</span><span class="p">,</span>
+  <span class="na">url</span>          <span class="p">=</span> <span class="s">{https://doi.org/10.5281/zenodo.4946458}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>

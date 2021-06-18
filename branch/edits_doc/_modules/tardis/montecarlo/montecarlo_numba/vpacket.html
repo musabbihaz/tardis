@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.vpacket &mdash; TARDIS v3.0.dev3985</title>
+  <title>tardis.montecarlo.montecarlo_numba.vpacket &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -101,17 +101,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -138,6 +140,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -219,7 +225,6 @@
 <span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.r_packet</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">PacketStatus</span><span class="p">,</span>
     <span class="n">move_packet_across_shell_boundary</span><span class="p">,</span>
-    <span class="n">test_for_close_line</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba.calculate_distances</span> <span class="kn">import</span> <span class="p">(</span>
@@ -244,7 +249,6 @@
     <span class="p">(</span><span class="s2">&quot;current_shell_id&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;is_close_line&quot;</span><span class="p">,</span> <span class="n">boolean</span><span class="p">),</span>
 <span class="p">]</span>
 
 
@@ -259,7 +263,6 @@
         <span class="n">current_shell_id</span><span class="p">,</span>
         <span class="n">next_line_id</span><span class="p">,</span>
         <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">is_close_line</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">mu</span>
@@ -269,7 +272,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">next_line_id</span> <span class="o">=</span> <span class="n">next_line_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">PacketStatus</span><span class="o">.</span><span class="n">IN_PROCESS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_close_line</span> <span class="o">=</span> <span class="n">is_close_line</span>
 
 
 <div class="viewcode-block" id="trace_vpacket_within_shell"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.vpacket.html#tardis.montecarlo.montecarlo_numba.vpacket.trace_vpacket_within_shell">[docs]</a><span class="nd">@njit</span><span class="p">(</span><span class="o">**</span><span class="n">njit_dict_no_parallel</span><span class="p">)</span>
@@ -327,13 +329,6 @@
             <span class="n">numba_model</span><span class="o">.</span><span class="n">time_explosion</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">cur_line_id</span> <span class="o">!=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">test_for_close_line</span><span class="p">(</span>
-                <span class="n">v_packet</span><span class="p">,</span>
-                <span class="n">cur_line_id</span><span class="p">,</span>
-                <span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">[</span><span class="n">cur_line_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
-                <span class="n">numba_plasma</span><span class="p">,</span>
-            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">distance_boundary</span> <span class="o">&lt;=</span> <span class="n">distance_trace_line</span><span class="p">:</span>
             <span class="k">break</span>
@@ -482,16 +477,7 @@
             <span class="n">r_packet</span><span class="o">.</span><span class="n">current_shell_id</span><span class="p">,</span>
             <span class="n">r_packet</span><span class="o">.</span><span class="n">next_line_id</span><span class="p">,</span>
             <span class="n">i</span><span class="p">,</span>
-            <span class="n">r_packet</span><span class="o">.</span><span class="n">is_close_line</span><span class="p">,</span>
         <span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">r_packet</span><span class="o">.</span><span class="n">next_line_id</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="n">test_for_close_line</span><span class="p">(</span>
-                <span class="n">v_packet</span><span class="p">,</span>
-                <span class="n">r_packet</span><span class="o">.</span><span class="n">next_line_id</span><span class="p">,</span>
-                <span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">[</span><span class="n">r_packet</span><span class="o">.</span><span class="n">next_line_id</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
-                <span class="n">numba_plasma</span><span class="p">,</span>
-            <span class="p">)</span>
 
         <span class="n">tau_vpacket</span> <span class="o">=</span> <span class="n">trace_vpacket</span><span class="p">(</span><span class="n">v_packet</span><span class="p">,</span> <span class="n">numba_model</span><span class="p">,</span> <span class="n">numba_plasma</span><span class="p">)</span>
 

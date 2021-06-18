@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.util.base &mdash; TARDIS v3.0.dev3985</title>
+  <title>tardis.util.base &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -101,17 +101,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -138,6 +140,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -219,6 +225,7 @@
 
 <span class="kn">import</span> <span class="nn">tardis</span>
 <span class="kn">from</span> <span class="nn">tardis.io.util</span> <span class="kn">import</span> <span class="n">get_internal_data_path</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">get_ipython</span>
 
 <span class="n">k_B_cgs</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">k_B</span><span class="o">.</span><span class="n">cgs</span><span class="o">.</span><span class="n">value</span>
 <span class="n">c_cgs</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cgs</span><span class="o">.</span><span class="n">value</span>
@@ -745,6 +752,49 @@
     <span class="c1"># Assign header row</span>
     <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">nucname</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="is_notebook"><a class="viewcode-back" href="../../../api/tardis.util.base.html#tardis.util.base.is_notebook">[docs]</a><span class="k">def</span> <span class="nf">is_notebook</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checking the shell environment where the simulation is run is Jupyter based</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    True : if the shell environment is IPython Based</span>
+<span class="sd">    False : if the shell environment is Terminal or anything else</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Trying to import the ZMQInteractiveShell for Jupyter based environments</span>
+        <span class="kn">from</span> <span class="nn">ipykernel.zmqshell</span> <span class="kn">import</span> <span class="n">ZMQInteractiveShell</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="c1"># If the class cannot be imported then we are automatically return False Value</span>
+        <span class="c1"># Raised due to Name Error with the imported Class</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Trying to import Interactive Terminal based IPython shell</span>
+        <span class="kn">from</span> <span class="nn">IPython.core.interactiveshell</span> <span class="kn">import</span> <span class="n">InteractiveShell</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="c1"># If the class cannot be imported then we are automatically return False Value</span>
+        <span class="c1"># Raised due to Name Error with the imported Class</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Trying to get the value of the shell via the get_ipython() method</span>
+        <span class="n">shell</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+        <span class="c1"># Returns False if the shell name cannot be inferred correctly</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Checking if the shell instance is Jupyter based &amp; if True, returning True</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">ZMQInteractiveShell</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="c1"># Checking if the shell instance is Terminal IPython based &amp; if True, returning False</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">InteractiveShell</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1"># All other shell instances are returned False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 </pre></div>
 
            </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Line Interaction Treatments &mdash; TARDIS v3.0.dev3985</title>
+  <title>Line Interaction Treatments &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -49,7 +49,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Volume-based Monte Carlo Estimators" href="estimators.html" />
+    <link rel="next" title="Random Sampling Basics" href="randomsampling.html" />
     <link rel="prev" title="Packet Propagation" href="propagation.html" />
     <link href="../../_static/tardis.css" rel="stylesheet" type="text/css">
 
@@ -76,7 +76,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -105,18 +105,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Monte Carlo Primer</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Monte Carlo Iteration</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="basicprinciples.html">Monte Carlo Radiative Transfer - Basic Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discretization.html">Monte Carlo Discretization — Energy Packets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Energy Packet Initialization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="propagation.html">Packet Propagation</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Line Interaction Treatments</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#resonant-scattering">Resonant Scattering</a></li>
@@ -125,13 +126,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#comparison">Comparison</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="estimators.html">Volume-based Monte Carlo Estimators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virtualpackets.html">Spectrum Generation with Virtual Packets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sourceintegration.html">Direct integration of the radiation field</a></li>
 <li class="toctree-l2"><a class="reference internal" href="randomsampling.html">Random Sampling Basics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -158,6 +157,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -206,7 +209,7 @@
     
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">Monte Carlo Primer</a> &raquo;</li>
+          <li><a href="index.html">Monte Carlo Iteration</a> &raquo;</li>
         
       <li>Line Interaction Treatments</li>
     
@@ -257,7 +260,7 @@
 activated via the YAML configuration file. Independently of the chosen
 treatment, a number of steps are always carried out when a Monte Carlo packet
 performs a line interaction. Since TARDIS adopts the indivisible energy packet
-formalism (see <a class="reference internal" href="discretization.html"><span class="doc">Discretization</span></a>), the packet will have the
+formalism (see <a class="reference internal" href="initialization.html#initialization"><span class="std std-ref">Energy Packets</span></a>), the packet will have the
 same energy in the co-moving frame after (f for final) the line interaction as
 before (i for initial). Thus, after accounting for the frame transformations,</p>
 <div class="math notranslate nohighlight">
@@ -318,7 +321,7 @@ upper energy level to a lower one (macro atom deactivation). Again, all
 involved processes are governed by probabilities reflecting the different line
 transition strengths, radiative emission and absorption processes. More details
 about the implementation of the Macro Atom scheme in TARDIS is provided
-<a class="reference internal" href="../plasma/macroatom.html#macroatom"><span class="std std-ref">here</span></a>. For more background information and
+<a class="reference internal" href="../setup/plasma/macroatom.html#macroatom"><span class="std std-ref">here</span></a>. For more background information and
 an in-depth derivation of the scheme, we refer to <span id="id6">[<a class="reference internal" href="../../zreferences.html#id23" title="L. B. Lucy. Monte Carlo transition probabilities. Astronomy and Astrophysics, 384:725-735, March 2002. arXiv:arXiv:astro-ph/0107377, doi:10.1051/0004-6361:20011756.">Lucy02</a>]</span> and
 <span id="id7">[<a class="reference internal" href="../../zreferences.html#id22" title="L. B. Lucy. Monte Carlo transition probabilities. II. Astronomy and Astrophysics, 403:261-275, May 2003. arXiv:arXiv:astro-ph/0303202, doi:10.1051/0004-6361:20030357.">Lucy03</a>]</span>.</p>
 </div>
@@ -339,7 +342,7 @@ downbranching scheme and the right one the macro atom results.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="estimators.html" class="btn btn-neutral float-right" title="Volume-based Monte Carlo Estimators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="randomsampling.html" class="btn btn-neutral float-right" title="Random Sampling Basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="propagation.html" class="btn btn-neutral float-left" title="Packet Propagation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

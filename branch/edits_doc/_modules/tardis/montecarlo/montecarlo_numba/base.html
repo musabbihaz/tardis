@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.base &mdash; TARDIS v3.0.dev3985</title>
+  <title>tardis.montecarlo.montecarlo_numba.base &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -101,17 +101,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -138,6 +140,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -231,7 +237,7 @@
     <span class="n">single_packet_loop</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">tardis.montecarlo.montecarlo_numba</span> <span class="kn">import</span> <span class="n">njit_dict</span>
-
+<span class="kn">from</span> <span class="nn">numba.typed</span> <span class="kn">import</span> <span class="n">List</span>
 
 <div class="viewcode-block" id="montecarlo_radial1d"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.base.html#tardis.montecarlo.montecarlo_numba.base.montecarlo_radial1d">[docs]</a><span class="k">def</span> <span class="nf">montecarlo_radial1d</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">plasma</span><span class="p">,</span> <span class="n">runner</span><span class="p">):</span>
     <span class="n">packet_collection</span> <span class="o">=</span> <span class="n">PacketCollection</span><span class="p">(</span>
@@ -307,8 +313,7 @@
             <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">virt_packet_last_line_interaction_out_id</span><span class="p">)</span>
         <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span></div>
 
-
-<div class="viewcode-block" id="montecarlo_main_loop"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.base.html#tardis.montecarlo.montecarlo_numba.base.montecarlo_main_loop">[docs]</a><span class="nd">@njit</span><span class="p">(</span><span class="o">**</span><span class="n">njit_dict</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="montecarlo_main_loop"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.base.html#tardis.montecarlo.montecarlo_numba.base.montecarlo_main_loop">[docs]</a><span class="nd">@njit</span><span class="p">(</span><span class="o">**</span><span class="n">njit_dict</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">montecarlo_main_loop</span><span class="p">(</span>
     <span class="n">packet_collection</span><span class="p">,</span>
     <span class="n">numba_model</span><span class="p">,</span>
@@ -349,7 +354,18 @@
 
     <span class="n">v_packets_energy_hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">spectrum_frequency</span><span class="p">)</span>
     <span class="n">delta_nu</span> <span class="o">=</span> <span class="n">spectrum_frequency</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">spectrum_frequency</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+ 
+    <span class="c1"># Pre-allocate a list of vpacket collections for later storage</span>
+    <span class="n">vpacket_collections</span> <span class="o">=</span> <span class="n">List</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output_nus</span><span class="p">)):</span>
+        <span class="n">vpacket_collections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VPacketCollection</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> 
+            <span class="n">spectrum_frequency</span><span class="p">,</span> 
+            <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">v_packet_spawn_start_frequency</span><span class="p">,</span>
+            <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">v_packet_spawn_end_frequency</span><span class="p">,</span>
+            <span class="n">number_of_vpackets</span><span class="p">,</span>
+            <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">temporary_v_packet_bins</span><span class="p">))</span>
 
+    <span class="c1"># Arrays for vpacket logging</span>
     <span class="n">virt_packet_nus</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">virt_packet_energies</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">virt_packet_last_interaction_in_nu</span> <span class="o">=</span> <span class="p">[]</span>
@@ -357,7 +373,6 @@
     <span class="n">virt_packet_last_line_interaction_in_id</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">virt_packet_last_line_interaction_out_id</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running post-merge numba montecarlo (with C close lines)!&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output_nus</span><span class="p">)):</span>
         <span class="k">if</span> <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">single_packet_seed</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="n">seed</span> <span class="o">=</span> <span class="n">packet_seeds</span><span class="p">[</span><span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">single_packet_seed</span><span class="p">]</span>
@@ -372,16 +387,9 @@
             <span class="n">packet_collection</span><span class="o">.</span><span class="n">packets_input_energy</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
             <span class="n">seed</span><span class="p">,</span>
             <span class="n">i</span><span class="p">,</span>
-            <span class="mi">0</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">vpacket_collection</span> <span class="o">=</span> <span class="n">VPacketCollection</span><span class="p">(</span>
-            <span class="n">r_packet</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
-            <span class="n">spectrum_frequency</span><span class="p">,</span>
-            <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">v_packet_spawn_start_frequency</span><span class="p">,</span>
-            <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">v_packet_spawn_end_frequency</span><span class="p">,</span>
-            <span class="n">number_of_vpackets</span><span class="p">,</span>
-            <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">temporary_v_packet_bins</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">vpacket_collection</span> <span class="o">=</span> <span class="n">vpacket_collections</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
         <span class="n">loop</span> <span class="o">=</span> <span class="n">single_packet_loop</span><span class="p">(</span>
             <span class="n">r_packet</span><span class="p">,</span> <span class="n">numba_model</span><span class="p">,</span> <span class="n">numba_plasma</span><span class="p">,</span> <span class="n">estimators</span><span class="p">,</span> <span class="n">vpacket_collection</span>
         <span class="p">)</span>
@@ -404,11 +412,11 @@
         <span class="n">vpackets_energy</span> <span class="o">=</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">energies</span><span class="p">[:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span><span class="p">]</span>
 
         <span class="n">v_packets_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">vpackets_nu</span> <span class="o">-</span> <span class="n">spectrum_frequency</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">delta_nu</span>
+                <span class="p">(</span><span class="n">vpackets_nu</span> <span class="o">-</span> <span class="n">spectrum_frequency</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">delta_nu</span>
         <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
         <span class="c1"># if we&#39;re only in a single-packet mode</span>
         <span class="c1"># if montecarlo_configuration.single_packet_seed == -1:</span>
-        <span class="c1">#     break</span>
+        <span class="c1">#    break</span>
         <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">v_packets_idx</span><span class="p">):</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">vpackets_nu</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">spectrum_frequency</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span>
                 <span class="n">vpackets_nu</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">spectrum_frequency</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -416,28 +424,31 @@
                 <span class="k">continue</span>
             <span class="n">v_packets_energy_hist</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">vpackets_energy</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
 
-        <span class="k">if</span> <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">VPACKET_LOGGING</span><span class="p">:</span>
-            <span class="n">virt_packet_nus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vpackets_nu</span><span class="p">)</span>
-            <span class="n">virt_packet_energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vpackets_energy</span><span class="p">)</span>
-            <span class="n">virt_packet_last_interaction_in_nu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+    <span class="k">if</span> <span class="n">montecarlo_configuration</span><span class="o">.</span><span class="n">VPACKET_LOGGING</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">vpacket_collection</span> <span class="ow">in</span> <span class="n">vpacket_collections</span><span class="p">:</span>
+            <span class="n">vpackets_nu</span> <span class="o">=</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">nus</span><span class="p">[:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">vpackets_energy</span> <span class="o">=</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">energies</span><span class="p">[:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">virt_packet_nus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">vpackets_nu</span><span class="p">))</span>
+            <span class="n">virt_packet_energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">vpackets_energy</span><span class="p">))</span>
+            <span class="n">virt_packet_last_interaction_in_nu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span>
                 <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">last_interaction_in_nu</span><span class="p">[</span>
                     <span class="p">:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span>
-                <span class="p">]</span>
+                <span class="p">])</span>
             <span class="p">)</span>
-            <span class="n">virt_packet_last_interaction_type</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">virt_packet_last_interaction_type</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span>
                 <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">last_interaction_type</span><span class="p">[</span>
                     <span class="p">:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span>
-                <span class="p">]</span>
+                <span class="p">])</span>
             <span class="p">)</span>
-            <span class="n">virt_packet_last_line_interaction_in_id</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">virt_packet_last_line_interaction_in_id</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span>
                 <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">last_interaction_in_id</span><span class="p">[</span>
                     <span class="p">:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span>
-                <span class="p">]</span>
+                <span class="p">])</span>
             <span class="p">)</span>
-            <span class="n">virt_packet_last_line_interaction_out_id</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="n">virt_packet_last_line_interaction_out_id</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span>
                 <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">last_interaction_out_id</span><span class="p">[</span>
                     <span class="p">:</span> <span class="n">vpacket_collection</span><span class="o">.</span><span class="n">idx</span>
-                <span class="p">]</span>
+                <span class="p">])</span>
             <span class="p">)</span>
 
     <span class="n">packet_collection</span><span class="o">.</span><span class="n">packets_output_energy</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">output_energies</span><span class="p">[:]</span>

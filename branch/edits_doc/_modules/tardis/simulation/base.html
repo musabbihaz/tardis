@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.simulation.base &mdash; TARDIS v3.0.dev3985</title>
+  <title>tardis.simulation.base &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -101,17 +101,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -138,6 +140,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -216,7 +222,9 @@
 <span class="kn">from</span> <span class="nn">tardis.plasma.standard_plasmas</span> <span class="kn">import</span> <span class="n">assemble_plasma</span>
 <span class="kn">from</span> <span class="nn">tardis.io.util</span> <span class="kn">import</span> <span class="n">HDFWriterMixin</span>
 <span class="kn">from</span> <span class="nn">tardis.io.config_reader</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+<span class="kn">from</span> <span class="nn">tardis.util.base</span> <span class="kn">import</span> <span class="n">is_notebook</span>
 <span class="kn">from</span> <span class="nn">tardis.montecarlo</span> <span class="kn">import</span> <span class="n">montecarlo_configuration</span> <span class="k">as</span> <span class="n">mc_config_module</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
 
 <span class="c1"># Adding logging support</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -304,8 +312,8 @@
 <span class="sd">    nthreads : int</span>
 <span class="sd">        The number of threads to run montecarlo with</span>
 
-<span class="sd">        .. note:: TARDIS must be built with OpenMP support in order for</span>
-<span class="sd">        `nthreads` to have effect.</span>
+<span class="sd">        .. note:: TARDIS must be built with OpenMP support in order for ``nthreads`` to have effect.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">hdf_properties</span> <span class="o">=</span> <span class="p">[</span>
@@ -526,7 +534,7 @@
 
 <div class="viewcode-block" id="Simulation.iterate"><a class="viewcode-back" href="../../../api/tardis.simulation.base.html#tardis.simulation.base.Simulation.iterate">[docs]</a>    <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no_of_packets</span><span class="p">,</span> <span class="n">no_of_virtual_packets</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">last_run</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Starting iteration </span><span class="si">{</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations_executed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Starting iteration </span><span class="si">{</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations_executed</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
@@ -554,6 +562,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        run the simulation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations_executed</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">store_plasma_state</span><span class="p">(</span>
@@ -584,8 +593,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">reshape_plasma_state_store</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations_executed</span><span class="p">)</span>
 
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Simulation finished in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations_executed</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> iterations &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;and took </span><span class="si">{</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Simulation finished in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations_executed</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> iterations &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Simulation took </span><span class="si">{</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_call_back</span><span class="p">()</span></div>
 
@@ -627,23 +636,35 @@
         <span class="n">plasma_state_log</span><span class="p">[</span><span class="s2">&quot;next_t_rad&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_t_rad</span>
         <span class="n">plasma_state_log</span><span class="p">[</span><span class="s2">&quot;w&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">w</span>
         <span class="n">plasma_state_log</span><span class="p">[</span><span class="s2">&quot;next_w&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_w</span>
+        <span class="n">plasma_state_log</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Shell No.&quot;</span>
 
-        <span class="n">plasma_state_log</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Shell&quot;</span>
+        <span class="k">if</span> <span class="n">is_notebook</span><span class="p">():</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Plasma stratification:&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="n">display</span><span class="p">(</span>
+                    <span class="n">plasma_state_log</span><span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="n">log_sampling</span><span class="p">]</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:.3g}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_df</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">plasma_output</span> <span class="o">=</span> <span class="n">plasma_state_log</span><span class="o">.</span><span class="n">iloc</span><span class="p">[::</span><span class="n">log_sampling</span><span class="p">]</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span>
+                <span class="n">float_format</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:.3g}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">),</span>
+                <span class="n">justify</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">plasma_output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                <span class="n">output_df</span> <span class="o">=</span> <span class="n">output_df</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Plasma stratification:&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">output_df</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="n">plasma_state_log</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">plasma_state_log</span><span class="p">[::</span><span class="n">log_sampling</span><span class="p">])</span>
-
-        <span class="n">plasma_state_log</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">plasma_state_log</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)]</span>
-        <span class="p">)</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Plasma stratification:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">plasma_state_log</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t_inner </span><span class="si">{</span><span class="n">t_inner</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> -- next t_inner </span><span class="si">{</span><span class="n">next_t_inner</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Current t_inner = </span><span class="si">{</span><span class="n">t_inner</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n\t</span><span class="s2">Expected t_inner for next iteration = </span><span class="si">{</span><span class="n">next_t_inner</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Simulation.log_run_results"><a class="viewcode-back" href="../../../api/tardis.simulation.base.html#tardis.simulation.base.Simulation.log_run_results">[docs]</a>    <span class="k">def</span> <span class="nf">log_run_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emitted_luminosity</span><span class="p">,</span> <span class="n">absorbed_luminosity</span><span class="p">):</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Luminosity emitted = </span><span class="si">{</span><span class="n">emitted_luminosity</span><span class="si">:</span><span class="s2">.5e</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Luminosity absorbed = </span><span class="si">{</span><span class="n">absorbed_luminosity</span><span class="si">:</span><span class="s2">.5e</span><span class="si">}</span><span class="s2"> &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Luminosity requested = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">luminosity_requested</span><span class="si">:</span><span class="s2">.5e</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Luminosity emitted   = </span><span class="si">{</span><span class="n">emitted_luminosity</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Luminosity absorbed  = </span><span class="si">{</span><span class="n">absorbed_luminosity</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Luminosity requested = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">luminosity_requested</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_call_back</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Monte Carlo Radiative Transfer - Basic Principles &mdash; TARDIS v3.0.dev3985</title>
+  <title>Monte Carlo Radiative Transfer - Basic Principles &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -47,8 +47,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Monte Carlo Discretization — Energy Packets" href="discretization.html" />
-    <link rel="prev" title="Monte Carlo Primer" href="index.html" />
+    <link rel="next" title="Energy Packet Initialization" href="initialization.html" />
+    <link rel="prev" title="Monte Carlo Iteration" href="index.html" />
     <link href="../../_static/tardis.css" rel="stylesheet" type="text/css">
 
 </head>
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -103,27 +103,26 @@
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Monte Carlo Primer</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Monte Carlo Iteration</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Monte Carlo Radiative Transfer - Basic Principles</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discretization.html">Monte Carlo Discretization — Energy Packets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="initialization.html">Energy Packet Initialization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="propagation.html">Packet Propagation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lineinteraction.html">Line Interaction Treatments</a></li>
-<li class="toctree-l2"><a class="reference internal" href="estimators.html">Volume-based Monte Carlo Estimators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="virtualpackets.html">Spectrum Generation with Virtual Packets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sourceintegration.html">Direct integration of the radiation field</a></li>
 <li class="toctree-l2"><a class="reference internal" href="randomsampling.html">Random Sampling Basics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -150,6 +149,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -198,7 +201,7 @@
     
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="index.html">Monte Carlo Primer</a> &raquo;</li>
+          <li><a href="index.html">Monte Carlo Iteration</a> &raquo;</li>
         
       <li>Monte Carlo Radiative Transfer - Basic Principles</li>
     
@@ -260,11 +263,11 @@ through and interact with the ambient material. A sufficiently large number of
 representative “machine photons” are considered and their propagation history
 solved in a stochastic process. The initial properties of these photons are
 randomly (in a probabilistic sense) assigned in accordance with the macroscopic
-properties of the radiation field (see <a class="reference internal" href="discretization.html"><span class="doc">Discretization</span></a>)
+properties of the radiation field (see <a class="reference internal" href="initialization.html#initialization"><span class="std std-ref">Energy Packets</span></a>)
 and in a similar manner the decisions about when, where and how the machine
-photons interact with the surrounding material are made (see <a class="reference internal" href="propagation.html"><span class="doc">Propagation</span></a>). If this process is repeated for a large enough number of machine
+photons interact with the surrounding material are made (see <a class="reference internal" href="propagation.html#propagation"><span class="std std-ref">Propagation</span></a>). If this process is repeated for a large enough number of machine
 photons, the ensemble behaviour and thus the macroscopic evolution of the
-radiation field is recovered (see <a class="reference internal" href="estimators.html"><span class="doc">Estimators</span></a>).</p>
+radiation field is recovered (see <a class="reference internal" href="../est_and_conv/estimators.html#estimators"><span class="std std-ref">Estimators</span></a>).</p>
 </div>
 
 
@@ -273,8 +276,8 @@ radiation field is recovered (see <a class="reference internal" href="estimators
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="discretization.html" class="btn btn-neutral float-right" title="Monte Carlo Discretization — Energy Packets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="index.html" class="btn btn-neutral float-left" title="Monte Carlo Primer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="initialization.html" class="btn btn-neutral float-right" title="Energy Packet Initialization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Monte Carlo Iteration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

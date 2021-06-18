@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.montecarlo.montecarlo_numba.r_packet &mdash; TARDIS v3.0.dev3985</title>
+  <title>tardis.montecarlo.montecarlo_numba.r_packet &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -101,17 +101,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -138,6 +140,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -259,7 +265,6 @@
     <span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;seed&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
-    <span class="p">(</span><span class="s2">&quot;is_close_line&quot;</span><span class="p">,</span> <span class="n">boolean</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;last_interaction_type&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;last_interaction_in_nu&quot;</span><span class="p">,</span> <span class="n">float64</span><span class="p">),</span>
     <span class="p">(</span><span class="s2">&quot;last_line_interaction_in_id&quot;</span><span class="p">,</span> <span class="n">int64</span><span class="p">),</span>
@@ -269,7 +274,7 @@
 
 <span class="nd">@jitclass</span><span class="p">(</span><span class="n">rpacket_spec</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">RPacket</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">is_close_line</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">nu</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">r</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="n">mu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">nu</span>
@@ -278,7 +283,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">PacketStatus</span><span class="o">.</span><span class="n">IN_PROCESS</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_close_line</span> <span class="o">=</span> <span class="n">is_close_line</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_interaction_type</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_interaction_in_nu</span> <span class="o">=</span> <span class="mf">0.0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_line_interaction_in_id</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -347,7 +351,6 @@
     <span class="n">cur_line_id</span> <span class="o">=</span> <span class="n">start_line_id</span>  <span class="c1"># initializing varibale for Numba</span>
     <span class="c1"># - do not remove</span>
     <span class="n">last_line_id</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-
     <span class="k">for</span> <span class="n">cur_line_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_line_id</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">)):</span>
 
         <span class="c1"># Going through the lines</span>
@@ -424,10 +427,6 @@
             <span class="n">distance</span> <span class="o">=</span> <span class="n">distance_trace</span>
             <span class="k">break</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_last_line</span><span class="p">:</span>
-            <span class="n">test_for_close_line</span><span class="p">(</span>
-                <span class="n">r_packet</span><span class="p">,</span> <span class="n">cur_line_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nu_line</span><span class="p">,</span> <span class="n">numba_plasma</span>
-            <span class="p">)</span>
 
         <span class="c1"># Recalculating distance_electron using tau_event -</span>
         <span class="c1"># tau_trace_line_combined</span>
@@ -528,12 +527,6 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">packet</span><span class="o">.</span><span class="n">current_shell_id</span> <span class="o">=</span> <span class="n">next_shell_id</span></div>
 
-
-<div class="viewcode-block" id="test_for_close_line"><a class="viewcode-back" href="../../../../api/tardis.montecarlo.montecarlo_numba.r_packet.html#tardis.montecarlo.montecarlo_numba.r_packet.test_for_close_line">[docs]</a><span class="nd">@njit</span><span class="p">(</span><span class="o">**</span><span class="n">njit_dict_no_parallel</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">test_for_close_line</span><span class="p">(</span><span class="n">r_packet</span><span class="p">,</span> <span class="n">line_id</span><span class="p">,</span> <span class="n">nu_line</span><span class="p">,</span> <span class="n">numba_plasma</span><span class="p">):</span>
-    <span class="n">r_packet</span><span class="o">.</span><span class="n">is_close_line</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span>
-        <span class="n">numba_plasma</span><span class="o">.</span><span class="n">line_list_nu</span><span class="p">[</span><span class="n">line_id</span><span class="p">]</span> <span class="o">-</span> <span class="n">nu_line</span>
-    <span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">nu_line</span> <span class="o">*</span> <span class="n">CLOSE_LINE_THRESHOLD</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>tardis.io.atom_data.base &mdash; TARDIS v3.0.dev3985</title>
+  <title>tardis.io.atom_data.base &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -101,17 +101,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -138,6 +140,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -237,57 +243,67 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    atom_data : pandas.DataFrame</span>
-<span class="sd">        A DataFrame containing the *basic atomic data* with:</span>
-<span class="sd">            index : atomic_number;</span>
-<span class="sd">            columns : symbol, name, mass[u].</span>
+<span class="sd">    A DataFrame containing the *basic atomic data* with:</span>
+<span class="sd">        index : atomic_number</span>
+<span class="sd">        columns : symbol, name, mass[u].</span>
+
 <span class="sd">    ionization_data : pandas.DataFrame</span>
-<span class="sd">        A DataFrame containing the *ionization data* with:</span>
-<span class="sd">            index : atomic_number, ion_number;</span>
-<span class="sd">            columns : ionization_energy[eV].</span>
-<span class="sd">        It is important to note here is that `ion_number` describes the *final ion state*</span>
-<span class="sd">            e.g. H I - H II is described with ion=1</span>
+<span class="sd">    A DataFrame containing the *ionization data* with:</span>
+<span class="sd">        index : atomic_number, ion_number</span>
+<span class="sd">        columns : ionization_energy[eV].</span>
+<span class="sd">    It is important to note here is that `ion_number` describes the *final ion state*</span>
+<span class="sd">    e.g. H I - H II is described with ion=1</span>
+
 <span class="sd">    levels : pandas.DataFrame</span>
-<span class="sd">        A DataFrame containing the *levels data* with:</span>
-<span class="sd">            index : numerical index;</span>
-<span class="sd">            columns : atomic_number, ion_number, level_number, energy[eV], g[1], metastable.</span>
+<span class="sd">    A DataFrame containing the *levels data* with:</span>
+<span class="sd">        index : numerical index</span>
+<span class="sd">        columns : atomic_number, ion_number, level_number, energy[eV], g[1], metastable.</span>
+
 <span class="sd">    lines : pandas.DataFrame</span>
-<span class="sd">        A DataFrame containing the *lines data* with:</span>
-<span class="sd">            index : numerical index;</span>
-<span class="sd">            columns : line_id, atomic_number, ion_number, level_number_lower, level_number_upper,</span>
-<span class="sd">                wavelength[angstrom], nu[Hz], f_lu[1], f_ul[1], B_ul[?], B_ul[?], A_ul[1/s].</span>
+<span class="sd">    A DataFrame containing the *lines data* with:</span>
+<span class="sd">        index : numerical index</span>
+<span class="sd">        columns : line_id, atomic_number, ion_number, level_number_lower, level_number_upper,</span>
+<span class="sd">        wavelength[angstrom], nu[Hz], f_lu[1], f_ul[1], B_ul[?], B_ul[?], A_ul[1/s].</span>
+
 <span class="sd">    macro_atom_data :</span>
-<span class="sd">        A DataFrame containing the *macro atom data* with:</span>
-<span class="sd">            index : numerical index;</span>
-<span class="sd">            columns : atomic_number, ion_number, source_level_number, destination_level_number,</span>
-<span class="sd">                transition_line_id, transition_type, transition_probability;</span>
+<span class="sd">    A DataFrame containing the *macro atom data* with:</span>
+<span class="sd">        index : numerical index</span>
+<span class="sd">        columns : atomic_number, ion_number, source_level_number, destination_level_number,</span>
+<span class="sd">        transition_line_id, transition_type, transition_probability;</span>
+
 <span class="sd">    macro_atom_references :</span>
-<span class="sd">        A DataFrame containing  the *macro atom references* with:</span>
-<span class="sd">            index : numerical index;</span>
-<span class="sd">            columns : atomic_number, ion_number, source_level_number, count_down, count_up, count_total.</span>
-<span class="sd">        Refer to the docs: http://tardis.readthedocs.io/en/latest/physics/plasma/macroatom.html</span>
+<span class="sd">    A DataFrame containing  the *macro atom references* with:</span>
+<span class="sd">        index : numerical index</span>
+<span class="sd">        columns : atomic_number, ion_number, source_level_number, count_down, count_up, count_total.</span>
+<span class="sd">    Refer to the docs: http://tardis.readthedocs.io/en/latest/physics/plasma/macroatom.html</span>
+
 <span class="sd">    collision_data : (pandas.DataFrame, np.array)</span>
-<span class="sd">        A DataFrame containing the *electron collisions data* with:</span>
-<span class="sd">            index : atomic_number, ion_number, level_number_lower, level_number_upper;</span>
-<span class="sd">            columns : e_col_id, delta_e, g_ratio, c_ul;</span>
+<span class="sd">    A DataFrame containing the *electron collisions data* with:</span>
+<span class="sd">        index : atomic_number, ion_number, level_number_lower, level_number_upper</span>
+<span class="sd">        columns : e_col_id, delta_e, g_ratio, c_ul;</span>
+
 <span class="sd">    collision_data_temperatures : np.array</span>
 <span class="sd">        An array with the collision temperatures.</span>
+
 <span class="sd">    zeta_data :</span>
-<span class="sd">        A DataFrame containing the *zeta data* for the</span>
-<span class="sd">        nebular ionization calculation</span>
-<span class="sd">        (i.e., the fraction of recombinations that go directly to the</span>
-<span class="sd">        ground state) with:</span>
-<span class="sd">            index : atomic_number, ion_charge;</span>
-<span class="sd">            columns : temperatures[K]</span>
+<span class="sd">    A DataFrame containing the *zeta data* for the</span>
+<span class="sd">    nebular ionization calculation</span>
+<span class="sd">    (i.e., the fraction of recombinations that go directly to the</span>
+<span class="sd">    ground state) with:</span>
+<span class="sd">        index : atomic_number, ion_charge</span>
+<span class="sd">        columns : temperatures[K]</span>
+
 <span class="sd">    synpp_refs : ?</span>
+
 <span class="sd">    photoionization_data : pandas.DataFrame</span>
-<span class="sd">        A DataFrame containing the *photoionization data* with:</span>
-<span class="sd">            index : numerical index;</span>
-<span class="sd">            columns : atomic_number, ion_number, level_number, nu[Hz], x_sect[cm^2]</span>
+<span class="sd">    A DataFrame containing the *photoionization data* with:</span>
+<span class="sd">        index : numerical index</span>
+<span class="sd">        columns : atomic_number, ion_number, level_number, nu[Hz], x_sect[cm^2]</span>
 
 <span class="sd">    two_photon_data : pandas.DataFrame</span>
-<span class="sd">        A DataFrame containing the *two photon decay data* with:</span>
-<span class="sd">            index: atomic_number, ion_number, level_number_lower, level_number_upper</span>
-<span class="sd">            columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</span>
+<span class="sd">    A DataFrame containing the *two photon decay data* with:</span>
+<span class="sd">        index: atomic_number, ion_number, level_number_lower, level_number_upper</span>
+<span class="sd">        columns: A_ul[1/s], nu0[Hz], alpha, beta, gamma</span>
 
 <span class="sd">    Attributes</span>
 <span class="sd">    ----------</span>
@@ -382,11 +398,11 @@
             <span class="c1"># ToDo: strore data sources as attributes in carsus</span>
 
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Read Atom Data with UUID=</span><span class="si">{</span><span class="n">atom_data</span><span class="o">.</span><span class="n">uuid1</span><span class="si">}</span><span class="s2"> and MD5=</span><span class="si">{</span><span class="n">atom_data</span><span class="o">.</span><span class="n">md5</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\t</span><span class="s2">Reading Atom Data with:</span><span class="se">\n\t</span><span class="s2">UUID = </span><span class="si">{</span><span class="n">atom_data</span><span class="o">.</span><span class="n">uuid1</span><span class="si">}</span><span class="se">\n\t</span><span class="s2">MD5  = </span><span class="si">{</span><span class="n">atom_data</span><span class="o">.</span><span class="n">md5</span><span class="si">}</span><span class="s2"> &quot;</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="n">nonavailable</span><span class="p">:</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s1">&#39;Non provided atomic data: </span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nonavailable</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+                    <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">Non provided atomic data:</span><span class="se">\n\t</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">nonavailable</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
                 <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">atom_data</span></div>

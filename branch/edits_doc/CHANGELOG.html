@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Change Log &mdash; TARDIS v3.0.dev3985</title>
+  <title>Change Log &mdash; TARDIS v3.0.dev4012</title>
   
 
   
@@ -74,7 +74,7 @@
             
             
               <div class="version">
-                3.0.dev3985
+                3.0.dev4012
               </div>
             
           
@@ -103,17 +103,19 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart/quickstart.html">Quickstart for TARDIS</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Using TARDIS</span></p>
+<p class="caption"><span class="caption-text">Input/Output</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="using/components/index.html">Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using/interaction/index.html">Additional Interactivity</a></li>
-<li class="toctree-l1"><a class="reference internal" href="using/parallelisation/index.html">Parallel execution with Numba and OpenMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/configuration/index.html">Configuration (Required Input)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/optional/index.html">Optional Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/visualization/index.html">Visualization Tools &amp; Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io/output/index.html">Additional Outputs</a></li>
 </ul>
-<p class="caption"><span class="caption-text">The Physics of TARDIS</span></p>
+<p class="caption"><span class="caption-text">Physics Walkthrough</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="physics/montecarlo/index.html">Monte Carlo Primer</a></li>
-<li class="toctree-l1"><a class="reference internal" href="physics/plasma/index.html">Plasma</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/setup/index.html">Setting Up the Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/montecarlo/index.html">Monte Carlo Iteration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/est_and_conv/index.html">Estimators and Convergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="physics/spectrum/index.html">Spectrum Generation</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Research with TARDIS</span></p>
 <ul>
@@ -131,7 +133,8 @@
 <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="development/index.html">Developer Workflow</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Change Log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#upcoming-2021-06-04-15-10-00-00">upcoming (2021/06/04 15:10 +00:00)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upcoming-2021-06-13-23-52-00-00">upcoming (2021/06/13 23:52 +00:00)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v3-0-dev3983-2021-06-04-16-50-00-00">v3.0.dev3983 (2021/06/04 16:50 +00:00)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v3-0-dev3970-2021-05-28-21-43-00-00">v3.0.dev3970 (2021/05/28 21:43 +00:00)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v3-0-dev3959-2021-05-21-18-44-00-00">v3.0.dev3959 (2021/05/21 18:44 +00:00)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#v3-0-dev3957-2021-05-20-19-27-00-00">v3.0.dev3957 (2021/05/20 19:27 +00:00)</a></li>
@@ -191,6 +194,10 @@
 <p class="caption"><span class="caption-text">References</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="zreferences.html">TARDIS Papers and useful References</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Outdated</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="outdated/index.html">Outdated Documentation</a></li>
 </ul>
 
             
@@ -284,9 +291,25 @@
 </style>
 <div class="section" id="change-log">
 <h1>Change Log<a class="headerlink" href="#change-log" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="upcoming-2021-06-04-15-10-00-00">
-<h2>upcoming (2021/06/04 15:10 +00:00)<a class="headerlink" href="#upcoming-2021-06-04-15-10-00-00" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="upcoming-2021-06-13-23-52-00-00">
+<h2>upcoming (2021/06/13 23:52 +00:00)<a class="headerlink" href="#upcoming-2021-06-13-23-52-00-00" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1609">#1609</a> update refdata procedure docs (#1609) (&#64;epassaro)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1635">#1635</a> Run tests before making a new release (#1635) (&#64;epassaro)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1617">#1617</a> Fixing docstrings &amp; indentation related warnings for Sphinx (#1617) (&#64;DhruvSondhi)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1565">#1565</a> Fix for close line test.   (#1565) (&#64;Rodot-)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1639">#1639</a> push montecarlo data (#1639) (&#64;epassaro)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1595">#1595</a> move zenodo pipeline to GA (#1595) (&#64;epassaro)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1623">#1623</a> force pyne nomoab_openmc version (#1623) (&#64;epassaro)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1622">#1622</a> Adding GitHub to sponsors page (#1622) (&#64;smithis7)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1631">#1631</a> update mailmap and orcid (#1631) (&#64;epassaro)</p></li>
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1619">#1619</a> disable repeat on pr comment (#1619) (&#64;epassaro)</p></li>
+</ul>
+</div>
+<div class="section" id="v3-0-dev3983-2021-06-04-16-50-00-00">
+<h2>v3.0.dev3983 (2021/06/04 16:50 +00:00)<a class="headerlink" href="#v3-0-dev3983-2021-06-04-16-50-00-00" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1555">#1555</a> Replacing the contents of the news section with TARDIS twitter feed (#1555) (&#64;atharva-2001)</p></li>
 <li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1610">#1610</a> add token at checkout step (#1610) (&#64;epassaro)</p></li>
 <li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1594">#1594</a> Fixing JSON Schema not Rendering Properly in the Documentation (#1594) (&#64;DhruvSondhi)</p></li>
 <li><p><a class="reference external" href="https://github.com/tardis-sn/tardis/pull/1607">#1607</a> SDEC Visibility Fix (#1607) (&#64;atharva-2001)</p></li>
